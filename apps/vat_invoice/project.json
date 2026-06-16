@@ -1,0 +1,87 @@
+{
+  "name": "vat_invoice",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/vat_invoice/src",
+  "tags": [
+    "type:app",
+    "scope:vat-invoice"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/vat_invoice",
+        "index": "apps/vat_invoice/src/index.html",
+        "main": "apps/vat_invoice/src/main.ts",
+        "tsConfig": "apps/vat_invoice/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/vat_invoice/public"
+          }
+        ],
+        "styles": [
+          "apps/vat_invoice/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/vat_invoice/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4213,
+        "publicHost": "http://localhost:4213"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "vat_invoice:build:production"
+        },
+        "development": {
+          "buildTarget": "vat_invoice:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "vat_invoice:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/vat_invoice"
+      ],
+      "options": {
+        "main": "apps/vat_invoice/src/test.ts",
+        "tsConfig": "apps/vat_invoice/tsconfig.spec.json",
+        "karmaConfig": "apps/vat_invoice/karma.conf.js"
+      }
+    }
+  }
+}

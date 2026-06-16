@@ -1,0 +1,70 @@
+{
+  "name": "supplementary-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/supplementary-portal/src",
+  "tags": [
+    "type:app",
+    "scope:supplementary"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/supplementary-portal",
+        "index": "apps/supplementary-portal/src/index.html",
+        "main": "apps/supplementary-portal/src/main.ts",
+        "tsConfig": "apps/supplementary-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/supplementary-portal/public"
+          }
+        ],
+        "styles": [
+          "apps/supplementary-portal/src/styles.scss"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/supplementary-portal/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4205,
+        "publicHost": "http://localhost:4205"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "supplementary-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "supplementary-portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

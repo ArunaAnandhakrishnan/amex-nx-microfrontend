@@ -1,0 +1,70 @@
+{
+  "name": "wearables-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/wearables-portal/src",
+  "tags": [
+    "type:app",
+    "scope:wearables"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/wearables-portal",
+        "index": "apps/wearables-portal/src/index.html",
+        "main": "apps/wearables-portal/src/main.ts",
+        "tsConfig": "apps/wearables-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/wearables-portal/public"
+          }
+        ],
+        "styles": [
+          "apps/wearables-portal/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/wearables-portal/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4206,
+        "publicHost": "http://localhost:4206"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "wearables-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "wearables-portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "name": "online-account",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/online-account/src",
+  "tags": [
+    "type:app",
+    "scope:online-account"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/online-account",
+        "index": "apps/online-account/src/index.html",
+        "main": "apps/online-account/src/main.ts",
+        "tsConfig": "apps/online-account/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/online-account/public"
+          }
+        ],
+        "styles": [
+          "apps/online-account/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/online-account/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4202,
+        "publicHost": "http://localhost:4202"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "online-account:build:production"
+        },
+        "development": {
+          "buildTarget": "online-account:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "online-account:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/online-account"
+      ],
+      "options": {
+        "main": "apps/online-account/src/test.ts",
+        "tsConfig": "apps/online-account/tsconfig.spec.json",
+        "karmaConfig": "apps/online-account/karma.conf.js"
+      }
+    }
+  }
+}

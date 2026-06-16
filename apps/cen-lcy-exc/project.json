@@ -1,0 +1,70 @@
+{
+  "name": "cen-lcy-exc",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/cen-lcy-exc/src",
+  "tags": [
+    "type:app",
+    "scope:cen-lcy-exc"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/cen-lcy-exc",
+        "index": "apps/cen-lcy-exc/src/index.html",
+        "main": "apps/cen-lcy-exc/src/main.ts",
+        "tsConfig": "apps/cen-lcy-exc/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/cen-lcy-exc/public"
+          }
+        ],
+        "styles": [
+          "apps/cen-lcy-exc/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/cen-lcy-exc/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4210,
+        "publicHost": "http://localhost:4210"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "cen-lcy-exc:build:production"
+        },
+        "development": {
+          "buildTarget": "cen-lcy-exc:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

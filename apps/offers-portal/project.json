@@ -1,0 +1,70 @@
+{
+  "name": "offers-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/offers-portal/src",
+  "tags": [
+    "type:app",
+    "scope:offers"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/offers-portal",
+        "index": "apps/offers-portal/src/index.html",
+        "main": "apps/offers-portal/src/main.ts",
+        "tsConfig": "apps/offers-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/offers-portal/public"
+          }
+        ],
+        "styles": [
+          "apps/offers-portal/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/offers-portal/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4204,
+        "publicHost": "http://localhost:4204"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "offers-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "offers-portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

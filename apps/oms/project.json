@@ -1,0 +1,87 @@
+{
+  "name": "oms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/oms/src",
+  "tags": [
+    "type:app",
+    "scope:oms"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/oms",
+        "index": "apps/oms/src/index.html",
+        "main": "apps/oms/src/main.ts",
+        "tsConfig": "apps/oms/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/oms/public"
+          }
+        ],
+        "styles": [
+          "apps/oms/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/oms/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "oms:build:production"
+        },
+        "development": {
+          "buildTarget": "oms:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "oms:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/oms"
+      ],
+      "options": {
+        "main": "apps/oms/src/test.ts",
+        "tsConfig": "apps/oms/tsconfig.spec.json",
+        "karmaConfig": "apps/oms/karma.conf.js"
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "name": "centurion-portal",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/centurion-portal/src",
+  "tags": [
+    "type:app",
+    "scope:centurion"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/centurion-portal",
+        "index": "apps/centurion-portal/src/index.html",
+        "main": "apps/centurion-portal/src/main.ts",
+        "tsConfig": "apps/centurion-portal/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/centurion-portal/public"
+          }
+        ],
+        "styles": [
+          "apps/centurion-portal/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/centurion-portal/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4211,
+        "publicHost": "http://localhost:4211"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "centurion-portal:build:production"
+        },
+        "development": {
+          "buildTarget": "centurion-portal:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

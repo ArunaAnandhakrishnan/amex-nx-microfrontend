@@ -1,0 +1,70 @@
+{
+  "name": "lounge",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/lounge/src",
+  "tags": [
+    "type:app",
+    "scope:lounge"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@angular-builders/custom-webpack:browser",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/lounge",
+        "index": "apps/lounge/src/index.html",
+        "main": "apps/lounge/src/main.ts",
+        "tsConfig": "apps/lounge/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/lounge/public"
+          }
+        ],
+        "styles": [
+          "apps/lounge/src/styles.css"
+        ],
+        "customWebpackConfig": {
+          "path": "apps/lounge/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-builders/custom-webpack:dev-server",
+      "options": {
+        "port": 4209,
+        "publicHost": "http://localhost:4209"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "lounge:build:production"
+        },
+        "development": {
+          "buildTarget": "lounge:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

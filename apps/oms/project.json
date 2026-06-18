@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/oms",
         "index": "apps/oms/src/index.html",
         "main": "apps/oms/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/oms/tsconfig.app.json",
         "assets": [
           {

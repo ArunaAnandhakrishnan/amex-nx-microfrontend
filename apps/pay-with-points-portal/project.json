@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/pay-with-points-portal",
         "index": "apps/pay-with-points-portal/src/index.html",
         "main": "apps/pay-with-points-portal/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/pay-with-points-portal/tsconfig.app.json",
         "assets": [
           {

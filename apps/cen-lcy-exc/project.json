@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/cen-lcy-exc",
         "index": "apps/cen-lcy-exc/src/index.html",
         "main": "apps/cen-lcy-exc/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/cen-lcy-exc/tsconfig.app.json",
         "assets": [
           {

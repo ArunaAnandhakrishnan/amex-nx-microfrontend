@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/centurion-portal",
         "index": "apps/centurion-portal/src/index.html",
         "main": "apps/centurion-portal/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/centurion-portal/tsconfig.app.json",
         "assets": [
           {

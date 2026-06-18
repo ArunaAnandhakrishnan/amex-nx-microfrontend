@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/online-account",
         "index": "apps/online-account/src/index.html",
         "main": "apps/online-account/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/online-account/tsconfig.app.json",
         "assets": [
           {

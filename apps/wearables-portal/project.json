@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/wearables-portal",
         "index": "apps/wearables-portal/src/index.html",
         "main": "apps/wearables-portal/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/wearables-portal/tsconfig.app.json",
         "assets": [
           {

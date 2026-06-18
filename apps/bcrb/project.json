@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/bcrb",
         "index": "apps/bcrb/src/index.html",
         "main": "apps/bcrb/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/bcrb/tsconfig.app.json",
         "assets": [
           {

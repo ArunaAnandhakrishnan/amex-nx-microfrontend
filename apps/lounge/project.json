@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/lounge",
         "index": "apps/lounge/src/index.html",
         "main": "apps/lounge/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/lounge/tsconfig.app.json",
         "assets": [
           {

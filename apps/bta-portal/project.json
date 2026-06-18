@@ -18,6 +18,9 @@
         "outputPath": "dist/apps/bta-portal",
         "index": "apps/bta-portal/src/index.html",
         "main": "apps/bta-portal/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/bta-portal/tsconfig.app.json",
         "assets": [
           {

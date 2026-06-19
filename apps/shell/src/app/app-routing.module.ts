@@ -151,6 +151,19 @@ const routes: Routes = [
         .catch(portalFallback),
   },
 
+  {
+    path: 'change-password',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      loadRemoteModule({
+        type: 'module',
+        remoteEntry: 'http://localhost:4214/remoteEntry.js',
+        exposedModule: './Module',
+      })
+        .then(m => m.ChangePasswordRemoteEntryModule)
+        .catch(portalFallback),
+  },
+
   // { path: '**', redirectTo: 'bta' },
 ];
 

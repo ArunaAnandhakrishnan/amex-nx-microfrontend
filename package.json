@@ -18,6 +18,7 @@
     "start:cen-lcy-exc": "nx serve cen-lcy-exc",
     "start:centurion": "nx serve centurion-portal",
     "start:soc-roc-portal": "nx serve socRocPortal",
+    "start:change-password": "nx serve change-password-portal",
     "start:all": "nx run-many --target=serve --all --parallel",
     "build:all": "nx run-many --target=build --all",
     "build:affected": "nx affected --target=build",

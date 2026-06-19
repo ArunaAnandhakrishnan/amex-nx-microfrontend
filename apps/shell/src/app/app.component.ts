@@ -10,6 +10,7 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth.service';
 import { EventBusService } from './core/services/event-bus.service';
+import { SecureFormService } from './core/services/secure-form.service'; 
 import { AmexTabItem } from '@vn-core-ui-components/ui';
 
 @Component({
@@ -151,6 +152,7 @@ export class AppComponent implements OnInit, OnDestroy {
     { id: 'benefits', label: 'Benefits' },
     { id: 'misc', label: 'Misc' },
     { id: 'centurion', label: 'Centurion' },
+    { id: 'change-password', label: 'Change Password' },
 
   ];
 
@@ -189,12 +191,14 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private auth: AuthService,
+     private secureForm: SecureFormService, 
     private bus: EventBusService,
   ) { }
 
   // ── Lifecycle ─────────────────────────────────────────────────────
 
   ngOnInit(): void {
+     this.secureForm.enable(); 
     // Set immediately from current URL so shell doesn't flash on first paint
     this.isAuthPage = this.checkIsAuthRoute(this.router.url);
 
@@ -251,6 +255,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (url.startsWith('/supp')) { this.activeTabId = 'supp'; this.activeSubId = ''; return; }
     if (url.startsWith('/account')) { this.activeTabId = 'account'; this.activeSubId = ''; return; }
     if (url.startsWith('/bta')) { this.activeTabId = 'bta'; this.activeSubId = ''; return; }
+    if (url.startsWith('/change-password')) { this.activeTabId = 'change-password'; this.activeSubId = ''; return; }
 
     // MISC
     for (const [subId, route] of Object.entries(this.subRouteMap)) {
@@ -291,6 +296,7 @@ export class AppComponent implements OnInit, OnDestroy {
       bta: '/bta',
       offers: '/offers',
       benefits: '/offers/benefits',
+      'change-password': '/change-password',
     };
     if (routeMap[tabId]) {
       this.router.navigate([routeMap[tabId]]);

@@ -4,33 +4,20 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/wearables-portal/src",
-  "tags": [
-    "type:app",
-    "scope:wearables"
-  ],
+  "tags": ["type:app", "scope:wearables"],
   "targets": {
     "build": {
       "executor": "@angular-builders/custom-webpack:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/wearables-portal",
         "index": "apps/wearables-portal/src/index.html",
         "main": "apps/wearables-portal/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
         "tsConfig": "apps/wearables-portal/tsconfig.app.json",
         "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/wearables-portal/public"
-          }
+          { "glob": "**/*", "input": "apps/wearables-portal/public" }
         ],
-        "styles": [
-          "apps/wearables-portal/src/styles.css"
-        ],
+        "styles": ["apps/wearables-portal/src/styles.css"],
         "customWebpackConfig": {
           "path": "apps/wearables-portal/webpack.config.js"
         }
@@ -54,7 +41,13 @@
       "executor": "@angular-builders/custom-webpack:dev-server",
       "options": {
         "port": 4206,
-        "publicHost": "http://localhost:4206"
+        "publicHost": "http://localhost:4206",
+        "allowedHosts": ["all"],
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+          "Access-Control-Allow-Headers": "*"
+        }
       },
       "configurations": {
         "production": {

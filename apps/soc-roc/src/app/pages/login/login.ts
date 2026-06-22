@@ -1,51 +1,34 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AmexLoginFormComponent } from '@vn-core-ui-components/ui';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './login.html',
-  styleUrl: './login.css'
+  imports: [AmexLoginFormComponent],
+  template: `
+    <amex-login-form
+      portalTitle="SOC & ROC Portal"
+      [errorMessage]="errorMessage"
+      [showRegister]="true"
+      (loginSubmit)="onLogin($event)"
+      (registerClick)="goToSignUp()">
+    </amex-login-form>
+  `
 })
 export class Login {
-  username: string = '';
-  password: string = '';
-  isLoading: boolean = false;
   errorMessage: string = '';
 
   constructor(private router: Router) {}
 
-  onLogin(): void {
+  onLogin(credentials: { username: string; password: string }): void {
     this.errorMessage = '';
-    if (!this.username || !this.password) {
-      this.errorMessage = 'Please enter both User ID and Password.';
-      return;
-    }
-    this.isLoading = true;
-    setTimeout(() => {
-      if (this.username === 'admin' && this.password === 'admin123') {
-        localStorage.setItem('soc_roc_token', 'mock-auth-token');
-        localStorage.setItem('soc_roc_user', this.username);
-        this.router.navigateByUrl('/dashboard');
-      } else {
-        this.errorMessage = 'Invalid User ID or Password. Please try again.';
-        this.isLoading = false;
-      }
-    }, 600);
-  }
-
-  onCancel(): void {
-    this.username = '';
-    this.password = '';
-    this.errorMessage = '';
-  }
-
-  onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      this.onLogin();
+    if (credentials.username === 'admin' && credentials.password === 'admin123') {
+      localStorage.setItem('soc_roc_token', 'mock-auth-token');
+      localStorage.setItem('soc_roc_user', credentials.username);
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      this.errorMessage = 'Invalid User ID or Password. Please try again.';
     }
   }
 

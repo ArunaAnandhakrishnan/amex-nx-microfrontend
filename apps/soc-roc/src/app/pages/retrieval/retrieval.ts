@@ -1,90 +1,56 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-interface FieldConfig {
-  label: string;
-  value: string;
-  enabled: boolean;
-  type?: string;
-  options?: string[];
-}
-
-interface DateFilterConfig {
-  label: string;
-  value: string;
-  enabled: boolean;
-  placeholder?: string;
-}
-
-interface RetrievalRecord {
-  julianDay: string;
-  batchNo: string;
-  socRefNo: string;
-  country: string;
-  currency: string;
-  seNo: string;
-  cardNo: string;
-  rocRef: string;
-  date: string;
-  amount: number;
-}
+import { AmexSortableFilterableTableComponent, AmexTableColumn } from '@vn-core-ui-components/ui';
 
 @Component({
   selector: 'app-retrieval',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './retrieval.html',
-  styleUrl: './retrieval.css',
+  standalone: true,
+  imports: [AmexSortableFilterableTableComponent],
+  template: `
+    <amex-sortable-filterable-table
+      title="Retrieval"
+      ctaLabel="Retrieve"
+      [columns]="columns"
+      [rows]="records"
+      [actions]="tableActions"
+      (ctaClick)="onRetrieve()"
+      (actionClick)="onActionClick($event)"
+      (sortChange)="onSortChange($event)">
+    </amex-sortable-filterable-table>
+  `
 })
 export class Retrieval {
-  selectedType: 'ROC' | 'SOC' = 'ROC';
-
-  rocFields: FieldConfig[] = [
-    { label: 'ROC Ref. No.', value: '', enabled: true, type: 'text' },
-    { label: 'ROC Amount',   value: '', enabled: true, type: 'text' },
-    { label: 'Card No.',     value: '', enabled: true, type: 'text' },
-    { label: 'SE No.',       value: '', enabled: true, type: 'text' },
-    { label: 'Currency',     value: 'US DOLLAR', enabled: true, type: 'select',
-      options: ['US DOLLAR', 'EURO', 'GBP', 'AED', 'SAR', 'QAR', 'KWD', 'BHD', 'DZD'] },
-    { label: 'Country',      value: 'US', enabled: true, type: 'select',
-      options: ['US', 'UAE', 'KSA', 'QATAR', 'KUWAIT', 'BAHRAIN', 'OMAN', 'ALGERIA'] },
+  columns: AmexTableColumn[] = [
+    { key: 'julianDay',  label: 'Julian Day' },
+    { key: 'batchNo',   label: 'Batch No.' },
+    { key: 'socRefNo',  label: 'SOC Ref. No.' },
+    { key: 'country',   label: 'Country' },
+    { key: 'currency',  label: 'Currency' },
+    { key: 'seNo',      label: 'SE No.' },
+    { key: 'cardNo',    label: 'Card No.' },
+    { key: 'rocRef',    label: 'ROC Ref.' },
+    { key: 'date',      label: 'Date' },
+    { key: 'amount',    label: 'Amount' },
   ];
 
-  socFields: FieldConfig[] = [
-    { label: 'SOC Ref. No.', value: '', enabled: true },
-    { label: 'SOC Amount',   value: '', enabled: true },
+  tableActions = [
+    { id: 'view',  label: 'View',  type: 'primary' },
+    { id: 'print', label: 'Print', type: 'secondary' },
   ];
 
-  dateFilters: DateFilterConfig[] = [
-    { label: 'From Julian Day', value: '', enabled: false },
-    { label: 'To Julian Day',   value: '', enabled: false },
-    { label: 'From Date',       value: '', enabled: false, placeholder: 'DD/MM/YYYY' },
-    { label: 'To Date',         value: '', enabled: false, placeholder: 'DD/MM/YYYY' },
-  ];
-
-  showModal: boolean = false;
-  reportRecords: RetrievalRecord[] = [];
-
-  status: 'idle' | 'success' | 'error' = 'idle';
-  statusMessage: string = '';
+  records: Record<string, any>[] = [];
 
   onRetrieve(): void {
-    this.status = 'idle';
-    this.statusMessage = '';
-    // TODO: replace with ReportService API call using enabled field values
-    this.reportRecords = [];
-    this.showModal = true;
+    // TODO: Replace with ReportService API call
+    this.records = [];
   }
 
-  onPrint(): void {
-    this.showModal = true;
+  onActionClick(event: { action: string; row: any }): void {
+    if (event.action === 'print') {
+      window.print();
+    }
   }
 
-  onPrintReport(): void {
-    window.print();
-  }
-
-  onCancel(): void {
-    this.showModal = false;
+  onSortChange(event: { key: string; dir: any }): void {
+    console.log('Sort:', event);
   }
 }

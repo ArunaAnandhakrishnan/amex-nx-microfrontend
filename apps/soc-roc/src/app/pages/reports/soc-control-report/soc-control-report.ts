@@ -1,71 +1,86 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-interface SocControlRecord {
-  socRefNo: string;
-  salesEntity: string;
-  julianDay: string;
-  totalCharges: number;
-  numCharges: number;
-  totalRefunds: number;
-  numRefunds: number;
-  status: string;
-}
+import {
+  AmexSortableFilterableTableComponent,
+  AmexTableColumn,
+  AmexSuccessToastComponent,
+  AmexErrorToastComponent
+} from '@vn-core-ui-components/ui';
 
 @Component({
   selector: 'app-soc-control-report',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './soc-control-report.html',
-  styleUrl: './soc-control-report.css',
+  standalone: true,
+  imports: [
+    AmexSortableFilterableTableComponent,
+    AmexSuccessToastComponent,
+    AmexErrorToastComponent
+  ],
+  template: `
+    <amex-sortable-filterable-table
+      title="SOC / Control Report"
+      ctaLabel="Search"
+      [columns]="columns"
+      [rows]="records"
+      [actions]="tableActions"
+      (ctaClick)="onSearch()"
+      (actionClick)="onActionClick($event)"
+      (sortChange)="onSortChange($event)">
+    </amex-sortable-filterable-table>
+
+    @if (status === 'success') {
+      <amex-success-toast
+        [message]="statusMessage"
+        portalStyle="onls"
+        [autoDismiss]="true"
+        (dismissed)="status = 'idle'">
+      </amex-success-toast>
+    }
+
+    @if (status === 'error') {
+      <amex-error-toast
+        [message]="statusMessage"
+        portalStyle="onls"
+        (dismissed)="status = 'idle'">
+      </amex-error-toast>
+    }
+  `
 })
 export class SocControlReport implements OnInit {
-  julianDay: string = '';
-  selectedDate: string = '';
-  salesEntity: string = '';
+  columns: AmexTableColumn[] = [
+    { key: 'socRefNo',     label: 'SOC Ref. No.' },
+    { key: 'salesEntity',  label: 'Sales Entity' },
+    { key: 'julianDay',    label: 'Julian Day' },
+    { key: 'totalCharges', label: 'Total Charges' },
+    { key: 'numCharges',   label: 'No. of Charges' },
+    { key: 'totalRefunds', label: 'Total Refunds' },
+    { key: 'numRefunds',   label: 'No. of Refunds' },
+    { key: 'status',       label: 'Status' },
+  ];
 
-  records: SocControlRecord[] = [];
+  tableActions = [
+    { id: 'print', label: 'Print', type: 'secondary' },
+  ];
+
+  records: Record<string, any>[] = [];
   status: 'idle' | 'success' | 'error' = 'idle';
   statusMessage: string = '';
 
   ngOnInit(): void {
-    const today = new Date();
-    this.julianDay = this.getJulianDay(today);
-    this.selectedDate = today.toLocaleDateString('en-GB');
-  }
-
-  getJulianDay(date: Date): string {
-    const start = new Date(date.getFullYear(), 0, 0);
-    const diff = date.getTime() - start.getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24)).toString();
+    this.onSearch();
   }
 
   onSearch(): void {
-    if (!this.julianDay.trim()) {
-      this.status = 'error';
-      this.statusMessage = 'Julian Day is required.';
-      return;
+    this.status = 'idle';
+    // TODO: Replace with ReportService API call
+    this.records = [];
+  }
+
+  onActionClick(event: { action: string; row: any }): void {
+    if (event.action === 'print') {
+      window.print();
     }
-    this.status = 'idle';
-    this.statusMessage = '';
-    // TODO: replace with ReportService API call
-    this.records = [];
   }
 
-  onClear(): void {
-    this.julianDay = '';
-    this.selectedDate = '';
-    this.salesEntity = '';
-    this.records = [];
-    this.status = 'idle';
-    this.statusMessage = '';
-  }
-
-  onPrint(): void {
-    window.print();
-  }
-
-  onExport(): void {
-    // TODO: implement export
+  onSortChange(event: { key: string; dir: any }): void {
+    console.log('Sort:', event);
   }
 }

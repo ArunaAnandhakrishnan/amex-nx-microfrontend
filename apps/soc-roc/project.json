@@ -70,8 +70,8 @@
           "buildTarget": "soc-roc:build:development"
         }
       },
-      "defaultConfiguration": "development",
-      "dependsOn": ["app-shell:serve"]
+      "defaultConfiguration": "development"
+      
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

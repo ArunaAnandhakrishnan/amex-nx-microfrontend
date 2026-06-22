@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import {
-  AmexPageShellComponent,
+  AmexPageComponent,
   AmexTopNavBarComponent,
   AmexTabBarComponent,
   AmexTabItem
@@ -21,7 +21,7 @@ interface MenuItem {
   imports: [
     CommonModule,
     RouterOutlet,
-    AmexPageShellComponent,
+    AmexPageComponent,
     AmexTopNavBarComponent,
     AmexTabBarComponent
   ],
@@ -32,7 +32,7 @@ interface MenuItem {
     }
 
     @if (!isPublicPage && isDashboardPage) {
-      <amex-page-shell
+      <amex-page-component
         portalStyle="onls"
         [showCustomHeader]="true"
         [showSidebar]="true">
@@ -55,11 +55,11 @@ interface MenuItem {
 
         <router-outlet></router-outlet>
 
-      </amex-page-shell>
+      </amex-page-component>
     }
 
     @if (!isPublicPage && !isDashboardPage) {
-      <amex-page-shell
+      <amex-page-component
         portalStyle="onls"
         [showCustomHeader]="true"
         [showSidebar]="true">
@@ -106,7 +106,7 @@ interface MenuItem {
 
         <router-outlet></router-outlet>
 
-      </amex-page-shell>
+      </amex-page-component>
     }
   `,
   styles: [`

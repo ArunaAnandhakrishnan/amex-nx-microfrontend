@@ -1,53 +1,35 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AmexRegisterFormComponent } from '@vn-core-ui-components/ui';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './signup.html',
-  styleUrl: './signup.css'
+  imports: [AmexRegisterFormComponent],
+  template: `
+    <amex-register-form
+      portalTitle="SOC & ROC Portal"
+      [errorMessage]="errorMessage"
+      [successMessage]="successMessage"
+      (registerSubmit)="onRegister($event)"
+      (cancel)="onCancel()">
+    </amex-register-form>
+  `
 })
 export class Signup {
-  password: string = '';
-  confirmPassword: string = '';
-  lastName: string = '';
-  accountLockedTime: string = '';
-  accountStatus: string = '';
-  accountLocked: string = '';
-  accountLockOutTime: string = '';
   errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private router: Router) {}
 
-  onOk(): void {
+  onRegister(data: { password: string; confirmPassword: string; lastName: string }): void {
     this.errorMessage = '';
-
-    if (!this.password || !this.confirmPassword || !this.lastName) {
-      this.errorMessage = 'Please fill all required fields.';
-      return;
-    }
-
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Password and Confirm Password do not match.';
-      return;
-    }
-
     // TODO: Replace with actual signup API call
-    this.router.navigateByUrl('/login');
+    this.successMessage = 'Registration successful!';
+    setTimeout(() => this.router.navigateByUrl('/login'), 1000);
   }
 
   onCancel(): void {
     this.router.navigateByUrl('/login');
-  }
-
-  goToLogin(): void {
-    this.router.navigateByUrl('/login');
-  }
-
-  goToSignUp(): void {
-    // already here
   }
 }

@@ -1,52 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AmexPaymentRegisterTableComponent, PaymentRegisterRow } from '@vn-core-ui-components/ui';
 
 @Component({
   selector: 'app-payment-register',
-  imports: [CommonModule, FormsModule],
-  templateUrl: './payment-register.html',
-  styleUrl: './payment-register.css',
+  standalone: true,
+  imports: [AmexPaymentRegisterTableComponent],
+  template: `
+    <amex-payment-register-table
+      title="Payment Register"
+      [rows]="records"
+      (printClick)="onPrint()">
+    </amex-payment-register-table>
+  `
 })
 export class PaymentRegister implements OnInit {
-  julianDay: string = '';
-  year: string = '';
-  country: string = '';
-  currency: string = '';
-  referenceNumber: string = '';
-
-  yearList: string[] = [];
-  countryList: string[] = ['ALGERIA', 'UAE', 'KSA', 'QATAR', 'KUWAIT', 'BAHRAIN', 'OMAN'];
-  currencyList: string[] = ['DZD', 'USD', 'EUR', 'GBP', 'AED', 'SAR', 'QAR', 'KWD', 'BHD', 'OMR'];
-
-  status: 'idle' | 'success' | 'error' = 'idle';
-  statusMessage: string = '';
+  // Interface: { date, location, currency, amount, reference }
+  records: PaymentRegisterRow[] = [];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const currentYear = new Date().getFullYear();
-    for (let y = currentYear; y >= currentYear - 10; y--) {
-      this.yearList.push(y.toString());
-    }
-    this.year = currentYear.toString();
-    this.julianDay = this.getJulianDay(new Date());
+    // TODO: Replace with PaymentRegisterService API call
+    this.records = [];
   }
 
-  getJulianDay(date: Date): string {
-    const start = new Date(date.getFullYear(), 0, 0);
-    const diff = date.getTime() - start.getTime();
-    return Math.floor(diff / (1000 * 60 * 60 * 24)).toString();
+  onPrint(): void {
+    window.print();
   }
 
-  onPaymentTab(): void {
+  onBack(): void {
     this.router.navigate(['algeria-payment']);
-  }
-
-  onViewReport(): void {
-    this.status = 'idle';
-    this.statusMessage = '';
-    // TODO: replace with PaymentRegisterService API call
   }
 }

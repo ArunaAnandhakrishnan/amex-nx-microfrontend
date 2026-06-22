@@ -6,8 +6,8 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'wearablesPortal',
   exposes: {
-    './Module': './apps/wearables-portal/src/app/remote-entry/entry.module.ts',
-  },
+      './Routes': './apps/soc-roc/src/app/remote-entry/entry.routes.ts',
+    },
   shared: {
     ...shareAll({
       singleton:       true,

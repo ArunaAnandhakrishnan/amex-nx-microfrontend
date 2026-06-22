@@ -22,7 +22,7 @@
         ],
         "styles": ["apps/soc-roc/src/styles.css"],
         "customWebpackConfig": {
-          "path": "apps/soc-roc/webpack.config.ts"
+          "path": "apps/soc-roc/webpack.config.js"
         }
       },
       "configurations": {
@@ -41,7 +41,7 @@
           ],
           "outputHashing": "all",
           "customWebpackConfig": {
-            "path": "apps/soc-roc/webpack.prod.config.ts"
+            "path": "apps/soc-roc/webpack.prod.config.js"
           }
         },
         "development": {

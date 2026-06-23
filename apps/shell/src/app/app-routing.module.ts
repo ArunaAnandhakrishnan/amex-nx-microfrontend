@@ -21,10 +21,6 @@ const routes: Routes = [
     path: "account",
     canActivate: [AuthGuard],
     loadChildren: () =>
-<<<<<<< Updated upstream
-      loadRemoteModule({ type: 'module', remoteEntry: 'http://localhost:4202/remoteEntry.js', exposedModule: './Routes' })
-        .then(m => m.remoteRoutes).catch(portalFallback),
-=======
       loadRemoteModule({
         type: "module",
         remoteEntry: "http://localhost:4201/remoteEntry.js",
@@ -32,7 +28,6 @@ const routes: Routes = [
       })
         .then((m) => m.RemoteEntryModule)
         .catch(portalFallback),
->>>>>>> Stashed changes
   },
 
   // ── BCRB Report Portal (port 4208) ───────────────────────────────
@@ -40,10 +35,6 @@ const routes: Routes = [
     path: "bcrb",
     canActivate: [AuthGuard],
     loadChildren: () =>
-<<<<<<< Updated upstream
-      loadRemoteModule({ type: 'module', remoteEntry: 'http://localhost:4208/remoteEntry.js', exposedModule: './Routes' })
-        .then(m => m.remoteRoutes).catch(portalFallback),
-=======
       loadRemoteModule({
         type: "module",
         remoteEntry: "http://localhost:4202/remoteEntry.js",
@@ -51,7 +42,6 @@ const routes: Routes = [
       })
         .then((m) => m.RemoteEntryModule)
         .catch(portalFallback),
->>>>>>> Stashed changes
   },
 
   // ── BTA Portal (port 4203) ────────────────────────────────────────

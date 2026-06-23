@@ -79,6 +79,9 @@ npm run build:affected
 
 # View the dependency graph
 npm run graph
+
+#Run verdaccio
+npx verdaccio
 ```
 
 ---

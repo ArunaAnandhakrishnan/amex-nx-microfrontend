@@ -1,4 +1,4 @@
-package StepDefinitions.UI.OnlineHelper;
+package StepDefinitions.GUI.OnlineHelper;
 
 import Context.TestContext;
 import Helper.UI.UiHelper;
@@ -29,11 +29,8 @@ public class OnlineHelperLoginSteps {
     public OnlineHelperLoginSteps(TestContext context) {
 
         this.context = context;
-
         driver = WebDriverManagerUtil.getDriver();
-
         wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-
         uiHelper = new UiHelper(driver);
     }
 
@@ -63,11 +60,5 @@ public class OnlineHelperLoginSteps {
         assertTrue(welcomeMessage.isDisplayed(), "Home page is not displayed");
         LoggerUtils.logInfo("Home page landed successfully");
     }
-
-
-
-
-
-
 
 }

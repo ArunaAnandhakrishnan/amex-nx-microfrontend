@@ -1,10 +1,7 @@
-package StepDefinitions.UI.BTA_Portal;
+package StepDefinitions.GUI.BTAPortal;
 
 import Helper.UI.UiHelper;
 import Utils.LoggerUtils;
-import io.cucumber.java.PendingException;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;

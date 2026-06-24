@@ -1,4 +1,4 @@
-package StepDefinitions.UI;
+package StepDefinitions.GUI;
 
 import Utils.ExtentReportManager;
 import io.cucumber.java.After;

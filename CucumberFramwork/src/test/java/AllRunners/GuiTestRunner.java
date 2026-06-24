@@ -1,4 +1,4 @@
-package Runners;
+package AllRunners;
 
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
@@ -15,5 +15,5 @@ import io.cucumber.testng.CucumberOptions;
                 "junit:target/ui-cucumber.xml"
         }
 )
-public class UiTestRunner extends AbstractTestNGCucumberTests {
+public class GuiTestRunner extends AbstractTestNGCucumberTests {
 }

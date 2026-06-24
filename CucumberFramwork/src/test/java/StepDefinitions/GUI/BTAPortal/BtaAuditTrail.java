@@ -1,4 +1,4 @@
-package StepDefinitions.UI.BTA_Portal;
+package StepDefinitions.GUI.BTAPortal;
 
 import Helper.UI.UiHelper;
 import io.cucumber.java.en.Then;

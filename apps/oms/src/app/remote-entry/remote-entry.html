@@ -6,20 +6,37 @@
   [activeTabId]="activeId"
   (tabClick)="onTabChanged($event)"
 
-  [showSidebar]="showSidebar"
-  [sidebarItems]="sidebarItems"
-  [activeSidebarId]="activeSidebarId"
-  (sidebarItemClick)="onMenuChanged($event)"
+  [showSidebar]="false"
 
   (logout)="onLogout()">
 
   <div class="content">
+
+    <oms-edit-profile-menu
+
+      *ngIf="
+        showSidebar &&
+        !selectedSidebarMenu
+      "
+
+      [links]="sidebarItems"
+      [activeId]="activeSidebarId"
+
+      (linkClicked)="
+        onMenuChanged($event)
+      ">
+
+    </oms-edit-profile-menu>
 
     <oms-merchant-panel
 
       *ngIf="
         selectedSidebarMenu ===
         'merchantaccount'
+      "
+
+      (backClicked)="
+        onBackToProfileMenu()
       ">
 
     </oms-merchant-panel>
@@ -29,6 +46,10 @@
       *ngIf="
         selectedSidebarMenu ===
         'editprofile'
+      "
+
+      (backClicked)="
+        onBackToProfileMenu()
       ">
 
     </oms-merchant-data-form>
@@ -37,6 +58,9 @@
       *ngIf="
         selectedSidebarMenu ===
         'contactinformation'
+      "
+      (backClicked)="
+        onBackToProfileMenu()
       ">
     </oms-contact-information>
 
@@ -47,7 +71,10 @@
       "
 
       sectionTitle="Marketing Information"
-      >
+
+      (backClicked)="
+        onBackToProfileMenu()
+      ">
     </oms-contact-information>
 
     <oms-contact-information
@@ -57,7 +84,10 @@
       "
 
       sectionTitle="Finance Information"
-      >
+
+      (backClicked)="
+        onBackToProfileMenu()
+      ">
     </oms-contact-information>
 
     <oms-contact-information
@@ -67,13 +97,19 @@
       "
 
       sectionTitle="Operations"
-      >
+
+      (backClicked)="
+        onBackToProfileMenu()
+      ">
     </oms-contact-information>
 
     <oms-report-format
         *ngIf="
             selectedSidebarMenu ===
             'reportformat'
+        "
+        (backClicked)="
+            onBackToProfileMenu()
         ">
     </oms-report-format>
 
@@ -96,6 +132,10 @@
 
     (downloadTaxInvoiceClicked)="
         onDownloadTaxInvoiceClicked()
+    "
+
+    (backClicked)="
+        onBackToProfileMenu()
     ">
 
     </oms-vat-registration>

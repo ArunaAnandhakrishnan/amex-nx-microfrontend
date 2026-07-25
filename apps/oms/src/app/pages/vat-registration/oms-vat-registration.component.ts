@@ -27,6 +27,18 @@ export class OmsVatRegistrationComponent {
     @Output()
     downloadTaxInvoiceClicked = new EventEmitter<void>();
 
+    @Output()
+    backClicked = new EventEmitter<void>();
+
+    onBack() {
+
+    console.log(
+        'Back Clicked'
+    );
+
+    this.backClicked.emit();
+    }
+
     onTaxInvoiceDelivery() {
 
     this.taxInvoiceDeliveryClicked.emit();

@@ -1,17 +1,54 @@
-<amex-add-delete-merchant-panel
+<!-- Landing menu: ADD/DELETE A MERCHANT ACCOUNT card with 2 links -->
+<div class="omp-menu" *ngIf="view === 'menu'">
 
-  [merchantOptions]="merchantOptions"
+  <div class="omp-menu__title">{{ menuTitle }}</div>
 
-  (addClick)="
-    onAddMerchant($event)
-  "
+  <ui-accent-card class="omp-menu__card" accentColor="#7b1f4b" maxWidth="100%" padding="24px 20px">
 
-  (deleteClick)="
-    onDeleteMerchant($event)
-  "
+    <ul class="omp-menu__list">
+      <li class="omp-menu__item">
+        <a class="omp-menu__link" href="javascript:void(0)" (click)="onMenuLinkClick('add')">Add a new Merchant Account</a>
+      </li>
+      <li class="omp-menu__item">
+        <a class="omp-menu__link" href="javascript:void(0)" (click)="onMenuLinkClick('delete')">Delete an existing Merchant Account</a>
+      </li>
+    </ul>
 
-  (backClick)="
-    onStart()
-  ">
+    <div class="omp-menu__actions">
+      <button type="button" class="omp-menu__back-btn" (click)="onStart()">Back</button>
+    </div>
 
-</amex-add-delete-merchant-panel>
+  </ui-accent-card>
+
+</div>
+
+<!-- Add / Delete form, single column, title lives outside the card -->
+<div class="omp-page" *ngIf="view === 'add' || view === 'delete'">
+
+  <div class="omp-page__title">{{ view === 'add' ? addFormTitle : deleteFormTitle }}</div>
+
+  <amex-add-delete-merchant-panel
+
+    [mode]="view"
+
+    [showTitle]="false"
+
+    [showLabels]="view === 'delete'"
+
+    [merchantOptions]="merchantOptions"
+
+    (addClick)="
+      onAddMerchant($event)
+    "
+
+    (deleteClick)="
+      onDeleteMerchant($event)
+    "
+
+    (backClick)="
+      onPanelBack()
+    ">
+
+  </amex-add-delete-merchant-panel>
+
+</div>

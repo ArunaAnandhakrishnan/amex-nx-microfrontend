@@ -1,6 +1,8 @@
 import {
   Component,
-  OnInit
+  EventEmitter,
+  OnInit,
+  Output
 } from '@angular/core';
 
 import {
@@ -31,6 +33,10 @@ import {
 })
 export class OmsReportFormatComponent
   implements OnInit {
+
+    @Output()
+  backClicked =
+    new EventEmitter<void>();
 
   settlementOptions = [
 
@@ -115,10 +121,12 @@ export class OmsReportFormatComponent
     }, 1500);
   }
 
-  onBack() {
+onBack() {
 
     console.log(
       'Back Clicked'
     );
+
+    this.backClicked.emit();
   }
 }

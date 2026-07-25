@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 
 import {
@@ -36,6 +38,10 @@ export class OmsContactInformationComponent
   @Input()
   sectionTitle =
     'CONTACT INFORMATION';
+
+  @Output()
+  backClicked =
+    new EventEmitter<void>();
 
   backLabel =
     'Back';
@@ -254,10 +260,12 @@ export class OmsContactInformationComponent
     }, 1500);
   }
 
-  onBack() {
+onBack() {
 
     console.log(
       'Back Clicked'
     );
+
+    this.backClicked.emit();
   }
 }

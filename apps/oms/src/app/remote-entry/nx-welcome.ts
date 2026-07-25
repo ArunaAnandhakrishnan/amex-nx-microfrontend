@@ -40,6 +40,7 @@ import { SecureFormService } from '../services/secure-form.service';
 import { AmexPageComponent, AmexSidebarMenuItem, IconButtonComponent } from '@ui-components/ui';
 import { SessionService, EnvironmentService, AuthApiService } from '@amex/shared-services';
 import { filter, Subscription } from 'rxjs';
+import { OmsEditProfileMenuComponent } from '../pages/edit-profile-menu/oms-edit-profile-menu.component';
 
 interface NavItem { id: string; label: string; }
 
@@ -57,6 +58,7 @@ imports: [
     CommonModule,
 
     IconButtonComponent,
+    OmsEditProfileMenuComponent,
 
     OmsMerchantPanelComponent,
     OmsMerchantDataFormComponent,
@@ -259,9 +261,9 @@ export class NxWelcome
   activeId = '';
 
   sidebarItems: AmexSidebarMenuItem[] = [
-  { id: 'merchantaccount', label: 'Merchant Account' },
-  { id: 'editprofile', label: 'Edit Profile' },
-  { id: 'contactinformation', label: 'Contact Information' },
+  { id: 'merchantaccount', label: 'Add/Delete a Merchant Account' },
+  { id: 'editprofile', label: 'Update Merchant Account Details' },
+  { id: 'contactinformation', label: 'Add/EditContact Information' },
   { id: 'marketinginformation', label: 'Marketing Information' },
   { id: 'financeinformation', label: 'Finance Information' },
   { id: 'operations', label: 'Operations' },
@@ -659,6 +661,17 @@ onSettlementSubmit(
       menuId;
 
     this.activeSidebarId = menuId; 
+  }
+
+  onBackToProfileMenu() {
+
+    console.log(
+      'Back to Edit Profile Menu'
+    );
+
+    this.selectedSidebarMenu = '';
+
+    this.activeSidebarId = '';
   }
 
   onTaxInvoiceDeliveryClicked() {

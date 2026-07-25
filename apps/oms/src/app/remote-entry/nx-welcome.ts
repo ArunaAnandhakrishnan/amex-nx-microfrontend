@@ -17,6 +17,8 @@ import { OmsMerchantPanelComponent } from '../pages/merchant-panel/oms-merchant-
 import { OmsMerchantDataFormComponent } from '../pages/merchant-data-form/oms-merchant-data-form.component';
 import { OmsContactInformationComponent } from '../pages/contact-information/oms-contact-information.component';
 import { OmsReportFormatComponent } from '../pages/report-format/oms-report-format.component';
+import { OmsCaptureVatDetailsComponent } from '../pages/capture-vat-details/oms-capture-vat-details.component';
+import { OmsVatOutletLinkingComponent } from '../pages/vat-outlet-linking/oms-vat-outlet-linking.component';
 import { OmsVatRegistrationComponent } from '../pages/vat-registration/oms-vat-registration.component';
 import { OmsTaxInvoiceDeliveryComponent } from '../pages/tax-invoice-delivery/oms-tax-invoice-delivery.component';
 import { OmsUploadCertificateComponent } from '../pages/upload-certificate/oms-upload-certificate.component';
@@ -77,6 +79,8 @@ imports: [
     OmsChangePasswordComponent,
     OmsCustomizedReportComponent,
     OmsMonthsDropdownFilterComponent,
+    OmsCaptureVatDetailsComponent,
+    OmsVatOutletLinkingComponent,
 
     OmsSettlementSubmissionsTableComponent,
     OmsSubUserAdminTableComponent,
@@ -203,7 +207,11 @@ export class NxWelcome
 
   showTaxInvoiceDelivery = false;
 
+  showCaptureVatDetails = false;
+
   showUploadCertificate = false;
+
+  showVatOutletLinking = false;
 
   showTaxInvoiceReport = false;
 
@@ -263,10 +271,7 @@ export class NxWelcome
   sidebarItems: AmexSidebarMenuItem[] = [
   { id: 'merchantaccount', label: 'Add/Delete a Merchant Account' },
   { id: 'editprofile', label: 'Update Merchant Account Details' },
-  { id: 'contactinformation', label: 'Add/EditContact Information' },
-  { id: 'marketinginformation', label: 'Marketing Information' },
-  { id: 'financeinformation', label: 'Finance Information' },
-  { id: 'operations', label: 'Operations' },
+  { id: 'contactinformation', label: 'Add/Edit Contact Information' },
   { id: 'reportformat', label: 'Report Format' },
   { id: 'vatregistration', label: 'VAT Registration' }
 ];
@@ -580,7 +585,11 @@ onSettlementSubmit(
 
   this.showTaxInvoiceDelivery = false;
 
+  this.showCaptureVatDetails = false;
+
   this.showUploadCertificate = false;
+
+  this.showVatOutletLinking = false;
 
   this.showTaxInvoiceReport = false;
 
@@ -686,12 +695,39 @@ onSettlementSubmit(
 
   onUploadCertificateClicked() {
 
+    this.showCaptureVatDetails = true;
+  }
+
+  onBackToVatRegistrationFromCapture() {
+
+    this.showCaptureVatDetails = false;
+  }
+
+  onCaptureVatDetailsSearched() {
+
+    this.showCaptureVatDetails = false;
+
     this.showUploadCertificate = true;
   }
 
   onBackToVatRegistrationFromUpload() {
 
     this.showUploadCertificate = false;
+  }
+
+  onMerchantRegistrationClicked() {
+
+    this.showVatOutletLinking = true;
+  }
+
+  onBackToVatRegistrationFromOutletLinking() {
+
+    this.showVatOutletLinking = false;
+  }
+
+  onVatOutletLinkingSearched() {
+
+    this.showVatOutletLinking = false;
   }
 
   onDownloadTaxInvoiceClicked() {

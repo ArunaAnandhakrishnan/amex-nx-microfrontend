@@ -1,118 +1,101 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { InputComponent } from '../../../primitives/input';
-import { SelectComponent, SelectOption } from '../../../primitives/select';
 import { ButtonComponent } from '../../../primitives/button';
+import { ContactSectionCardComponent, ContactRow } from './contact-section-card';
 
-export interface ContactRow {
-  name: string;
-  jobTitle: string;
-  email: string;
-  countryCode: string;
-  landline: string;
-  mobile: string;
+export type { ContactRow } from './contact-section-card';
+
+export interface ContactSection {
+  title: string;
+  contacts: ContactRow[];
 }
 
 /**
  * ContactInformationForm
- * OMS: multiple contact rows (Name, Job Title, Email, Country dropdown, Landline, Mobile).
- * "Operations" section header with purple accent.
- * Back (navy) + Save (purple) buttons.
- * Source: OMS (image20, image60) — exact layout match
+ * OMS Add/Edit Contact Information page. Outer ui-accent-card holds:
+ * optional error banner, 3 top-level fields (Contact Name, Website URL,
+ * OMS Email Address), then [sections] (Marketing/Finance/Operations)
+ * each rendered via the ONE reusable amex-contact-section-card component
+ * (looped, not hand-duplicated), then Back/Submit buttons.
+ * Source: OMS (image1, image2, image3)
  */
 @Component({
   selector: 'amex-contact-information-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, InputComponent, SelectComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, InputComponent, ButtonComponent, ContactSectionCardComponent],
   template: `
-    <ui-panel [title]="sectionTitle">
-      <!-- Contact rows — each has Name, Job Title, then Email/Country/Landline/Mobile -->
-      <div *ngFor="let contact of contacts; let i = index" class="cif__contact-row">
-        <ui-input class="cif__input cif__input--full"
-          [id]="id + '-contact-' + i + '-name'"
-          [(ngModel)]="contact.name"
-          ariaLabel="Name"
-          placeholder="Name">
+    <ui-accent-card class="cif__outer" [accentColor]="accentColor" maxWidth="120%" padding="24px 28px" background="#fbfbfb">
+
+      <div class="cif__error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+      <div class="cif__top-fields">
+        <ui-input class="cif__input"
+          [id]="id + '-contact-name'"
+          [(ngModel)]="contactName"
+          ariaLabel="Contact Name"
+          placeholder="Contact Name">
         </ui-input>
-        <ui-input class="cif__input cif__input--full" style="margin-top:6px"
-          [id]="id + '-contact-' + i + '-job-title'"
-          [(ngModel)]="contact.jobTitle"
-          ariaLabel="Job Title"
-          placeholder="Job Title">
+        <ui-input class="cif__input"
+          [id]="id + '-website-url'"
+          [(ngModel)]="websiteUrl"
+          ariaLabel="Website URL"
+          placeholder="Website URL">
         </ui-input>
-        <div class="cif__contact-bottom">
-          <ui-input class="cif__input cif__input--email"
-            [id]="id + '-contact-' + i + '-email'"
-            [(ngModel)]="contact.email"
-            [ariaLabel]="'Email ' + (i + 1)"
-            [placeholder]="'Email ' + (i + 1)">
-          </ui-input>
-          <ui-select class="cif__select cif__select--country"
-            [id]="id + '-contact-' + i + '-country-code'"
-            [options]="countrySelectOptions"
-            placeholder="--"
-            ariaLabel="Country code"
-            [(ngModel)]="contact.countryCode">
-          </ui-select>
-          <ui-input class="cif__input cif__input--phone"
-            [id]="id + '-contact-' + i + '-landline'"
-            [(ngModel)]="contact.landline"
-            ariaLabel="Landline"
-            placeholder="Landline">
-          </ui-input>
-          <ui-input class="cif__input cif__input--phone"
-            [id]="id + '-contact-' + i + '-mobile'"
-            [(ngModel)]="contact.mobile"
-            ariaLabel="Mobile"
-            placeholder="Mobile">
-          </ui-input>
-        </div>
+        <ui-input class="cif__input"
+          [id]="id + '-oms-email'"
+          [(ngModel)]="omsEmail"
+          ariaLabel="OMS Email Address"
+          placeholder="OMS Email Address">
+        </ui-input>
       </div>
 
-      <!-- Action buttons — navy Back + purple Save matching screenshot -->
+      <amex-contact-section-card
+        *ngFor="let section of sections"
+        [title]="section.title"
+        [contacts]="section.contacts"
+        [countryCodes]="countryCodes"
+        [accentColor]="accentColor">
+      </amex-contact-section-card>
+
       <div class="cif__actions">
         <ui-button class="cif__btn cif__btn--back" variant="primary" [label]="backLabel" (click)="backClick.emit()"></ui-button>
-        <ui-button class="cif__btn cif__btn--save" variant="primary" [label]="saveLabel" (click)="saveClick.emit(contacts)"></ui-button>
+        <ui-button class="cif__btn cif__btn--save" variant="primary" [label]="saveLabel" (click)="onSave()"></ui-button>
       </div>
-    </ui-panel>
+
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-size: 14px;
-      --panel-title-transform: uppercase;
-      --panel-accent-color: #7b1fa2;
-      --panel-padding: 16px 20px;
       --input-border: 1px solid #ccc;
       --input-radius: 3px;
-      --input-padding: 7px 10px;
+      --input-padding: 8px 12px;
       --input-focus-border-color: #7b1fa2;
     }
 
-    /* Each contact block — matches image20 structure */
-    .cif__contact-row {
-      margin-bottom: 20px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-    .cif__contact-row:last-of-type { border-bottom: none; }
-
-    .cif__input--full { width: 100%; display: block; }
-    .cif__input--email { flex: 2; min-width: 0; }
-    .cif__input--phone { flex: 1.2; min-width: 0; }
-
-    .cif__contact-bottom {
-      display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap;
-      align-items: flex-start;
+    .cif__error {
+      color: #c0392b;
+      font-size: 13px;
+      margin-bottom: 16px;
     }
 
-    .cif__select--country { flex: 1; min-width: 100px; }
+    .cif__top-fields {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 3px;
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cif__input { width: 100%; display: block; }
 
-    /* Buttons — navy Back + purple Save */
-    .cif__actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
+    .cif__actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 8px; }
     .cif__btn--back {
       --btn-bg: #1e3a5f; --btn-color: #fff; --btn-radius: 3px;
       --btn-padding: 9px 28px; --btn-font-size: 14px;
@@ -127,14 +110,20 @@ export class AmexContactInformationFormComponent {
   private static _idCounter = 0;
   @HostBinding('attr.id') @Input() id = `contact-information-form-${++AmexContactInformationFormComponent._idCounter}`;
 
-  @Input() sectionTitle = 'Operations';
+  @Input() accentColor = '#7b1f4b';
+  @Input() errorMessage = 'Some unexpected error has occurred. We are sorry for the inconvenience. Please try again after sometime.';
+  @Input() contactName = '';
+  @Input() websiteUrl = '';
+  @Input() omsEmail = '';
   @Input() backLabel = 'Back';
   @Input() saveLabel = 'Save';
-  @Input() contacts: ContactRow[] = [
-    { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-    { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-    { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
+
+  @Input() sections: ContactSection[] = [
+    { title: 'Marketing', contacts: [] },
+    { title: 'Finance', contacts: [] },
+    { title: 'Operations', contacts: [] },
   ];
+
   @Input() countryCodes: { value: string; label: string }[] = [
     { value: '+971', label: 'UAE (+971)' },
     { value: '+973', label: 'Bahrain (+973)' },
@@ -143,10 +132,16 @@ export class AmexContactInformationFormComponent {
     { value: '+974', label: 'Qatar (+974)' },
     { value: '+966', label: 'Saudi (+966)' },
   ];
-  @Output() saveClick = new EventEmitter<ContactRow[]>();
+
+  @Output() saveClick = new EventEmitter<{ contactName: string; websiteUrl: string; omsEmail: string; sections: ContactSection[] }>();
   @Output() backClick = new EventEmitter<void>();
 
-  get countrySelectOptions(): SelectOption[] {
-    return this.countryCodes.map(c => ({ value: c.value, label: c.label }));
+  onSave() {
+    this.saveClick.emit({
+      contactName: this.contactName,
+      websiteUrl: this.websiteUrl,
+      omsEmail: this.omsEmail,
+      sections: this.sections,
+    });
   }
 }

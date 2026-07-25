@@ -113,11 +113,13 @@
         ">
     </oms-report-format>
 
-    <oms-vat-registration
+  <oms-vat-registration
 
     *ngIf="
         !showTaxInvoiceDelivery &&
+        !showCaptureVatDetails &&
         !showUploadCertificate &&
+        !showVatOutletLinking &&
         !showTaxInvoiceReport &&
         selectedSidebarMenu === 'vatregistration'
     "
@@ -128,6 +130,10 @@
 
     (uploadCertificateClicked)="
         onUploadCertificateClicked()
+    "
+
+    (merchantRegistrationClicked)="
+        onMerchantRegistrationClicked()
     "
 
     (downloadTaxInvoiceClicked)="
@@ -155,6 +161,23 @@
 
     </oms-tax-invoice-delivery>
 
+    <oms-capture-vat-details
+
+    *ngIf="
+        showCaptureVatDetails &&
+        selectedSidebarMenu === 'vatregistration'
+    "
+
+    (searchClicked)="
+        onCaptureVatDetailsSearched()
+    "
+
+    (backClicked)="
+        onBackToVatRegistrationFromCapture()
+    ">
+
+    </oms-capture-vat-details>
+
     <oms-upload-certificate
 
     *ngIf="
@@ -165,6 +188,23 @@
         onBackToVatRegistrationFromUpload()
     ">
     </oms-upload-certificate>
+
+    <oms-vat-outlet-linking
+
+    *ngIf="
+        showVatOutletLinking &&
+        selectedSidebarMenu === 'vatregistration'
+    "
+
+    (searchClicked)="
+        onVatOutletLinkingSearched()
+    "
+
+    (backClicked)="
+        onBackToVatRegistrationFromOutletLinking()
+    ">
+
+    </oms-vat-outlet-linking>
 
     <oms-tax-invoice-report
 

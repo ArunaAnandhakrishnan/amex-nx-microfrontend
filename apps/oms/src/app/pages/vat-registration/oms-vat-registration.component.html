@@ -1,14 +1,4 @@
-<div
-  tabindex="0"
-
-  (click)="handleClick($event)"
-
-  (keydown.enter)="handleClick($event)"
-
-  (keydown.space)="handleClick($event)">
-
-  <amex-vat-registration-form
-    (backClick)="onBack()">
-  </amex-vat-registration-form>
-
-</div>
+<amex-vat-registration-form
+  (stepClick)="onStepClick($event)"
+  (backClick)="onBack()">
+</amex-vat-registration-form>

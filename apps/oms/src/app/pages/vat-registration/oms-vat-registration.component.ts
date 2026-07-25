@@ -25,6 +25,9 @@ export class OmsVatRegistrationComponent {
     uploadCertificateClicked = new EventEmitter<void>();
 
     @Output()
+    merchantRegistrationClicked = new EventEmitter<void>();
+
+    @Output()
     downloadTaxInvoiceClicked = new EventEmitter<void>();
 
     @Output()
@@ -39,57 +42,31 @@ export class OmsVatRegistrationComponent {
     this.backClicked.emit();
     }
 
-    onTaxInvoiceDelivery() {
-
-    this.taxInvoiceDeliveryClicked.emit();
-  }
-
-  onUploadCertificate() {
+    onStepClick(step: string) {
 
     console.log(
-        'Upload Certificate Clicked'
+        'VAT Registration Step Clicked:',
+        step
     );
 
-    this.uploadCertificateClicked.emit();
+    if (step === 'upload') {
+
+      this.uploadCertificateClicked.emit();
     }
 
-    onDownloadTaxInvoice() {
+    if (step === 'merchant') {
 
-    console.log(
-        'Download Tax Invoice Clicked'
-    );
-
-    this.downloadTaxInvoiceClicked.emit();
+      this.merchantRegistrationClicked.emit();
     }
 
-  handleClick(event: any) {
+    if (step === 'delivery') {
 
-  const text =
-    event.target?.innerText?.trim();
+      this.taxInvoiceDeliveryClicked.emit();
+    }
 
-  console.log('Clicked:', text);
-  if (
-    text?.toLowerCase()
-      .includes('tax invoice delivery')
-  ) {
+    if (step === 'download') {
 
-    this.onTaxInvoiceDelivery();
+      this.downloadTaxInvoiceClicked.emit();
+    }
   }
-
-  if (
-    text?.toLowerCase()
-      .includes('upload certificate')
-  ) {
-
-    this.onUploadCertificate();
-  }
-
-  if (
-    text?.toLowerCase()
-      .includes('download tax invoices')
-  ) {
-
-    this.onDownloadTaxInvoice();
-  }
-}
 }

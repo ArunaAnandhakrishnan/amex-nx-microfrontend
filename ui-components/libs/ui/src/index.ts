@@ -107,7 +107,6 @@ export * from './lib/patterns/amex/tables/table-with-row-actions';
 export * from './lib/patterns/amex/forms/add-user-form';
 export * from './lib/patterns/amex/forms/edit-user-form';
 export * from './lib/patterns/amex/forms/edit-my-details-form';
-export * from './lib/patterns/amex/forms/contact-information-form';
 export * from './lib/patterns/amex/forms/country-master-form';
 export * from './lib/patterns/amex/forms/currency-master-form';
 export * from './lib/patterns/amex/forms/socroc-entry-form';
@@ -127,6 +126,8 @@ export * from './lib/patterns/amex/forms/vat-invoice-search-form';
 export * from './lib/patterns/amex/forms/uaefts-statement-request-form';
 export * from './lib/patterns/amex/forms/new-outlet-application-form';
 export * from './lib/patterns/amex/forms/mrm-create-edit-user-form';
+export * from './lib/patterns/amex/forms/contact-information-form';
+export * from './lib/patterns/amex/forms/contact-section-card';
 
 export * from './lib/patterns/amex/action/report-download-button';
 

@@ -294,7 +294,7 @@ export interface ForgotPasswordOmsRequest {
     }
 
     .oms-style {
-      background: #e8e8e8;
+     background: #e3dddd00;
     }
 
     .top-bar {

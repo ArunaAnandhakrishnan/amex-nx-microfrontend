@@ -475,6 +475,7 @@ export interface ForgotUserIdRequest {
       justify-content: flex-start;
        padding: 20px 0 4px;
       box-sizing: border-box;
+      background: #e3dddd00
     }
 
   .oms-card {

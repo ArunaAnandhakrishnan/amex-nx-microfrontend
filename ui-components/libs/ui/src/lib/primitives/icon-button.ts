@@ -5,7 +5,7 @@ import { IconComponent } from './icon';
 @Component({
   selector: 'ui-icon-button',
   standalone: true,
-  imports: [NgIf, IconComponent],
+  imports: [IconComponent],
   template: `
     <button type="button" class="icon-btn icon-btn-{{variant}} icon-btn-{{size}}"
       [disabled]="disabled"

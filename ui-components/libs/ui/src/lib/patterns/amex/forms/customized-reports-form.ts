@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { InputComponent } from '../../../primitives/input';
 import { CheckboxComponent } from '../../../primitives/checkbox';
@@ -22,9 +22,11 @@ export interface CustomizedReportData {
 @Component({
   selector: 'amex-customized-reports-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, InputComponent, CheckboxComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, InputComponent, CheckboxComponent, ButtonComponent],
   template: `
-    <ui-panel title="Customized Reports" variant="accent">
+    <ui-accent-card class="crf" [accentColor]="'#7b1fa2'" [padding]="'18px 22px'">
+      <div class="crf__title">Customized Reports</div>
+
       <!-- Report type tabs -->
       <div class="crf__tabs">
         <ui-button *ngFor="let t of reportTypes" class="crf__tab"
@@ -52,20 +54,18 @@ export interface CustomizedReportData {
         <ui-button class="crf__btn crf__btn--back" variant="primary" label="Back" (click)="backClick.emit()"></ui-button>
         <ui-button class="crf__btn crf__btn--submit" variant="primary" label="Submit" (click)="submitClick.emit(form)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-size: 15px;
-      --panel-accent-color: #7b1fa2;
-      --panel-padding: 18px 22px;
       --input-border: 1px solid #ccc;
       --input-radius: 3px;
       --input-padding: 7px 10px;
       --input-focus-border-color: #7b1fa2;
     }
+    .crf__title { font-size: 15px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 16px; }
     .crf__tabs { display: flex; gap: 2px; margin-bottom: 18px; flex-wrap: wrap; }
     .crf__tab { --btn-bg: #f5f5f5; --btn-color: #555; --btn-radius: 3px 3px 0 0; --btn-padding: 8px 16px; --btn-font-size: 13px; }
     .crf__tab--active { --btn-bg: #1e3a5f; --btn-color: #fff; }

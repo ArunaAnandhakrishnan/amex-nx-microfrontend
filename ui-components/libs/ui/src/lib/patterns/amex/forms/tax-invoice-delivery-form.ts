@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { InputComponent } from '../../../primitives/input';
 import { SelectComponent } from '../../../primitives/select';
@@ -20,9 +20,11 @@ export interface TaxInvoiceDeliveryData {
 @Component({
   selector: 'amex-tax-invoice-delivery-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, InputComponent, SelectComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, InputComponent, SelectComponent, ButtonComponent],
   template: `
-    <ui-panel [title]="title" variant="accent">
+    <ui-accent-card class="tidf" [accentColor]="'#7b1fa2'" [maxWidth]="'540px'">
+      <div class="tidf__title">{{ title }}</div>
+
       <ui-form-field class="tidf__field" label="VAT Registration Number" [forId]="id + '-vat-registration-number'"
         [error]="showError ? 'Invalid entry' : ''">
         <ui-input [id]="id + '-vat-registration-number'"
@@ -40,20 +42,18 @@ export interface TaxInvoiceDeliveryData {
         <ui-button class="tidf__btn tidf__btn--back" variant="primary" label="Back" (click)="backClick.emit()"></ui-button>
         <ui-button class="tidf__btn tidf__btn--search" variant="primary" label="Search" (click)="searchClick.emit(form)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-size: 15px;
-      --panel-title-style: italic;
-      --panel-max-width: 540px;
       --input-border: 1px solid #ccc;
       --input-radius: 3px;
       --input-padding: 8px 12px;
       --input-focus-border-color: #7b1fa2;
     }
+    .tidf__title { font-size: 15px; font-style: italic; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 16px; }
     .tidf__field { margin-bottom: 16px; max-width: 320px; }
     .tidf__actions { display: flex; gap: 10px; margin-top: 10px; }
     .tidf__btn--back { --btn-bg: #1e3a5f; --btn-color: #fff; --btn-radius: 3px; --btn-padding: 9px 28px; --btn-font-size: 14px; }

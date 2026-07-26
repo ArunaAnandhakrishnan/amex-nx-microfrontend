@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { InputComponent } from '../../../primitives/input';
 import { SelectComponent } from '../../../primitives/select';
@@ -24,9 +24,11 @@ export interface MRMUserData {
 @Component({
   selector: 'amex-mrm-create-edit-user-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, InputComponent, SelectComponent, CheckboxComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, InputComponent, SelectComponent, CheckboxComponent, ButtonComponent],
   template: `
-    <ui-panel [title]="title" variant="accent">
+    <ui-accent-card class="mrm" [accentColor]="'#7b1fa2'" [maxWidth]="'480px'">
+      <div class="mrm__title">{{ title }}</div>
+
       <ui-form-field class="mrm__field" label="Name" [forId]="id + '-name'" [required]="true">
         <ui-input [id]="id + '-name'" [(ngModel)]="form.name" placeholder="Enter full name"></ui-input>
       </ui-form-field>
@@ -58,18 +60,17 @@ export interface MRMUserData {
         <ui-button class="mrm__btn mrm__btn--back" variant="primary" label="Back" (click)="backClick.emit()"></ui-button>
         <ui-button class="mrm__btn mrm__btn--save" variant="primary" label="Save" (click)="saveClick.emit(form)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-transform: uppercase;
-      --panel-max-width: 480px;
       --input-border: 1px solid #ccc;
       --input-padding: 8px 12px;
       --input-focus-border-color: #7b1fa2;
     }
+    .mrm__title { font-size: 16px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; text-transform: uppercase; margin: 0 0 16px; }
     .mrm__field { margin-bottom: 14px; }
     .mrm__access-list { border: 1px solid #e0e0e0; border-radius: 3px; padding: 10px 12px; max-height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
     .mrm__actions { display: flex; gap: 10px; margin-top: 18px; }

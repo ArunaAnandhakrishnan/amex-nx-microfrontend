@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { FileInputComponent } from '../../../primitives/file-input';
 import { ButtonComponent } from '../../../primitives/button';
@@ -16,9 +16,11 @@ export type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
 @Component({
   selector: 'amex-upload-certificate-panel',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, FileInputComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, FileInputComponent, ButtonComponent],
   template: `
-    <ui-panel [title]="title" variant="accent">
+    <ui-accent-card class="ucp" [accentColor]="'#7b1fa2'" [maxWidth]="'560px'" [padding]="'18px 22px'">
+      <div class="ucp__title">{{ title }}</div>
+
       <div class="ucp__step-info" *ngIf="stepInfo">{{ stepInfo }}</div>
 
       <ui-form-field class="ucp__field" [label]="fileLabel" [forId]="id + '-field'">
@@ -45,16 +47,14 @@ export type UploadStatus = 'idle' | 'uploading' | 'success' | 'error';
         <ui-button class="ucp__btn ucp__btn--upload" variant="primary" [label]="uploadLabel"
           [disabled]="!selectedFile" (click)="uploadClick.emit(selectedFile)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-size: 15px;
-      --panel-max-width: 560px;
-      --panel-padding: 18px 22px;
     }
+    .ucp__title { font-size: 15px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 14px; }
     .ucp__step-info { font-size: 13px; color: #555; margin-bottom: 14px; }
     .ucp__field { margin-bottom: 16px; }
     .ucp__hint { font-size: 12px; color: #c62828; margin-top: 4px; }

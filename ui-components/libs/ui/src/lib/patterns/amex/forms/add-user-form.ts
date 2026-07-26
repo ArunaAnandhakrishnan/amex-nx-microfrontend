@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { InputComponent } from '../../../primitives/input';
 import { SelectComponent } from '../../../primitives/select';
@@ -27,9 +27,11 @@ export interface AddUserFormData {
 @Component({
   selector: 'amex-add-user-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, InputComponent, SelectComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, InputComponent, SelectComponent, ButtonComponent],
   template: `
-    <ui-panel [title]="title">
+    <ui-accent-card class="auf" [accentColor]="'#7b1fa2'" [maxWidth]="'460px'">
+      <div class="auf__title">{{ title }}</div>
+
       <!-- User ID (read-only in edit mode) -->
       <ui-form-field class="auf__field" *ngIf="showUserId" label="User ID" [forId]="id + '-user-id'">
         <ui-input
@@ -83,14 +85,12 @@ export interface AddUserFormData {
         <ui-button class="auf__btn auf__btn--back" variant="primary" [label]="backLabel" (click)="backClick.emit()"></ui-button>
         <ui-button class="auf__btn auf__btn--submit" variant="primary" [label]="submitLabel" (click)="submitClick.emit(form)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-accent-color: #7b1fa2;
-      --panel-max-width: 460px;
       --input-border: 1px solid #ccc;
       --input-radius: 3px;
       --input-padding: 8px 12px;
@@ -98,6 +98,7 @@ export interface AddUserFormData {
       --input-focus-shadow: 0 0 0 2px rgba(123,31,162,0.1);
     }
 
+    .auf__title { font-size: 16px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 16px; }
     .auf__field { margin-bottom: 16px; }
     .auf__input-wrap { position: relative; display: flex; align-items: center; }
     .auf__info-icon {

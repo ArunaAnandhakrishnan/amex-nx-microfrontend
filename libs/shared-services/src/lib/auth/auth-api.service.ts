@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map, tap, catchError, throwError, of } from 'rxjs';
 
-import { AmexPortalAuthUtil } from '@ui-components/ui';
+import { AmexPortalAuthUtil, RegisterData } from '@ui-components/ui';
 
 import { API_BASE_URL } from '../config/api-base-url.token';
 import { API_ENDPOINTS } from '../config/api-config';
@@ -167,6 +167,49 @@ export class AuthApiService extends AmexPortalAuthUtil {
       )
       .pipe(
         map((response) => response.message)
+      );
+  }
+
+  /**
+   * Registers a new merchant user (OMS "REGISTER NOW" flow).
+   */
+  registerOms(data: RegisterData): Observable<string> {
+    return this.http
+      .post<ApiResponse<void>>(
+        this.buildUrl(API_ENDPOINTS.auth.register),
+        data
+      )
+      .pipe(
+        map((response) => response.message),
+
+        catchError((error) => {
+          return throwError(() => error);
+        })
+      );
+  }
+
+  /**
+   * Forgot User ID. merchantNumber is only sent for the OMS flow;
+   * ONLS only submits the email.
+   */
+  forgotUserId(
+    email: string,
+    merchantNumber?: string
+  ): Observable<string> {
+    return this.http
+      .post<ApiResponse<void>>(
+        this.buildUrl(API_ENDPOINTS.auth.forgotUserId),
+        {
+          email,
+          ...(merchantNumber ? { merchantNumber } : {}),
+        }
+      )
+      .pipe(
+        map((response) => response.message),
+
+        catchError((error) => {
+          return throwError(() => error);
+        })
       );
   }
 

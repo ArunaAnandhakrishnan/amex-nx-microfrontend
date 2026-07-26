@@ -289,7 +289,7 @@ export interface LoginCredentials {
     .footer-copy { margin-left: auto; }
 
     /* ===================== OMS ===================== */
-    .oms-wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; }
+    .oms-wrapper { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding: 24px; background: #e3dddd00 ;}
     .oms-card {
       --input-border: 1px solid #ccc;
       --input-padding: 10px 12px;

@@ -211,6 +211,7 @@ export interface RegisterData {
   flex-direction: column;
   padding: 8px 0;
   box-sizing: border-box;
+  background: #e3dddd00
 }
 
 .oms-card {

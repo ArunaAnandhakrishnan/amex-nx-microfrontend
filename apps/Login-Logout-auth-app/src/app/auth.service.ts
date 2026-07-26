@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthApiService, AuthResponse } from '@amex/shared-services';
+import { RegisterData } from '@ui-components/ui';
 
 export type LoginResult = AuthResponse;
 
@@ -15,6 +16,17 @@ export class AuthService {
 
   forgotPassword(userId: string, emailId: string): Observable<string> {
     return this.authApi.forgotPassword(userId, emailId);
+  }
+
+  // NOTE: AuthApiService needs a `register(data)` method added — wire this
+  // to whatever your registration endpoint is.
+  register(data: RegisterData): Observable<string> {
+    return this.authApi.registerOms(data);
+  }
+
+  // NOTE: AuthApiService needs a `forgotUserId(email, merchantNumber?)` method.
+  forgotUserId(email: string, merchantNumber?: string): Observable<string> {
+    return this.authApi.forgotUserId(email, merchantNumber);
   }
 
   getUser() {

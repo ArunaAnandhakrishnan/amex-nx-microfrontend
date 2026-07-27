@@ -1,0 +1,8 @@
+<bcrb-dashboard
+  *ngIf="!showReports"
+  (linkChanged)="onLinkChanged($event)">
+</bcrb-dashboard>
+
+<bcrb-reports
+  *ngIf="showReports">
+</bcrb-reports>

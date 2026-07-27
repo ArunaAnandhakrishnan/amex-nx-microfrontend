@@ -7,7 +7,7 @@ import {
   AmexPageComponent,
   AmexTabItem,
 } from '@ui-components/ui';
-import { SecureFormService } from './core/services/secure-form.service';
+import { SecureFormService } from './services/secure-form.service';
 import { SessionService, AuthApiService, EnvironmentService } from '@amex/shared-services';
 
 interface NavItem { id: string; label: string; }

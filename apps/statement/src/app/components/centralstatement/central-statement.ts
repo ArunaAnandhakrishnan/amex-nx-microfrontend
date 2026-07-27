@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-central-statement',
+  standalone: true,
   imports: [InputComponent, ButtonComponent, CommonModule],
   templateUrl: './central-statement.html',
   styleUrl: './central-statement.css',

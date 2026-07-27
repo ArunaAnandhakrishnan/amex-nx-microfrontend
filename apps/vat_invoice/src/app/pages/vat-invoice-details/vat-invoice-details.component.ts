@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AmexVATInvoiceReportViewComponent } from '@ui-components/ui';
 import { VatInvoiceMockService } from '../../services/vat-invoice-mock.service';
 import { VatInvoice } from '../../models/vat-invoice.model';
-import { VatCustHomeComponent } from '../vat-cust-home-folder/vat-cust-home-component';
+import { VatCustHomeComponent } from '../../components/vat-cust-home/vat-cust-home.component';
 
 @Component({
   selector: 'vat-invoice-details',

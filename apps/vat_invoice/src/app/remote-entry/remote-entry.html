@@ -1,9 +1,0 @@
-<div class="vat-invoice-content">
-  <vat-report-view
-    *ngIf="!showInvoiceDetails"
-    (generateReport)="onGenerateReport($event)">
-  </vat-report-view>
-  <vat-invoice-details
-    *ngIf="showInvoiceDetails">
-  </vat-invoice-details>
-</div>

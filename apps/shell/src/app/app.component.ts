@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import {
   Router,
+  RouterOutlet,
   NavigationEnd,
   NavigationStart,
   NavigationCancel,
@@ -8,20 +9,35 @@ import {
 } from "@angular/router";
 import { filter } from "rxjs/operators";
 import { Subscription } from "rxjs";
-// import { AuthService } from "./core/services/auth.service";
 import { SessionService, AuthApiService } from "@amex/shared-services";
 
-
-import { EventBusService } from "./core/services/event-bus.service";
-import { SecureFormService } from "./core/services/secure-form.service";
+import { EventBusService } from "./services/event-bus.service";
+import { SecureFormService } from "./services/secure-form.service";
 import {
   AmexTabItem,
   AMEX_PORTAL_AUTH_ADAPTER,
+  AmexPageShellComponent,
+  AmexTopNavBarComponent,
+  AmexTabBarComponent,
+  AmexLogoutConfirmationComponent,
 } from "@ui-components/ui";
-import { ShellAuthAdapterService } from "./core/services/shell-auth-adapter.service";
+import { ShellAuthAdapterService } from "./services/shell-auth-adapter.service";
 
 @Component({
   selector: "app-root",
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    AmexPageShellComponent,
+    AmexTopNavBarComponent,
+    AmexTabBarComponent,
+    AmexLogoutConfirmationComponent,
+  ],
+  // NOTE: carried over from the old AppModule's schemas array. Kept here
+  // as a safety net — worth checking whether any @ui-components/ui
+  // element still actually needs this, or whether it can be dropped now
+  // that every element used here is a real Angular component selector.
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: AMEX_PORTAL_AUTH_ADAPTER, useExisting: ShellAuthAdapterService },
   ],
@@ -150,7 +166,6 @@ import { ShellAuthAdapterService } from "./core/services/shell-auth-adapter.serv
     >
     </amex-logout-confirmation>
   `,
-  standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
   isAuthPage = false;

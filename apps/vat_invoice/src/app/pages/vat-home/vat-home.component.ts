@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AmexTabBarComponent, AmexTabItem } from '@ui-components/ui';
 
-import { VatCustHomeComponent } from '../vat-cust-home-folder/vat-cust-home-component';
+import { VatCustHomeComponent } from '../../components/vat-cust-home/vat-cust-home.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector

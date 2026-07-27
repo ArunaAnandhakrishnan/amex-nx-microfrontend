@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 interface ExpenseReport {
@@ -9,6 +11,8 @@ interface ExpenseReport {
 
 @Component({
   selector: 'app-bta-reports',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './bta-reports.component.html',
   styleUrls: ['./bta-reports.component.css'],
 })

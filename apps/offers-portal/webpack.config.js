@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'offersPortal',
   exposes: {
-    './Module': './apps/offers-portal/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/offers-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

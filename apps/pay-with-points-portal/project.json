@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/pay-with-points-portal/public"
+            "input": "apps/pay-with-points-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/pay-with-points-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/pay-with-points-portal/src/styles.scss"
+          "apps/pay-with-points-portal/src/assets/styles/styles.scss"
         ],
         "customWebpackConfig": {
           "path": "apps/pay-with-points-portal/webpack.config.js"
@@ -37,7 +43,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/pay-with-points-portal/src/environments/environment.ts",
+              "with": "apps/pay-with-points-portal/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

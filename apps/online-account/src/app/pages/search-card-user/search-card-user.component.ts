@@ -1,0 +1,197 @@
+import { Component, inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import {
+  AmexDashboardMenuBarComponent,
+  ButtonComponent,
+  InputComponent,
+  AmexSortableFilterableTableComponent,
+} from "@ui-components/ui";
+import { UserSearch } from "../../services/user-search";
+import { Account, AccessGroupModel } from "../../models/account.model";
+@Component({
+  selector: "app-search-card-user",
+  standalone: true,
+
+  imports: [
+    FormsModule,
+    AmexDashboardMenuBarComponent,
+    ButtonComponent,
+    InputComponent,
+    AmexSortableFilterableTableComponent,
+  ],
+
+  templateUrl: "./search-card-user.component.html",
+  styleUrls: ["./search-card-user.component.css"],
+})
+export class SearchCardUserComponent {
+  accountService = inject(UserSearch);
+
+  accountData: Account | null = null;
+  supplementaryData: AccessGroupModel | null = null;
+
+  userId = "";
+  cardNo = "";
+
+  suppUserId = "";
+  suppCardNo = "";
+
+  activeSection = "onlineaccount";
+
+  changeSection(sectionId: string) {
+    console.log("Changing section to:", sectionId);
+    this.activeSection = sectionId;
+  }
+
+  onSearch(): void {
+    console.log("cardNo:", this.cardNo);
+    console.log("userId:", this.userId);
+
+    const userId = this.userId?.trim();
+    const cardNo = this.cardNo?.trim();
+
+    if (!userId && !cardNo) {
+      alert("Please enter Card Number or User ID");
+      return;
+    }
+
+    if (userId && cardNo) {
+      alert("Please enter only one field: Card Number or User ID");
+      return;
+    }
+
+    if (userId) {
+      console.log("Searching by User ID:", userId);
+
+      this.accountService.getAccountByUserId(userId).subscribe({
+        next: (response) => {
+          this.accountData = response;
+          console.log(response);
+        },
+        error: (err) => {
+          this.accountData = null;
+          console.error(err);
+
+          alert(err.error?.message || "User not found");
+        },
+      });
+
+      return;
+    }
+
+    if (cardNo) {
+      console.log("Searching by Card Number:", cardNo);
+
+      this.accountService.getAccountByCardNo(cardNo).subscribe({
+        next: (response) => {
+          this.accountData = response;
+        },
+        error: (err) => {
+          this.accountData = null;
+          console.error(err);
+
+          alert(err.error?.message || "Card not found");
+        },
+      });
+    }
+  }
+
+  onReset(): void {
+    this.userId = "";
+    this.cardNo = "";
+    this.accountData = null;
+    this.suppUserId = "";
+    this.suppCardNo = "";
+    this.supplementaryData = null;
+
+    console.log("Search form reset");
+  }
+
+  onSuppSearch(): void {
+    const userId = this.suppUserId?.trim();
+    const cardNo = this.suppCardNo?.trim();
+
+    if (!userId && !cardNo) {
+      alert("Please enter Card Number or User ID");
+      return;
+    }
+
+    if (userId && cardNo) {
+      alert("Please enter only one field: Card Number or User ID");
+      return;
+    }
+
+    if (userId) {
+      this.accountService.getSupplementaryCardsByUserId(userId).subscribe({
+        next: (response) => {
+          this.supplementaryData = response;
+        },
+        error: (err) => {
+          this.supplementaryData = null;
+          console.error(err);
+
+          alert(err.error?.message || "User not found");
+        },
+      });
+
+      return;
+    }
+
+    if (cardNo) {
+      this.accountService.getSupplementaryCardsByCardNo(cardNo).subscribe({
+        next: (response) => {
+          this.supplementaryData = response;
+        },
+        error: (err) => {
+          this.supplementaryData = null;
+          console.error(err);
+
+          alert(err.error?.message || "Card not found");
+        },
+      });
+    }
+  }
+
+  columns = [
+    { key: "embossName", label: "Emboss Name" },
+    { key: "uci", label: "UCI" },
+    { key: "maskedCard", label: "Masked Card" },
+    { key: "isAdminUci", label: "Admin UCI" },
+  ];
+
+  rows = [
+    {
+      embossName: "DEV ANAND",
+      uci: "DE8522VS",
+      maskedCard: "3744XXXXXXXX2263",
+      isAdminUci: "No",
+    },
+    {
+      embossName: "MARY SMITH",
+      uci: "DE8528KS",
+      maskedCard: "3744XXXXXXXX2271",
+      isAdminUci: "Yes",
+    },
+  ];
+
+  userColumns = [
+    { key: "userId", label: "User Id" },
+    { key: "status", label: "Account Status" },
+  ];
+
+  userRows = [
+    {
+      userId: "Supp15",
+      status: "Unlocked",
+    },
+  ];
+
+  userActions = [
+    { id: "lock", label: "Lock User", type: "primary" },
+    { id: "delete", label: "Delete User", type: "danger" },
+    { id: "offers", label: "Offers", type: "secondary" },
+  ];
+
+  onUserAction(event: { action: string; row: any }): void {
+    console.log(event);
+  }
+}

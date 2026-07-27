@@ -1,15 +1,29 @@
-import { Component, Optional, Inject } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  Optional,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AmexPageComponent,
   AmexTabItem,
 } from '@ui-components/ui';
+import {
+  AuthService,
+  StandaloneLaunchService,
+} from '@amex/shared-services';
 import { LoungePriorityPassComponent } from './lounge-priority-pass.component';
-import { SHELL_HOSTED } from '../../core/tokens/shell.token';
+import { SHELL_HOSTED } from '../../constants/shell.token';
+
 @Component({
   selector: 'app-lounge-shell-wrapper',
   standalone: true,
-  imports: [CommonModule, AmexPageComponent, LoungePriorityPassComponent],
+  imports: [
+    CommonModule,
+    AmexPageComponent,
+    LoungePriorityPassComponent,
+  ],
   template: `
     <amex-page-component
       portalStyle="onls"
@@ -25,31 +39,78 @@ import { SHELL_HOSTED } from '../../core/tokens/shell.token';
     </amex-page-component>
   `,
 })
-export class LoungeShellWrapperComponent {
-  isShellHosted: boolean;
-  constructor(@Optional() @Inject(SHELL_HOSTED) shellHosted: boolean) {
-    this.isShellHosted = !!shellHosted;
+export class LoungeShellWrapperComponent implements OnInit {
+
+  tabs: AmexTabItem[] = [
+    {
+      id: 'lounge',
+      label: 'Lounge Rationalization',
+    },
+  ];
+
+  constructor(
+    @Optional()
+    @Inject(SHELL_HOSTED)
+    private readonly shellHosted: boolean | null,
+
+    private readonly standaloneLaunchService: StandaloneLaunchService,
+
+    private readonly authService: AuthService,
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+
+    /**
+     * Direct standalone launch.
+     * If the portal is opened directly (localhost:4209),
+     * validate the session and redirect to the Shell.
+     *
+     * When hosted inside the Shell, skip this logic.
+     */
+    if (!this.shellHosted) {
+      await this.standaloneLaunchService.launch('/misc/priority-pass');
+      return;
+    }
   }
+
+  get isShellHosted(): boolean {
+    return !!this.shellHosted;
+  }
+
   get shellConfig() {
     if (this.isShellHosted) {
       return {
-        header:  { visible: false },
-        footer:  { visible: false },
-        sidebar: { visible: false },
+        header: {
+          visible: false,
+        },
+        footer: {
+          visible: false,
+        },
+        sidebar: {
+          visible: false,
+        },
       };
     }
+
     return {
-      header:  { visible: false },
-      footer:  { visible: true, text: '© American Express. All rights reserved.' },
-      sidebar: { visible: false },
+      header: {
+        visible: false,
+      },
+      footer: {
+        visible: true,
+        text: '© American Express. All rights reserved.',
+      },
+      sidebar: {
+        visible: false,
+      },
     };
   }
-  tabs: AmexTabItem[] = [
-    { id: 'lounge', label: 'Lounge Rationalization' },
-  ];
-  onTabClick(_id: string): void {}
+
+  onTabClick(_id: string): void {
+    // Reserved for future tabs
+  }
+
   onLogout(): void {
-    localStorage.clear();
-    window.location.reload();
+    this.authService.performLogout();
   }
 }

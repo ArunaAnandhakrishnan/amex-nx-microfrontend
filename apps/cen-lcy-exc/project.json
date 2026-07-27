@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/cen-lcy-exc/public"
+            "input": "apps/cen-lcy-exc/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/cen-lcy-exc/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/cen-lcy-exc/src/styles.css"
+          "apps/cen-lcy-exc/src/assets/styles/styles.css"
         ],
         "customWebpackConfig": {
           "path": "apps/cen-lcy-exc/webpack.config.js"
@@ -37,7 +43,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/cen-lcy-exc/src/environments/environment.ts",
+              "with": "apps/cen-lcy-exc/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

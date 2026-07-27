@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/wearables-portal/public"
+            "input": "apps/wearables-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/wearables-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/wearables-portal/src/styles.css"
+          "apps/wearables-portal/src/assets/styles/styles.css"
         ],
         "customWebpackConfig": {
           "path": "apps/wearables-portal/webpack.config.js"

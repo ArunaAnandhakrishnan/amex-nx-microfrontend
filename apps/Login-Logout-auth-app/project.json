@@ -16,7 +16,13 @@
       "configurations": {
         "production": {
           "optimization": true,
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/Login-Logout-auth-app/src/environments/environment.ts",
+              "with": "apps/Login-Logout-auth-app/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "optimization": false,

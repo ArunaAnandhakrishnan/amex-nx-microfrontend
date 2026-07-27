@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   RouterModule,
@@ -7,6 +7,7 @@ import {
 } from '@angular/router';
 
 import { filter, Subscription } from 'rxjs';
+import { LOGIN_APP_URL } from '@amex/shared-services';
 
 @Component({
   selector: 'app-root',
@@ -363,26 +364,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   };
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(LOGIN_APP_URL) private loginAppUrl: string,
+  ) {}
 
-//   ngOnInit() {
-
-//   // Runs EVERY time component initialises
-//   // No condition check — always navigates
-//   this.router.navigate(['/pay-with-points']);
-
-//   // Listens to every navigation event
-//   this.router.events
-//     .pipe(filter(e => e instanceof NavigationEnd))
-//     .subscribe(() => {
-
-//       // Sets active tab
-//       this.activeTab = 'misc';
-
-//       // ← FATAL: navigates AGAIN inside the listener
-//       this.router.navigate(['/pay-with-points']);
-//     });
-// }
   ngOnInit(): void {
 
     this.sub.add(
@@ -490,8 +476,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onLogout(): void {
-    localStorage.clear();
-    window.location.href = '/';
+    // TODO: verify against @amex/shared-services — this should call the
+    // shared logout endpoint (e.g. AuthApiService.performLogout(), used in
+    // bta-portal) to clear the HttpOnly session cookie server-side before
+    // redirecting. Redirecting alone does not invalidate the cookie.
+    window.location.href = this.loginAppUrl;
   }
 
   ngOnDestroy(): void {

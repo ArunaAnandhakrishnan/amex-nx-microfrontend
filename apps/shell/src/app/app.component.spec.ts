@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { AppModule } from './app.module';
 
+// NOTE: AuthApiService / SessionService are providedIn: 'root', so they
+// resolve automatically here via provideHttpClient(). If this test starts
+// making real network calls in CI, add HttpTestingController or mock
+// AuthApiService directly instead.
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppModule],
+      imports: [AppComponent],
+      providers: [provideRouter([]), provideHttpClient()],
     }).compileComponents();
   });
 

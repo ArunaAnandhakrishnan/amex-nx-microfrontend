@@ -5,7 +5,8 @@ import {
   AmexTabItem,
 } from '@ui-components/ui';
 import { CenLcyExcComponent } from './cen-lcy-exc.component';
-import { SHELL_HOSTED } from '../../core/tokens/shell.token';
+import { SHELL_HOSTED } from '../../constants/shell.token';
+import { LOGIN_APP_URL } from '@amex/shared-services';
 
 @Component({
   selector: 'app-cen-lcy-exc-shell-wrapper',
@@ -28,7 +29,10 @@ import { SHELL_HOSTED } from '../../core/tokens/shell.token';
 export class CenLcyExcShellWrapperComponent {
   isShellHosted: boolean;
 
-  constructor(@Optional() @Inject(SHELL_HOSTED) shellHosted: boolean) {
+  constructor(
+    @Optional() @Inject(SHELL_HOSTED) shellHosted: boolean,
+    @Inject(LOGIN_APP_URL) private loginAppUrl: string,
+  ) {
     this.isShellHosted = !!shellHosted;
   }
 
@@ -54,7 +58,10 @@ export class CenLcyExcShellWrapperComponent {
   onTabClick(_id: string): void {}
 
   onLogout(): void {
-    localStorage.clear();
-    window.location.reload();
+    // TODO: verify against @amex/shared-services — this should call the
+    // shared logout endpoint (e.g. AuthApiService.logout()) to clear the
+    // HttpOnly session cookie server-side before redirecting. Redirecting
+    // alone does not invalidate the cookie.
+    window.location.href = this.loginAppUrl;
   }
 }

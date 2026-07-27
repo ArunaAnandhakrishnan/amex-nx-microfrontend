@@ -11,9 +11,9 @@ export const routes: Routes = [
   {
     path: 'pay-with-points',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./pages/pay-with-points/pay-with-points.module')
-        .then(m => m.PayWithPointsModule),
+    loadComponent: () =>
+      import('./pages/pay-with-points/pay-with-points.component')
+        .then(m => m.PayWithPointsComponent),
   },
   {
     path: 'digital-wallet',

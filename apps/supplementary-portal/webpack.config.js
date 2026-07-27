@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'suppPortal',
   exposes: {
-    './Module': './apps/supplementary-portal/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/supplementary-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

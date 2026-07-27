@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'cenLcyExcPortal',
   exposes: {
-    './Module': './apps/cen-lcy-exc/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/cen-lcy-exc/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

@@ -37,7 +37,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/vat_invoice/src/environments/environment.ts",
+              "with": "apps/vat_invoice/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

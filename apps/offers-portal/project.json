@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/offers-portal/public"
+            "input": "apps/offers-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/offers-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/offers-portal/src/styles.css"
+          "apps/offers-portal/src/assets/styles/styles.css"
         ],
         "customWebpackConfig": {
           "path": "apps/offers-portal/webpack.config.js"
@@ -37,7 +43,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/offers-portal/src/environments/environment.ts",
+              "with": "apps/offers-portal/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

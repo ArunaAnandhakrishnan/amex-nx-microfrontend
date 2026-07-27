@@ -18,10 +18,16 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/bta-portal/public"
+            "input": "apps/bta-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/bta-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
-        "styles": ["apps/bta-portal/src/styles.css"],
+        "styles": ["apps/bta-portal/src/assets/styles/styles.css"],
         "customWebpackConfig": {
           "path": "apps/bta-portal/webpack.config.js"
         }

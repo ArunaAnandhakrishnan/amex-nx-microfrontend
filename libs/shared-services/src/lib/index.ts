@@ -14,6 +14,7 @@ export * from './models/session.model';
 export * from './config/api-config';
 export * from './config/api-base-url.token';
 export * from './config/login-app-url.token';
+export * from './config/shell-app-url.token';
 export * from './config/environment.service';
 
 /**
@@ -99,3 +100,10 @@ export * from './storage/storage.service';
  */
 export * from './models/user.model';
 export * from './models/api-response.model';
+
+/**
+ * ============================================================
+ * LAUNCHER
+ * ============================================================
+ */
+export * from './launcher/standalone-launch.service';

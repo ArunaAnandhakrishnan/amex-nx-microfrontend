@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface BcrbReport {
-  id: number;
-  processId: string;
-  reportType: string;
-  reportName: string;
-  fileName: string;
-  createdAt: string;
-  status: 'Processing' | 'Completed' | 'Failed';
-}
+import { BcrbReport } from '../models/bcrb-report.model';
 
 @Injectable({
   providedIn: 'root'

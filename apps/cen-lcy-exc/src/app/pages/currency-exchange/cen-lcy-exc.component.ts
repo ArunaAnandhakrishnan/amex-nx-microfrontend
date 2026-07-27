@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { CenLcyExcService } from '../../core/services/cen-lcy-exc.service';
-import { CenCustomer } from '../../core/models/cen-lcy-exc.models';
+import { CenLcyExcService } from '../../services/cen-lcy-exc.service';
+import { CenCustomer } from '../../models/cen-lcy-exc.models';
 
 @Component({
   selector: 'app-cen-lcy-exc',

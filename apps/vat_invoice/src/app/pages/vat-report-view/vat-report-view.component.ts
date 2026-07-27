@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AmexVATInvoiceReportViewComponent } from '@ui-components/ui';
-import { VatCustHomeComponent } from '../vat-cust-home-folder/vat-cust-home-component';
+import { VatCustHomeComponent } from '../../components/vat-cust-home/vat-cust-home.component';
 @Component({
   selector: 'vat-report-view',
   standalone: true,

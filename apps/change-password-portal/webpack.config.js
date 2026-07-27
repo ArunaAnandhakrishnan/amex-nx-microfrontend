@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'changePasswordPortal',
   exposes: {
-  './Module': './apps/change-password-portal/src/app/entry.module.ts',
+  './Routes': './apps/change-password-portal/src/remote-entry/entry.routes.ts',
 },
 
   shared: {

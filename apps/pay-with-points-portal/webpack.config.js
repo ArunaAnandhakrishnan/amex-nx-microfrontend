@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'payWithPointsPortal',
   exposes: {
-    './Module': './apps/pay-with-points-portal/src/app/pages/pay-with-points/pay-with-points.module.ts',
+    './Routes': './apps/pay-with-points-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

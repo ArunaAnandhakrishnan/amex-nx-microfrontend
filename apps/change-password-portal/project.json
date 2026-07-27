@@ -16,10 +16,19 @@
         ],
         "tsConfig": "apps/change-password-portal/tsconfig.app.json",
         "assets": [
-          "apps/change-password-portal/src/assets"
+          {
+            "glob": "**/*",
+            "input": "apps/change-password-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/change-password-portal/src/assets/icons",
+            "output": "assets/icons"
+          }
         ],
         "styles": [
-          "apps/change-password-portal/src/styles.scss"
+          "apps/change-password-portal/src/assets/styles/styles.scss"
         ],
         "scripts": [],
         "commonChunk": false,
@@ -29,7 +38,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/change-password-portal/src/environments/environment.ts",
+              "with": "apps/change-password-portal/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "optimization": false,
@@ -67,10 +82,19 @@
         ],
         "tsConfig": "apps/change-password-portal/tsconfig.spec.json",
         "assets": [
-          "apps/change-password-portal/src/assets"
+          {
+            "glob": "**/*",
+            "input": "apps/change-password-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/change-password-portal/src/assets/icons",
+            "output": "assets/icons"
+          }
         ],
         "styles": [
-          "apps/change-password-portal/src/styles.scss"
+          "apps/change-password-portal/src/assets/styles/styles.scss"
         ],
         "scripts": []
       }

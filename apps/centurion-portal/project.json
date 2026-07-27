@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/centurion-portal/public"
+            "input": "apps/centurion-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/centurion-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/centurion-portal/src/styles.css"
+          "apps/centurion-portal/src/assets/styles/styles.css"
         ],
         "customWebpackConfig": {
           "path": "apps/centurion-portal/webpack.config.js"
@@ -37,7 +43,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/centurion-portal/src/environments/environment.ts",
+              "with": "apps/centurion-portal/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

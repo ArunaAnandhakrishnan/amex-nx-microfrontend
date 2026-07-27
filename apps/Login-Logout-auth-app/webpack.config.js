@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'authApp',
   exposes: {
-    './LoginPage': './src/app/login-page.component.ts',
+    './LoginPage': './src/app/pages/login/login-page.component.ts',
   },
   shared: {
     ...shareAll({

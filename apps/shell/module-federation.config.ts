@@ -10,7 +10,6 @@ const config: ModuleFederationConfig = {
     ["vat_invoice", "http://localhost:4213/"],
     ["ui-components", "http://localhost:4214/"],
     ["soc-roc", "http://localhost:4215/"],
-    ["bcrb", "http://localhost:4208/"],
   ],
 };
 

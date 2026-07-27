@@ -6,12 +6,7 @@ import {
   AmexErrorToastComponent
 } from '@ui-components/ui';
 import { NumbersOnlyDirective } from '../../../core/directives/numbers-only.directive';
-
-
-interface CalendarDay {
-  date: Date;
-  currentMonth: boolean;
-}
+import { CalendarDay } from '../../../models/calendar-day.model';
 @Component({
   selector: 'app-retrieval-old-records',
   standalone: true,

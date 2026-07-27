@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'btaPortal',
   exposes: {
-    './Module': './apps/bta-portal/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/bta-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

@@ -18,10 +18,16 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/shell/public"
+            "input": "apps/shell/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/shell/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
-        "styles": ["apps/shell/src/styles.css"],
+        "styles": ["apps/shell/src/assets/styles/styles.css"],
         "customWebpackConfig": {
           "path": "apps/shell/webpack.config.js"
         }

@@ -25,11 +25,17 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/supplementary-portal/public"
+            "input": "apps/supplementary-portal/src/assets/images",
+            "output": "assets/images"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/supplementary-portal/src/assets/icons",
+            "output": "assets/icons"
           }
         ],
         "styles": [
-          "apps/supplementary-portal/src/styles.scss"
+          "apps/supplementary-portal/src/assets/styles/styles.scss"
         ],
         "customWebpackConfig": {
           "path": "apps/supplementary-portal/webpack.config.js"
@@ -37,7 +43,13 @@
       },
       "configurations": {
         "production": {
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "fileReplacements": [
+            {
+              "replace": "apps/supplementary-portal/src/environments/environment.ts",
+              "with": "apps/supplementary-portal/src/environments/environment.prod.ts"
+            }
+          ]
         },
         "development": {
           "buildOptimizer": false,

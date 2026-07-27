@@ -1,11 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { LoungeService } from '../../core/services/lounge.service';
-import { LoungeCustomer } from '../../core/models/lounge.models';
+import {
+  InputComponent,
+  ButtonComponent,
+  SelectComponent,
+  SelectOption,
+  CheckboxComponent,
+  ModalComponent,
+  AlertComponent,
+} from '@ui-components/ui';
+import { LoungeService } from '../../services/lounge.service';
+import { LoungeCustomer } from '../../models/lounge.models';
 
-const COUNTRY_CODES = [
+const COUNTRY_CODES: SelectOption[] = [
   { label: 'UAE (+971)', value: '+971' },
   { label: 'Bahrain (+973)', value: '+973' },
   { label: 'Saudi Arabia (+966)', value: '+966' },
@@ -19,7 +28,17 @@ const COUNTRY_CODES = [
 @Component({
   selector: 'app-lounge-priority-pass',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    InputComponent,
+    ButtonComponent,
+    SelectComponent,
+    CheckboxComponent,
+    ModalComponent,
+    AlertComponent,
+  ],
   templateUrl: './lounge-priority-pass.component.html',
   styleUrls: ['./lounge-priority-pass.component.css'],
 })
@@ -49,6 +68,7 @@ export class LoungePriorityPassComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loungeSvc: LoungeService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.searchForm = this.fb.group({ clientCode: ['', Validators.required] });
   }
@@ -71,13 +91,16 @@ export class LoungePriorityPassComponent implements OnInit {
         this.loading = false;
         if (!result || result.cards?.length === 0) {
           this.errorMsg = `No eligible cards associated with the client code you entered or the client code does not exist.`;
+          this.cdr.detectChanges();
           return;
         }
         this.setCustomer(result);
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loading = false;
         this.errorMsg = 'An unexpected error occurred. Please try again.';
+        this.cdr.detectChanges();
       },
     });
   }
@@ -111,6 +134,19 @@ export class LoungePriorityPassComponent implements OnInit {
     return [...new Set(
       this.customer?.cards.map((card: any) => card.cardNumber)
     )];
+  }
+
+  maskCardNumber(cardNumber: string): string {
+    const digits = cardNumber.replace(/\s/g, '');
+    if (digits.length <= 8) return cardNumber;
+    const first4 = digits.slice(0, 4);
+    const last4 = digits.slice(-4);
+    const maskedMiddle = '•'.repeat(digits.length - 8);
+    return `${first4} ${maskedMiddle} ${last4}`;
+  }
+
+  get basicCardOptions(): SelectOption[] {
+    return this.uniqueCards.map(c => ({ label: c, value: c }));
   }
 
   toggleEdit(field: 'mobile' | 'email'): void {
@@ -152,10 +188,12 @@ export class LoungePriorityPassComponent implements OnInit {
           const card = this.customer!.cards.find(c => c.cardNumber === sc.cardNumber);
           if (card) card.enrolled = true;
         });
+        this.cdr.detectChanges();
       },
       error: (err: Error) => {
         this.enrollLoading = false;
         this.enrollError = err.message || 'Enrollment failed. Please try again.';
+        this.cdr.detectChanges();
       },
     });
   }

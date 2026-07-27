@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'centurionPortal',
   exposes: {
-    './Module': './apps/centurion-portal/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/centurion-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

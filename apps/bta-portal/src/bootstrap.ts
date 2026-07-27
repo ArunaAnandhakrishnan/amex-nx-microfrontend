@@ -1,9 +1,11 @@
-import { platformBrowser } from '@angular/platform-browser';
-import { AppModule } from './app/app.module';
-import { captureAuthTokenFromUrl } from './app/core/services/token-bridge'; // NEW
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
 
-captureAuthTokenFromUrl();
+// LEGACY — disabled, see app/utils/token-bridge.util.ts for why.
+// import { captureAuthTokenFromUrl } from './app/utils/token-bridge.util';
+// captureAuthTokenFromUrl();
 
-platformBrowser()
-  .bootstrapModule(AppModule)
-  .catch((err: unknown) => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err: unknown) =>
+  console.error(err),
+);

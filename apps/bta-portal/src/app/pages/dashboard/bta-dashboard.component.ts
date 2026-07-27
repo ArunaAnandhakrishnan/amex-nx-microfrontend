@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { BtaAuthService } from '../../core/services/auth.service';
+import { SessionService } from '@amex/shared-services';
 
 interface TravelRequest {
   id: string;
@@ -21,6 +22,8 @@ interface ExpenseItem {
 
 @Component({
   selector: 'app-bta-dashboard',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './bta-dashboard.component.html',
   styleUrls: ['./bta-dashboard.component.css'],
 })
@@ -48,9 +51,14 @@ export class BtaDashboardComponent implements OnInit {
     { icon: '✓', dotClass: 'green',  title: 'Expense report ER-0218 reimbursed',                         meta: 'Yesterday, 2:30 PM', amount: 1820 },
     { icon: '!', dotClass: 'blue',   title: 'Policy reminder sent to 5 travelers with pending receipts', meta: 'Jun 8, 11:00 AM',   amount: 0 },
   ];
-  constructor(private router: Router, private auth: BtaAuthService) {}
+  constructor(private router: Router, private session: SessionService) {}
   ngOnInit(): void {
-    this.user = this.auth.getUser();
+    // TODO: BtaAuthService.getUser() doesn't exist anywhere in this codebase —
+    // this component was dead code before migration (never compiled, since
+    // nothing imported it). Wire this to whatever SessionService actually
+    // exposes for the current user (e.g. session.getCurrentUser() or
+    // session.user$) — verify the exact method against @amex/shared-services.
+    this.user = null;
   }
   navigate(path: string): void {
     const url = path ? ['/bta', path] : ['/bta'];

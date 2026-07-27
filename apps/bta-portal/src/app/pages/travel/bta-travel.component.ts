@@ -11,6 +11,8 @@ interface TravelRequest {
 
 @Component({
   selector: 'app-bta-travel',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './bta-travel.component.html',
   styleUrls: ['./bta-travel.component.css'],
 })

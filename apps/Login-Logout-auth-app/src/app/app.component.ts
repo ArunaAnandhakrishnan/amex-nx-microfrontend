@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SecureFormService } from './secure-from.service';
+import { SecureFormService } from './services/secure-from.service';
 
 @Component({
   selector: 'app-root',

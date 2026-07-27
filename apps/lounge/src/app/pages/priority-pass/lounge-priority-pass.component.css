@@ -14,43 +14,77 @@
   width: 720px;
 }
 
-.lcs__input {
-  width: 720px;
-  max-width: 720px;
-  min-width: 720px;
-  
+.lcs__field-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
 }
 
-/* .lpp__header {
-  background: #005295;
-  color: #fff;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 18px 16px;
-  border: 1px solid #5a7da0;
-  margin-bottom: 24px;
-  text-transform: uppercase;
-} */
-
 .lcs__input {
-  width: 100%;
+  display: block;
+  flex: 1;
   max-width: 690px;
-  height: 28px;
-  font-size: 14px;
-  border: none;
+  --input-padding: 6px 0;
+  --input-border: none;
+  --input-radius: 0;
+  --input-bg: transparent;
+  --input-focus-border-color: #005295;
+  --input-focus-shadow: none;
   border-bottom: 1px solid #d4d4d4;
-  background: transparent;
-  padding-left: 0;
+}
+
+.lcs__field-error {
+  color: #f44336;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* Strip ui-alert (error variant) down to a plain legacy-style text line,
+   overriding the shared @ui-components/ui library's default box/icon look */
+.lcs__wrap ::ng-deep ui-alert[variant="error"] {
+  display: block !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 6px 0 0 !important;
+  margin: 6px 0 0 !important;
+}
+
+.lcs__wrap ::ng-deep ui-alert[variant="error"] * {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.lcs__wrap ::ng-deep ui-alert[variant="error"] svg,
+.lcs__wrap ::ng-deep ui-alert[variant="error"] [class*="icon" i] {
+  display: none !important;
+}
+
+.lcs__wrap ::ng-deep ui-alert[variant="error"] [class*="message" i],
+.lcs__wrap ::ng-deep ui-alert[variant="error"] p,
+.lcs__wrap ::ng-deep ui-alert[variant="error"] span,
+.lcs__wrap ::ng-deep ui-alert[variant="error"] div {
+  color: #333333 !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
 }
 
 .lcs__submit-btn {
-  margin-top: 2px;
-  background: #005295;
-  border: 1px solid #7d8da1;
+  display: block;
+  --btn-bg: #005295;
+  --btn-border: 1px solid #7d8da1;
+  --btn-padding: 9px 4px;
+  --btn-font-size: 12px;
+  --btn-width: 100%;
+  --btn-justify-content: center;
   width: 78px;
-  height: 30px;
-  font-size: 12px;
-  color: #fff;
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
@@ -70,8 +104,25 @@
   line-height: 1.3;
 }
 
+.lpp__section-warning--bold {
+  font-weight: bold;
+}
+
+.lpp__tnc-check {
+  --checkbox-color: #005aa9;
+  --checkbox-border-color: #005aa9;
+  --checkbox-checked-bg: #005aa9;
+}
+
+.lpp__tnc-check ::ng-deep input[type="checkbox"],
+.lpp__tnc-check ::ng-deep .checkbox,
+.lpp__tnc-check ::ng-deep .checkbox-box {
+  accent-color: #005aa9;
+  border-color: #005aa9 !important;
+}
+
 .lpp__contact-box {
-  width: 332px;
+  width: 420px;
   border: 1px solid #d2d2d2;
   background: #f8f8f8;
 }
@@ -90,30 +141,45 @@
 }
 
 .lpp__contact-input {
-  width: 165px;
-  height: 18px;
+  display: block;
+  width: 250px;
+  --input-padding: 4px 8px;
+  --input-border: 1px solid #8c8c8c;
+  --input-radius: 2px;
+  --input-bg: #efefef;
   font-size: 11px;
-  border: 1px solid #8c8c8c;
-  padding: 10px;
 }
 
 .lpp__edit-btn {
-  width: 54px;
-  height: 30px;
-  background: #005295;
-  color: #fff;
-  font-size: 11px;
+  display: inline-block;
+  --btn-bg: #005295;
+  --btn-bg-hover: #003f73;
+  --btn-border: 1px solid #6c87a4;
+  --btn-color: #ffffff;
+  --btn-color-hover: #ffffff;
+  --btn-font-weight: bold;
+  --btn-padding: 6px 14px;
+  --btn-font-size: 11px;
+  --btn-radius: 3px;
+  --btn-justify-content: center;
+  width: auto;
+  box-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+
+.lpp__edit-btn ::ng-deep .btn-label {
+  text-decoration: none;
 }
 
 .lpp__card-select {
+  display: block;
   width: 100%;
   max-width: 700px;
-  height: 32px;
-  border: none;
+  --select-padding: 6px 32px 6px 0;
+  --select-border: none;
+  --select-radius: 0;
+  --select-bg: transparent;
+  --select-font-size: 13px;
   border-bottom: 1px solid #d9d9d9;
-  background: transparent;
-  font-size: 13px;
-  padding-left: 0;
 }
 
 .lpp__card-row {
@@ -127,6 +193,9 @@
 
 .lpp__card-bullet {
   padding-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .lpp__bullet {
@@ -149,8 +218,8 @@
 }
 
 .lpp__card-art-inner {
-  width: 52px;
-  height: 34px;
+  width: 48px;
+  height: 32px;
   background: linear-gradient(135deg, #4caf7d 0%, #2e8b57 100%);
   border-radius: 2px; border: 1px solid #ccc;
   position: relative; overflow: hidden;
@@ -165,12 +234,6 @@
 .lpp__card-logo {
   color: #fff; font-size: 9px; font-weight: bold;
   text-align: right; letter-spacing: .05em;
-}
-
-.lpp__card-art-inner {
-  width: 48px;
-  height: 32px;
-  border-radius: 2px;
 }
 
 .lpp__card-type,
@@ -191,6 +254,9 @@
   margin-top: 8px;
 }
 
+.lpp__card-status--yes { color: #1b5e20; font-weight: bold; }
+.lpp__card-status--no { color: #b71c1c; font-weight: bold; }
+
 .lpp__tnc {
   margin-top: 28px;
 }
@@ -200,18 +266,29 @@
   line-height: 1.35;
 }
 
+.lpp__tnc-text--bold {
+  font-weight: bold;
+}
+
+.lpp__tnc-check {
+  margin-top: 10px;
+  display: block;
+}
+
 .lpp__actions {
   text-align: right;
   padding-right: 90px;
 }
 
 .lpp__enroll-btn {
+  display: inline-block;
+  --btn-bg: #005295;
+  --btn-border: 1px solid #6c87a4;
+  --btn-padding: 10px 18px;
+  --btn-font-size: 12px;
+  --btn-width: 100%;
+  --btn-justify-content: center;
   min-width: 170px;
-  height: 34px;
-  font-size: 12px;
-  background: #005295;
-  color: #ffffff;
-  border: 1px solid #6c87a4;
 }
 
 .lpp__copyright {
@@ -221,36 +298,6 @@
   color: #888;
 }
 
-.lpp__overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.28);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.lpp__popup {
-  width: 920px;
-  background: #f3f3f3;
-  border: 1px solid #cfcfcf;
-  box-shadow: 0 4px 14px rgba(0,0,0,.22);
-}
-
-.lpp__popup-hd {
-  background: #005295;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 14px 20px;
-  margin: 22px 22px 16px;
-}
-
-.lpp__popup-body {
-  padding: 0 34px 26px;
-}
-
 .lpp__edit-field {
   margin-bottom: 22px;
 }
@@ -258,89 +305,99 @@
 .lpp__edit-field-label {
   display: block;
   font-size: 11px;
-  color: #6d7885;
+  color: #4a90d9;
   font-weight: bold;
   margin-bottom: 6px;
 }
 
-.lpp__select-wrapper {
-  position: relative;
-  width: 320px;
-}
-
-.lpp__phone-icon {
-  position: absolute;
-  left: -24px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #005295;
-  font-size: 14px;
-}
-
-.lpp__underline-select,
-.lpp__underline-input {
+.lpp__modal-select {
+  display: block;
   width: 100%;
-  border: none;
+  max-width: 500px;
+  --select-padding: 4px 24px 6px 0;
+  --select-border: none;
+  --select-radius: 0;
+  --select-bg: transparent;
+  --select-font-size: 13px;
   border-bottom: 1px solid #bcc7d1;
-  background: transparent;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  padding: 4px 0 6px;
-  outline: none;
-  color: #1a1a1a;
-  box-sizing: border-box;
 }
 
-.lpp__underline-input {
-  max-width: 320px;
+.lpp__modal-input {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  --input-padding: 4px 0 6px;
+  --input-border: none;
+  --input-radius: 0;
+  --input-bg: transparent;
+  --input-focus-border-color: #005295;
+  --input-focus-shadow: none;
+  border-bottom: 1px solid #bcc7d1;
 }
 
-.lpp__underline-select:focus,
-.lpp__underline-input:focus {
-  border-bottom: 1px solid #005295;
+.lpp__modal {
+  --icon-btn-color: #fff;
+  --icon-btn-bg: transparent;
+  --icon-btn-hover-bg: rgba(255,255,255,0.18);
 }
 
-.lpp__edit-note {
-  color: #2d5d8f;
-  font-size: 11px;
-  margin: 34px 0 22px;
-  line-height: 1.4;
-  max-width: 760px;
+.lpp__modal ::ng-deep .modal {
+  border-radius: 0;
+}
+
+.lpp__modal ::ng-deep .modal-header {
+  background: #00539a;
+  padding: 14px 20px;
+  border-bottom: none;
+}
+
+.lpp__modal ::ng-deep .modal-title {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.lpp__modal ::ng-deep .modal-body {
+  background: #f5f5f5;
+}
+
+.lpp__modal ::ng-deep .modal-footer {
+  background: #f5f5f5;
+  justify-content: flex-start;
 }
 
 .lpp__edit-btns {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
+  justify-content: flex-start;
 }
 
-.lpp__submit-btn {
-  background: #005295;
-  color: #fff;
-  border: none;
-  min-width: 88px;
-  height: 30px;
+.lpp__modal-submit-btn {
+  display: block;
+  --btn-bg: #005295;
+  --btn-padding: 9px 18px;
+  --btn-font-size: 11px;
+  --btn-justify-content: center;
+}
+
+.lpp__modal-cancel-btn {
+  display: block;
+  --btn-bg: #ececec;
+  --btn-bg-hover: #ddd;
+  --btn-color: #222;
+  --btn-color-hover: #222;
+  --btn-border: none;
+  --btn-padding: 9px 18px;
+  --btn-font-size: 11px;
+  --btn-font-weight: 400;
+  --btn-justify-content: center;
+}
+
+.lpp__edit-note {
+  color: #2d5d8f;
   font-size: 11px;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0 18px;
-}
-
-.lpp__cancel-btn {
-  background: #ececec;
-  border: none;
-  color: #222;
-  min-width: 78px;
-  height: 30px;
-  font-size: 11px;
-  cursor: pointer;
-  padding: 0 18px;
-}
-
-.lpp__submit-btn:hover {
-  background: #003f73;
-}
-
-.lpp__cancel-btn:hover {
-  background: #ddd;
+  margin: 12px 0 6px;
+  line-height: 1.4;
+  max-width: 760px;
 }

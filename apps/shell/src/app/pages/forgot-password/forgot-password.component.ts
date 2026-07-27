@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthApiService } from '@amex/shared-services';
+import { AmexForgotPasswordFormComponent } from '@ui-components/ui';
 
 @Component({
     selector: 'app-forgot-password',
+    standalone: true,
+    imports: [AmexForgotPasswordFormComponent],
     template: `
     <amex-forgot-password-form
       portalStyle="onls"
@@ -12,8 +15,7 @@ import { AuthApiService } from '@amex/shared-services';
       (submitIdentifier)="onSubmit($event)"
       (backToLogin)="goToLogin()">
     </amex-forgot-password-form>
-  `,
-    standalone: false
+  `
 })
 
 export class ForgotPasswordComponent implements OnInit {

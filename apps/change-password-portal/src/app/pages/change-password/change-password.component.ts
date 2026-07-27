@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { HttpClient, HttpHeaders, HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {
   AmexChangePasswordFormComponent,
   ChangePasswordData,
@@ -9,7 +9,7 @@ import {
 @Component({
   selector: "app-change-password",
   standalone: true,
-  imports: [CommonModule, HttpClientModule, AmexChangePasswordFormComponent],
+  imports: [CommonModule, AmexChangePasswordFormComponent],
   templateUrl: `./change-password.component.html`,
   styleUrls: [`./change-password.component.css`],
 })

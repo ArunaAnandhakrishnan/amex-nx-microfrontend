@@ -6,7 +6,7 @@ const mfConfig = withModuleFederationPlugin({
   name: "statement",
 
   exposes: {
-    "./Routes": "./apps/statement/src/app/remote-entry/entry.routes.ts",
+    "./Routes": "./apps/statement/src/remote-entry/entry.routes.ts",
   },
   shared: {
     ...shareAll({

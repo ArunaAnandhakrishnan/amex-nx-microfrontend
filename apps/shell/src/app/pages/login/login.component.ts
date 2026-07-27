@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthApiService } from '@amex/shared-services';
-import { EventBusService } from '../../core/services/event-bus.service';
-import { LoginCredentials } from '@ui-components/ui';
-import { RegisterData }     from '@ui-components/ui';
+import { EventBusService } from '../../services/event-bus.service';
+import {
+  LoginCredentials,
+  RegisterData,
+  AmexLoginFormComponent,
+  AmexRegisterFormComponent,
+} from '@ui-components/ui';
 
 @Component({
     selector: 'app-login',
+    standalone: true,
+    imports: [AmexLoginFormComponent, AmexRegisterFormComponent],
     template: `
     <!-- LOGIN VIEW -->
     @if (mode === 'login') {
@@ -31,8 +37,7 @@ import { RegisterData }     from '@ui-components/ui';
         (cancel)="setMode('login')">
       </amex-register-form>
     }
-    `,
-    standalone: false
+    `
 })
 export class LoginComponent implements OnInit {
 
@@ -51,10 +56,39 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     // Already logged in → redirect away
     if (this.authApi.isUserAuthenticated()) {
-      this.router.navigate([this.returnUrl]);
+      this.router.navigateByUrl(this.returnUrl);
       return;
     }
-    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') ?? '/misc/priority-pass';
+    this.returnUrl = this.sanitizeReturnUrl(
+      this.route.snapshot.queryParamMap.get('returnUrl'),
+    );
+  }
+
+  // Router.navigate()/navigateByUrl() expect a relative path, not a full
+  // URL with scheme+host. Whatever upstream sets `returnUrl` (e.g. the
+  // shared authGuard redirect) sometimes passes the full
+  // window.location.href instead of a relative path — that produced
+  // NG04002 "Cannot match any routes" when passed straight through.
+  // This also doubles as an open-redirect guard: a cross-origin
+  // returnUrl is rejected and falls back to the default route instead
+  // of being followed.
+  private sanitizeReturnUrl(raw: string | null): string {
+    const fallback = '/misc/priority-pass';
+    if (!raw) return fallback;
+
+    if (/^https?:\/\//i.test(raw)) {
+      try {
+        const url = new URL(raw);
+        if (url.origin !== window.location.origin) {
+          return fallback;
+        }
+        return `${url.pathname}${url.search}${url.hash}` || fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    return raw;
   }
 
   // ── Mode toggle ───────────────────────────────────────────────────
@@ -78,7 +112,7 @@ export class LoginComponent implements OnInit {
             type: 'USER_LOGGED_IN',
             payload: { username: data.username, roles: data.roles, userId: data.userId },
           });
-          this.router.navigate([this.returnUrl]);
+          this.router.navigateByUrl(this.returnUrl);
         },
         error: (err) => {
           this.error = err.error?.message
@@ -114,7 +148,7 @@ export class LoginComponent implements OnInit {
             payload: { username: res.username, roles: res.roles, userId: res.userId },
           });
           this.success = 'Account created! Redirecting…';
-          setTimeout(() => this.router.navigate([this.returnUrl]), 1500);
+          setTimeout(() => this.router.navigateByUrl(this.returnUrl), 1500);
         },
         error: (err) => {
           this.error = err.error?.message

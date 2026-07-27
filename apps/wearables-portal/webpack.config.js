@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'wearablesPortal',
   exposes: {
-    './Module': './apps/wearables-portal/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/wearables-portal/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

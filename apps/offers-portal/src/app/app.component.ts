@@ -1,6 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, NavigationEnd, RouterModule } from "@angular/router";
-import { CommonModule } from "@angular/common";
+import { Component, OnInit, Inject } from "@angular/core";
+import { Router, NavigationEnd, RouterOutlet } from "@angular/router";
 import { filter } from "rxjs/operators";
 
 import {
@@ -10,13 +9,13 @@ import {
   AmexSidebarMenuComponent,
   AmexLogoutConfirmationComponent,
 } from "@ui-components/ui";
+import { LOGIN_APP_URL } from "@amex/shared-services";
 
 @Component({
   selector: "app-root",
   standalone: true,
   imports: [
-    CommonModule,
-    RouterModule,
+    RouterOutlet,
     AmexTopNavBarComponent,
     AmexTabBarComponent,
     AmexSidebarMenuComponent,
@@ -35,7 +34,10 @@ export class AppComponent implements OnInit {
     { id: "benefits", label: "Benefits" },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(LOGIN_APP_URL) private loginAppUrl: string,
+  ) {}
 
   ngOnInit(): void {
     this.router.events
@@ -62,7 +64,10 @@ export class AppComponent implements OnInit {
 
   onLogout(): void {
     this.showLogout = false;
-    localStorage.clear();
-    window.location.reload();
+    // TODO: verify against @amex/shared-services — this should call the
+    // shared logout endpoint (e.g. AuthApiService.logout()) to clear the
+    // HttpOnly session cookie server-side before redirecting. Redirecting
+    // alone does not invalidate the cookie.
+    window.location.href = this.loginAppUrl;
   }
 }

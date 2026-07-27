@@ -6,7 +6,7 @@ const {
 const mfConfig = withModuleFederationPlugin({
   name: 'loungePortal',
   exposes: {
-    './Module': './apps/lounge/src/app/remote-entry/entry.module.ts',
+    './Routes': './apps/lounge/src/remote-entry/entry.routes.ts',
   },
   shared: {
     ...shareAll({

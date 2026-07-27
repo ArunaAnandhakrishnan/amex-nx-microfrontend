@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { portalAuthGuard } from '@ui-components/ui';
-import { LoginPageComponent } from './login-page.component';
-import { HomePageComponent } from './home-page.component';
-import { ForgotPasswordPageComponent } from './forgot-password-page.component';
+import { LoginPageComponent } from './pages/login/login-page.component';
+import { HomePageComponent } from './pages/home/home-page.component';
+import { ForgotPasswordPageComponent } from './pages/forgot-password/forgot-password-page.component';
 export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'forgot-password', component: ForgotPasswordPageComponent },

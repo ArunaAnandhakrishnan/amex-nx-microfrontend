@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   Input,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 
 import {
@@ -9,12 +11,29 @@ import {
 } from '@angular/common';
 
 import {
-  AmexContactInformationFormComponent
+  AmexContactInformationFormComponent,
+  ContactSection,
+  ContactRow
 } from '@ui-components/ui';
 
 import {
   OmsContactInformationService
 } from '../../services/oms-contact-information.service';
+
+const EMPTY_ROW = (): ContactRow => ({
+  name: '',
+  jobTitle: '',
+  email: '',
+  countryCode: '+971',
+  landline: '',
+  mobile: ''
+});
+
+const SECTION_TITLES = [
+  'Marketing',
+  'Finance',
+  'Operations'
+];
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -37,13 +56,25 @@ export class OmsContactInformationComponent
   sectionTitle =
     'CONTACT INFORMATION';
 
+  @Output()
+  backClicked =
+    new EventEmitter<void>();
+
+  errorMessage = '';
+
+  contactName = '';
+
+  websiteUrl = '';
+
+  omsEmail = '';
+
   backLabel =
     'Back';
 
   saveLabel =
     'Save';
 
-  contacts: any[] = [];
+  sections: ContactSection[] = [];
 
   countryCodes = [
 
@@ -83,45 +114,52 @@ export class OmsContactInformationComponent
 
   loadContacts() {
 
-  const existingContacts =
-    this.contactService
-      .getBySection(
-        this.sectionTitle
+    this.sections =
+      SECTION_TITLES.map(
+        title => {
+
+          const existing =
+            this.contactService
+              .getBySection(title);
+
+          const contacts: ContactRow[] =
+            existing.length > 0
+              ? existing.map(
+                  c => ({
+                    name: c.name || '',
+                    jobTitle: (c as any).jobTitle || c.designation || '',
+                    email: c.email || '',
+                    countryCode: c.countryCode || '+971',
+                    landline: (c as any).landline || '',
+                    mobile: (c as any).mobile || c.phone || ''
+                  })
+                )
+              : [
+                  EMPTY_ROW(),
+                  EMPTY_ROW(),
+                  EMPTY_ROW()
+                ];
+
+          return {
+            title,
+            contacts
+          };
+        }
       );
 
-  if (
-    existingContacts.length > 0
-  ) {
-
-    this.contacts =
-      existingContacts;
-
-  } else {
-
-    this.contacts = [
-
-      {
-        name: '',
-
-        email: '',
-
-        phone: '',
-
-        countryCode: '+971',
-
-        designation: ''
-      }
-    ];
+    console.log(
+      'Loaded Sections:',
+      this.sections
+    );
   }
 
-  console.log(
-    'Loaded Contacts:',
-    this.contacts
-  );
-}
-
   onSubmit(
-    event: any
+    event: {
+      contactName: string;
+      websiteUrl: string;
+      omsEmail: string;
+      sections: ContactSection[];
+    }
   ) {
 
     console.log(
@@ -129,105 +167,47 @@ export class OmsContactInformationComponent
       event
     );
 
-    for (const contact of event) {
+    this.errorMessage = '';
 
-      if (
-        !contact.name?.trim()
-      ) {
+    for (const section of event.sections) {
 
-        alert(
-          'Name is required'
-        );
+      for (const contact of section.contacts) {
 
-        return;
-      }
+        const hasAnyValue =
+          contact.name?.trim() ||
+          contact.jobTitle?.trim() ||
+          contact.email?.trim() ||
+          contact.landline?.trim() ||
+          contact.mobile?.trim();
 
-      if (
-        !contact.email?.trim()
-      ) {
+        if (!hasAnyValue) {
 
-        alert(
-          'Email is required'
-        );
+          continue;
+        }
 
-        return;
-      }
+        if (!contact.name?.trim()) {
 
-      if (
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-          contact.email
-        )
-      ) {
+          this.errorMessage =
+            'Some unexpected error has occurred. We are sorry for the inconvenience. Please try again after sometime.';
 
-        alert(
-          'Please enter a valid email address'
-        );
+          alert(
+            `Name is required in ${section.title}`
+          );
 
-        return;
-      }
+          return;
+        }
 
-      const contactNumber =
+        if (
+          contact.email?.trim() &&
+          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)
+        ) {
 
-        contact.mobile ||
+          alert(
+            `Please enter a valid email address in ${section.title}`
+          );
 
-        contact.landline ||
-
-        contact.phone ||
-
-        '';
-
-      if (
-        !String(contactNumber).trim()
-      ) {
-
-        alert(
-          'Mobile number is required'
-        );
-
-        return;
-      }
-
-      if (
-        !/^\d{7,15}$/.test(
-          String(contactNumber)
-        )
-      ) {
-
-        alert(
-          'Mobile number must contain 7 to 15 digits only'
-        );
-
-        return;
-      }
-
-      if (
-        !contact.countryCode
-      ) {
-
-        alert(
-          'Country code is required'
-        );
-
-        return;
-      }
-
-      const designation =
-
-        contact.jobTitle ||
-
-        contact.designation ||
-
-        '';
-
-      if (
-        !designation.trim()
-      ) {
-
-        alert(
-          'Designation is required'
-        );
-
-        return;
+          return;
+        }
       }
     }
 
@@ -235,18 +215,19 @@ export class OmsContactInformationComponent
 
     setTimeout(() => {
 
-      this.contactService
-        .saveSectionData(
+      for (const section of event.sections) {
 
-          this.sectionTitle,
-
-          event
-        );
+        this.contactService
+          .saveSectionData(
+            section.title,
+            section.contacts
+          );
+      }
 
       this.isSubmitting = false;
 
       alert(
-        `${this.sectionTitle} Saved Successfully`
+        'Contact Information Saved Successfully'
       );
 
       this.loadContacts();
@@ -259,5 +240,7 @@ export class OmsContactInformationComponent
     console.log(
       'Back Clicked'
     );
+
+    this.backClicked.emit();
   }
 }

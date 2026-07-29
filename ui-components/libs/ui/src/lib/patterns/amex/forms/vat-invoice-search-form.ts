@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { FormFieldComponent } from '../../../composite/form-field';
 import { InputComponent } from '../../../primitives/input';
 import { ButtonComponent } from '../../../primitives/button';
@@ -21,9 +21,11 @@ export interface VATInvoiceSearchData {
 @Component({
   selector: 'amex-vat-invoice-search-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, FormFieldComponent, InputComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, FormFieldComponent, InputComponent, ButtonComponent],
   template: `
-    <ui-panel title="VAT Invoice Search" variant="accent">
+    <ui-accent-card class="visf" [accentColor]="'#7b1fa2'" [maxWidth]="'480px'" [padding]="'18px 22px'">
+      <div class="visf__title">VAT Invoice Search</div>
+
       <!-- Customer type toggle -->
       <div class="visf__toggle-row">
         <ui-button class="visf__toggle-btn" [class.visf__toggle-btn--active]="form.customerType === 'corporate'"
@@ -51,19 +53,19 @@ export interface VATInvoiceSearchData {
         <ui-button class="visf__btn visf__btn--back" variant="primary" label="Back" (click)="backClick.emit()"></ui-button>
         <ui-button class="visf__btn visf__btn--submit" variant="primary" label="Submit" (click)="submitClick.emit(form)"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-max-width: 480px;
-      --panel-padding: 18px 22px;
       --input-border: 1px solid #ccc;
       --input-radius: 3px;
       --input-padding: 8px 12px;
       --input-focus-border-color: #7b1fa2;
     }
+
+    .visf__title { font-size: 15px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 16px; }
 
     /* Customer type toggle — two side-by-side buttons */
     .visf__toggle-row { display: flex; margin-bottom: 16px; border: 1px solid #ccc; border-radius: 4px; overflow: hidden; width: fit-content; }

@@ -66,5 +66,6 @@
       "style": "scss"
     }
   },
-  "defaultProject": "ui"
+  "defaultProject": "ui",
+  "analytics": true
 }

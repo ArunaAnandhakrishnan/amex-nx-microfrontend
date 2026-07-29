@@ -1,0 +1,77 @@
+<div class="rfp__title">{{ titleText }}</div>
+
+<ui-accent-card [accentColor]="accentColor" maxWidth="100%" padding="20px 24px">
+
+  <div class="rfp__email-check">
+    <ui-checkbox
+      [id]="id + '-email'"
+      [(ngModel)]="form.receiveByEmail"
+      [label]="emailCheckboxLabel">
+    </ui-checkbox>
+  </div>
+
+  <div class="rfp__group">
+    <div class="rfp__group-legend">{{ settlementLegend }}</div>
+    <div class="rfp__radio-list" role="radiogroup" [attr.aria-label]="settlementLegend">
+      <ui-radio
+        *ngFor="let opt of settlementOptions"
+        [name]="id + '-settlement'"
+        [value]="opt.value"
+        [label]="opt.label"
+        [checked]="opt.value === form.settlementAdviceFormat"
+        (checkedChange)="onSettlementChange($event)">
+      </ui-radio>
+    </div>
+  </div>
+
+  <div class="rfp__group">
+    <div class="rfp__group-legend">{{ submissionLegend }}</div>
+    <div class="rfp__radio-list" role="radiogroup" [attr.aria-label]="submissionLegend">
+      <ui-radio
+        *ngFor="let opt of submissionOptions"
+        [name]="id + '-submission'"
+        [value]="opt.value"
+        [label]="opt.label"
+        [checked]="opt.value === form.submissionDetailsFormat"
+        (checkedChange)="onSubmissionChange($event)">
+      </ui-radio>
+    </div>
+  </div>
+
+  <div class="rfp__submit-row">
+    <ui-button class="rfp__btn rfp__btn--submit" variant="primary" [label]="submitLabel" (click)="onSubmit()"></ui-button>
+  </div>
+
+  
+<ui-accent-card [accentColor]="accentColor" maxWidth="100%" padding="18px 22px" style="margin-top: 24px;">
+
+  <ui-label class="rfp__email-card-title" [forId]="id + '-new-email'">{{ addEmailLabel }}</ui-label>
+
+  <div class="rfp__email-row">
+    <ui-input
+      [id]="id + '-new-email'"
+      class="rfp__email-input"
+      [(ngModel)]="newEmail"
+      ariaLabel="New email address">
+    </ui-input>
+    <ui-button class="rfp__btn rfp__btn--add" variant="secondary" [label]="addButtonLabel" (click)="addEmail()"></ui-button>
+  </div>
+
+  <div class="rfp__email-note">{{ registeredEmailsNote }}</div>
+
+  <div class="rfp__email-list">
+    <div *ngFor="let e of form.emailAddresses; let i = index" class="rfp__email-item">
+      <span>{{ e }}</span>
+      <span class="rfp__email-remove" (click)="removeEmail(i)">×</span>
+    </div>
+  </div>
+
+</ui-accent-card>
+
+
+<div class="rfp__back-row">
+  <ui-button class="rfp__btn rfp__btn--back" variant="primary" [label]="backLabel" (click)="backClick.emit()"></ui-button>
+</div>
+
+</ui-accent-card>
+

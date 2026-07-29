@@ -1,0 +1,32 @@
+<div class="cvd__title">Capture VAT Registration Details</div>
+
+<ui-accent-card accentColor="#7b1f4b" maxWidth="100%" padding="20px 24px">
+
+  <div class="cvd__step-info">Step 1 - Input your VAT registration number &amp; VAT registered country</div>
+
+  <div class="cvd__field">
+    <ui-label class="cvd__field-label" forId="capture-vat-number">VAT Registration Number</ui-label>
+    <ui-input
+      id="capture-vat-number"
+      [(ngModel)]="form.vatRegistrationNumber"
+      placeholder="VAT Registration Number"
+      [invalid]="showError">
+    </ui-input>
+    <div class="cvd__error" *ngIf="showError">Invalid entry</div>
+  </div>
+
+  <div class="cvd__field">
+    <ui-label class="cvd__field-label" forId="capture-vat-country">VAT Registration Country</ui-label>
+    <ui-select
+      id="capture-vat-country"
+      [options]="countries"
+      [(ngModel)]="form.vatRegistrationCountry">
+    </ui-select>
+  </div>
+
+  <div class="cvd__actions">
+    <ui-button class="cvd__btn cvd__btn--back" variant="primary" label="Back" (click)="onBack()"></ui-button>
+    <ui-button class="cvd__btn cvd__btn--search" variant="primary" label="Search" (click)="onSearch()"></ui-button>
+  </div>
+
+</ui-accent-card>

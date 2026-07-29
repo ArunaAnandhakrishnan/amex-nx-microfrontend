@@ -1,0 +1,10 @@
+<div class="epm">
+  <div class="epm__title">{{ title }}</div>
+  <ui-accent-card class="epm__card" [accentColor]="accentColor" maxWidth="100%" padding="24px 20px">
+    <ul class="epm__list">
+      <li class="epm__item" *ngFor="let link of links">
+        <a class="epm__link" [class.epm__link--active]="link.id === activeId" href="javascript:void(0)" (click)="onLinkClick(link.id)">{{ link.label }}</a>
+      </li>
+    </ul>
+  </ui-accent-card>
+</div>

@@ -1,0 +1,21 @@
+:host { display: block; width: 100%; font-family: Arial, sans-serif; }
+.epm__title {
+  font-size: 16px; font-weight: 400; color: #1a3a6b;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 0;
+}
+.epm__list { list-style: none; margin: 0; padding: 0; }
+.epm__item { margin-bottom: 22px; }
+.epm__item:last-child { margin-bottom: 0; }
+.epm__link {
+  color: #016fd0;
+  text-decoration: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+.epm__link:hover { text-decoration: underline; }
+.epm__link--active {
+  color: #1a3a6b;
+  font-weight: bold;
+  text-decoration: underline;
+}

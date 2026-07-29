@@ -1,6 +1,8 @@
 import {
   Component,
-  OnInit
+  EventEmitter,
+  OnInit,
+  Output
 } from '@angular/core';
 
 import {
@@ -8,8 +10,9 @@ import {
 } from '@angular/common';
 
 import {
-  AmexReportFormatFormComponent
-} from '@ui-components/ui';
+  OmsReportFormatPanelComponent,
+  ReportFormatFormData
+} from './report-format-panel';
 
 import {
   OmsReportFormatService
@@ -23,7 +26,7 @@ import {
 
   imports: [
     CommonModule,
-    AmexReportFormatFormComponent
+    OmsReportFormatPanelComponent
   ],
 
   templateUrl:
@@ -32,16 +35,20 @@ import {
 export class OmsReportFormatComponent
   implements OnInit {
 
+  @Output()
+  backClicked =
+    new EventEmitter<void>();
+
   settlementOptions = [
 
     {
       value: 'pdf',
-      label: 'PDF'
+      label: 'Adobe PDF'
     },
 
     {
       value: 'excel',
-      label: 'Excel'
+      label: 'Microsoft Excel'
     }
   ];
 
@@ -49,16 +56,41 @@ export class OmsReportFormatComponent
 
     {
       value: 'pdf',
-      label: 'PDF'
+      label: 'Adobe PDF'
     },
 
     {
       value: 'excel',
-      label: 'Excel'
+      label: 'Microsoft Excel'
+    },
+
+    {
+      value: 'csv',
+      label: 'Comma Separated Values (CSV)'
+    },
+
+    {
+      value: 'extended_csv',
+      label: 'Extended (CSV)'
+    },
+
+    {
+      value: 'merchant_excel',
+      label: 'Merchant Extended Excel'
+    },
+
+    {
+      value: 'online_csv',
+      label: 'Online Merchants (CSV)'
     }
   ];
 
-  formData: any = {};
+  form: ReportFormatFormData = {
+    receiveByEmail: false,
+    settlementAdviceFormat: 'pdf',
+    submissionDetailsFormat: 'pdf',
+    emailAddresses: []
+  };
 
   isSubmitting = false;
 
@@ -79,7 +111,29 @@ export class OmsReportFormatComponent
       .getReportFormat()
       .subscribe(data => {
 
-        this.formData = data;
+        if (data) {
+
+          this.form = {
+
+            receiveByEmail:
+              (data as any).emailReports ??
+              (data as any).receiveByEmail ??
+              false,
+
+            settlementAdviceFormat:
+              (data as any).settlementAdvice ??
+              (data as any).settlementAdviceFormat ??
+              'pdf',
+
+            submissionDetailsFormat:
+              (data as any).submissionDetails ??
+              (data as any).submissionDetailsFormat ??
+              'pdf',
+
+            emailAddresses:
+              (data as any).emailAddresses ?? []
+          };
+        }
 
         console.log(
           'Loaded Report Format:',
@@ -88,8 +142,8 @@ export class OmsReportFormatComponent
       });
   }
 
-  onSubmit(
-    event: any
+onSubmit(
+    event: ReportFormatFormData
   ) {
 
     console.log(
@@ -97,14 +151,27 @@ export class OmsReportFormatComponent
       event
     );
 
+    this.form = event;
+
     this.isSubmitting = true;
 
     setTimeout(() => {
 
       this.reportFormatService
-        .saveReportFormat(
-          event
-        );
+        .saveReportFormat({
+
+          emailReports:
+            event.receiveByEmail,
+
+          emailAddresses:
+            event.emailAddresses,
+
+          settlementAdvice:
+            event.settlementAdviceFormat,
+
+          submissionDetails:
+            event.submissionDetailsFormat
+        });
 
       this.isSubmitting = false;
 
@@ -120,5 +187,7 @@ export class OmsReportFormatComponent
     console.log(
       'Back Clicked'
     );
+
+    this.backClicked.emit();
   }
 }

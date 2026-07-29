@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PanelComponent } from '../../../composite/panel';
+import { AccentCardComponent } from '../../../composite/amex/accent-card';
 import { CheckboxComponent } from '../../../primitives/checkbox';
 import { RadioGroupComponent } from '../../../primitives/radio-group';
 import { InputComponent } from '../../../primitives/input';
@@ -24,9 +24,11 @@ export interface ReportFormatData {
 @Component({
   selector: 'amex-report-format-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, PanelComponent, CheckboxComponent, RadioGroupComponent, InputComponent, ButtonComponent, LabelComponent],
+  imports: [CommonModule, FormsModule, AccentCardComponent, CheckboxComponent, RadioGroupComponent, InputComponent, ButtonComponent, LabelComponent],
   template: `
-    <ui-panel title="Select your report formats" variant="accent">
+    <ui-accent-card class="rff" [accentColor]="'#7b1fa2'" [padding]="'18px 22px'">
+      <div class="rff__title">Select your report formats</div>
+
       <!-- Email checkbox -->
       <div class="rff__email-check">
         <ui-checkbox [id]="id + '-email'" [(ngModel)]="form.receiveByEmail"
@@ -72,19 +74,18 @@ export interface ReportFormatData {
       <div class="rff__back-row">
         <ui-button class="rff__btn rff__btn--back" variant="primary" label="Back" (click)="backClick.emit()"></ui-button>
       </div>
-    </ui-panel>
+    </ui-accent-card>
   `,
   styles: [`
     :host {
       display: block;
       font-family: Arial, sans-serif;
-      --panel-title-size: 15px;
-      --panel-padding: 18px 22px;
       --input-border: 1px solid #ccc;
       --input-padding: 6px 10px;
       --input-focus-border-color: #7b1fa2;
     }
 
+    .rff__title { font-size: 15px; font-weight: bold; color: #1a3a6b; letter-spacing: 0.5px; margin: 0 0 16px; }
     .rff__email-check { margin-bottom: 18px; }
     .rff__group { margin-bottom: 18px; }
     .rff__submit-row { display: flex; justify-content: flex-end; margin-bottom: 14px; }

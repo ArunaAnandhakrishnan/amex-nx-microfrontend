@@ -9,7 +9,8 @@ import { CommonModule }
 from '@angular/common';
 
 import {
-  AmexAddDeleteMerchantPanelComponent
+  AmexAddDeleteMerchantPanelComponent,
+  AccentCardComponent
 } from '@ui-components/ui';
 
 import {
@@ -28,7 +29,8 @@ import {
 
   imports: [
     CommonModule,
-    AmexAddDeleteMerchantPanelComponent
+    AmexAddDeleteMerchantPanelComponent,
+    AccentCardComponent
   ],
 
   templateUrl:
@@ -44,6 +46,20 @@ export class OmsMerchantPanelComponent
   @Output()
   startClicked =
     new EventEmitter<void>();
+
+  @Output()
+  backClicked =
+    new EventEmitter<void>();
+
+  /** 'menu' = the ADD/DELETE landing card with the two links.
+   * 'add' / 'delete' = the corresponding form. */
+  view: 'menu' | 'add' | 'delete' = 'menu';
+
+  menuTitle = 'ADD/DELETE A MERCHANT ACCOUNT';
+
+  /** Now rendered outside amex-add-delete-merchant-panel (its [showTitle] is false), directly above the card. */
+  addFormTitle = 'To add new Merchant Number, please enter the following details';
+  deleteFormTitle = 'Delete an existing Merchant Account';
 
   merchantOptions: any[] = [];
 
@@ -95,6 +111,33 @@ export class OmsMerchantPanelComponent
       });
   }
 
+  onMenuLinkClick(id: string) {
+
+    console.log(
+      'Merchant Menu:',
+      id
+    );
+
+    if (id === 'add') {
+
+      this.view = 'add';
+    }
+
+    if (id === 'delete') {
+
+      this.view = 'delete';
+    }
+  }
+
+  onPanelBack() {
+
+    console.log(
+      'Back to Add/Delete Menu'
+    );
+
+    this.view = 'menu';
+  }
+
   onAddMerchant(
   event: any
 ) {
@@ -113,6 +156,9 @@ export class OmsMerchantPanelComponent
   const ibanLast5Digits =
     event?.lastFiveIban;
 
+  const tradeLicense =
+    event?.tradeLicense;
+
     console.log(
   'IBAN:',
   ibanLast5Digits,
@@ -122,7 +168,8 @@ export class OmsMerchantPanelComponent
   if (
     !merchantNo ||
     ibanLast5Digits === null ||
-    ibanLast5Digits === undefined
+    ibanLast5Digits === undefined ||
+    !tradeLicense
   ) {
 
     alert(
@@ -166,6 +213,8 @@ export class OmsMerchantPanelComponent
       'Merchant Added Successfully'
     );
 
+    this.view = 'menu';
+
   } else {
 
     alert(
@@ -175,22 +224,38 @@ export class OmsMerchantPanelComponent
 }
 
   onDeleteMerchant(
-  merchantNo: string
+  merchantNos: string[]
 ) {
 
   console.log(
-    'Delete Merchant:',
-    merchantNo
+    'Delete Merchants:',
+    merchantNos
   );
 
-  this.merchantService
-    .deleteMerchant(
-      merchantNo
+  if (!merchantNos?.length) {
+
+    alert(
+      'Please select at least one merchant to delete'
     );
+
+    return;
+  }
+
+  merchantNos.forEach(merchantNo => {
+
+    this.merchantService
+      .deleteMerchant(
+        merchantNo
+      );
+  });
 
   alert(
     'Merchant Deleted'
   );
+
+  this.view = 'menu';
+
+  this.loadMerchants();
 }
 
   onStart() {
@@ -200,5 +265,6 @@ export class OmsMerchantPanelComponent
     );
 
     this.startClicked.emit();
+    this.backClicked.emit();
   }
 }

@@ -11,7 +11,6 @@ import { SuppSearchComponent } from '../pages/search/supp-search.component';
   template: `
     <amex-page-component
       portalStyle="onls"
-      pageTitle="SUPPLEMENTARY ACCESS HELPER"
       [showHeader]="false"
       [showFooter]="false"
       [showSidebar]="false">

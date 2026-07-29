@@ -1,0 +1,20 @@
+<div class="vol__title">VAT Outlet Linking</div>
+
+<ui-accent-card accentColor="#7b1f4b" maxWidth="100%" padding="20px 24px">
+
+  <div class="vol__field">
+    <ui-label class="vol__field-label" forId="vat-outlet-merchant-number">American Express Merchant Number</ui-label>
+    <ui-input
+      id="vat-outlet-merchant-number"
+      [(ngModel)]="merchantNumber"
+      [invalid]="showError">
+    </ui-input>
+    <div class="vol__error" *ngIf="showError">Invalid entry</div>
+  </div>
+
+  <div class="vol__actions">
+    <ui-button class="vol__btn vol__btn--back" variant="primary" label="Back" (click)="onBack()"></ui-button>
+    <ui-button class="vol__btn vol__btn--search" variant="primary" label="Search" (click)="onSearch()"></ui-button>
+  </div>
+
+</ui-accent-card>

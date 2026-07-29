@@ -7,6 +7,7 @@
     "module": "preserve",
     "lib": ["es2020", "dom"],
     "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@ui-components/ui": ["libs/ui/src/index.ts"],
       "@ui-components/ui-styles": ["libs/ui-styles/src/index.ts"]

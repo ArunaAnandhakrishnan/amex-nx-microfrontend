@@ -1,5 +1,7 @@
 import {
-  Component
+  Component,
+  EventEmitter,
+  Output
 } from '@angular/core';
 
 import {
@@ -69,6 +71,10 @@ export class OmsMerchantDataFormComponent {
     private merchantDataService:
       OmsMerchantDataService
   ) {}
+
+  @Output()
+  backClicked =
+    new EventEmitter<void>();
 
   onSubmit(
     event: any
@@ -293,10 +299,12 @@ export class OmsMerchantDataFormComponent {
     }, 1500);
   }
 
-  onBack() {
+onBack() {
 
     console.log(
       'Back Clicked'
     );
+
+    this.backClicked.emit();
   }
 }

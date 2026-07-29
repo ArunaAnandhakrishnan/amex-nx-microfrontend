@@ -10,12 +10,11 @@ import { CommonModule } from '@angular/common';
       <ng-container *ngIf="variant === 'accent'">
         <div class="panel-title" *ngIf="title">{{ title }}</div>
         <div class="panel-accent" *ngIf="title"></div>
-        <div class="panel-body"><ng-content></ng-content></div>
       </ng-container>
-      <ng-container *ngIf="variant === 'band'">
-        <div class="panel-band" *ngIf="title">{{ title }}</div>
-        <div class="panel-band-body"><ng-content></ng-content></div>
-      </ng-container>
+      <div class="panel-band" *ngIf="variant === 'band' && title">{{ title }}</div>
+      <div [class]="variant === 'band' ? 'panel-band-body' : 'panel-body'">
+        <ng-content></ng-content>
+      </div>
     </div>
   `,
   styles: [`

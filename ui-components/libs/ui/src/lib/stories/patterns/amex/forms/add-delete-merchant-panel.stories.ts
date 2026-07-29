@@ -5,8 +5,12 @@ const meta: Meta<AmexAddDeleteMerchantPanelComponent> = {
   title: 'Patterns/Amex/Forms/AddDeleteMerchantPanel',
   component: AmexAddDeleteMerchantPanelComponent,
   argTypes: {
+    mode: { control: 'radio', options: ['add', 'delete'] },
+    showTitle: { control: 'boolean' },
+    showLabels: { control: 'boolean' },
     addTitle: { control: 'text' },
     deleteTitle: { control: 'text' },
+    cardAccentColor: { control: 'color' },
   },
   tags: ['autodocs'],
 };
@@ -14,13 +18,33 @@ export default meta;
 type Story = StoryObj<AmexAddDeleteMerchantPanelComponent>;
 
 export const AddMode: Story = {
-  name: 'Add mode — merchant number + IBAN',
-  args: { merchantOptions: [] },
+  name: 'Add mode â€” no title, no labels (default)',
+  args: { mode: 'add', merchantOptions: [] },
+};
+
+export const AddModeWithTitleAndLabels: Story = {
+  name: 'Add mode â€” title + labels on',
+  args: { mode: 'add', showTitle: true, showLabels: true, merchantOptions: [] },
 };
 
 export const DeleteMode: Story = {
-  name: 'Delete mode — select from list',
+  name: 'Delete mode â€” no title, no labels (default)',
   args: {
+    mode: 'delete',
+    merchantOptions: [
+      { merchantNo: '9275640241', label: 'Dubai Branch' },
+      { merchantNo: '1100286459', label: 'Abu Dhabi Branch' },
+      { merchantNo: '1104166483', label: 'Sharjah Branch' },
+    ],
+  },
+};
+
+export const DeleteModeWithTitleAndLabels: Story = {
+  name: 'Delete mode â€” title + labels on',
+  args: {
+    mode: 'delete',
+    showTitle: true,
+    showLabels: true,
     merchantOptions: [
       { merchantNo: '9275640241', label: 'Dubai Branch' },
       { merchantNo: '1100286459', label: 'Abu Dhabi Branch' },
@@ -30,6 +54,6 @@ export const DeleteMode: Story = {
 };
 
 export const DeleteEmpty: Story = {
-  name: 'Delete mode — no merchants',
-  args: { merchantOptions: [] },
+  name: 'Delete mode â€” no merchants',
+  args: { mode: 'delete', merchantOptions: [] },
 };

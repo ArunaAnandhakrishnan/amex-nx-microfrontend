@@ -176,7 +176,7 @@ export class AuthApiService extends AmexPortalAuthUtil {
   registerOms(data: RegisterData): Observable<string> {
     return this.http
       .post<ApiResponse<void>>(
-        this.buildUrl(API_ENDPOINTS.auth.register),
+        this.buildUrl(API_ENDPOINTS.auth.registeroms),
         data
       )
       .pipe(

@@ -10,7 +10,6 @@ export * from './lib/primitives/avatar';
 export * from './lib/primitives/spinner';
 export * from './lib/primitives/toggle';
 export * from './lib/primitives/tag';
-export * from './lib/primitives/divider';
 export * from './lib/primitives/progress-bar';
 export * from './lib/primitives/alert';
 export * from './lib/primitives/icon-button';
@@ -51,7 +50,6 @@ export * from './lib/composite/amex/card-tile';
 export * from './lib/composite/amex/report-table';
 export * from './lib/composite/amex/audit-trail-row';
 export * from './lib/composite/amex/offer-card';
-export * from './lib/composite/amex/wearable-tile';
 export * from './lib/composite/amex/user-row';
 export * from './lib/composite/amex/accent-card';
 

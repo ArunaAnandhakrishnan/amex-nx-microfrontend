@@ -16,7 +16,7 @@ type Story = StoryObj<ListItemComponent>;
 
 export const Default: Story = {
   render: () => ({
-    moduleMetadata: { imports: [ListComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `<ui-list><ui-list-item>A plain list item</ui-list-item></ui-list>`,
   }),
 };
@@ -25,7 +25,7 @@ export const Clickable: Story = {
   args: { clickable: true },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [ListComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `<ui-list [unstyled]="true"><ui-list-item [clickable]="clickable">Click or press Enter</ui-list-item></ui-list>`,
   }),
 };

@@ -1,5 +1,4 @@
-// libs/ui/src/lib/atoms/date-input.ts
-import { Component, Input, forwardRef, HostBinding } from '@angular/core';
+import { Component, Input, forwardRef, HostBinding, ElementRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { IconComponent } from './icon';
 
@@ -11,6 +10,7 @@ import { IconComponent } from './icon';
   template: `
     <div class="date-input-wrapper">
       <input
+        #dateInput
         type="date"
         [id]="id"
         [min]="min"
@@ -29,7 +29,13 @@ import { IconComponent } from './icon';
         (blur)="onTouched()"
         class="date-input"
       />
-      <ui-icon glyph="📅" size="sm" [decorative]="true" class="date-input-icon"></ui-icon>
+      <ui-icon
+        glyph="📅"
+        size="sm"
+        [decorative]="true"
+        class="date-input-icon"
+        (click)="openPicker()"
+      ></ui-icon>
     </div>
   `,
   styles: [`
@@ -51,18 +57,36 @@ import { IconComponent } from './icon';
     .date-input.invalid { border-color: #f44336; }
     .date-input.invalid:focus { box-shadow: 0 0 0 2px rgba(244,67,54,0.15); }
     .date-input.disabled { background: #f5f5f5; cursor: not-allowed; color: #999; }
+
+    /* hide native browser calendar icon so only our custom icon shows */
+    .date-input::-webkit-calendar-picker-indicator {
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      width: 32px;
+      height: 100%;
+      margin: 0;
+    }
+    .date-input::-webkit-clear-button,
+    .date-input::-webkit-inner-spin-button {
+      display: none;
+    }
+
     .date-input-icon {
       position: absolute;
       right: 8px;
       top: 50%;
       transform: translateY(-50%);
-      pointer-events: none;
+      cursor: pointer;
+      pointer-events: auto;
     }
   `],
 })
 export class DateInputComponent implements ControlValueAccessor {
   private static _idCounter = 0;
   @HostBinding('attr.id') @Input() id = `ui-date-input-${++DateInputComponent._idCounter}`;
+
+  @ViewChild('dateInput') dateInputRef!: ElementRef<HTMLInputElement>;
 
   @Input() min = '';
   @Input() max = '';
@@ -80,6 +104,16 @@ export class DateInputComponent implements ControlValueAccessor {
   onInput(event: Event) {
     this.value = (event.target as HTMLInputElement).value;
     this.onChange(this.value);
+  }
+
+  openPicker() {
+    if (this.disabled) return;
+    const input = this.dateInputRef.nativeElement;
+    if (typeof input.showPicker === 'function') {
+      input.showPicker();
+    } else {
+      input.focus();
+    }
   }
 
   writeValue(val: string) { this.value = val ?? ''; }

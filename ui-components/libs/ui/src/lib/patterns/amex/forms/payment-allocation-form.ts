@@ -32,7 +32,7 @@ export interface PaymentTransaction {
     TableBodyComponent, TableRowComponent, TableCellComponent,
   ],
   template: `
-    <ui-panel title="Payment Allocation" variant="band">
+    <ui-panel title="Payment Allocation">
       <!-- Account selector -->
       <div class="paf__field">
         <ui-select

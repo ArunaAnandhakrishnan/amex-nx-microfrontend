@@ -1,11 +1,14 @@
+// libs/ui/src/lib/primitives/list.ts
 import { Component, Input, HostBinding } from '@angular/core';
-import { NgIf } from '@angular/common';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'ui-list',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, NgTemplateOutlet],
   template: `
+    <ng-template #content><ng-content></ng-content></ng-template>
+
     <ul
       *ngIf="!ordered"
       [id]="id"
@@ -14,7 +17,7 @@ import { NgIf } from '@angular/common';
       [class.ui-list--unstyled]="unstyled"
       [attr.aria-label]="ariaLabel || null"
     >
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
     </ul>
     <ol
       *ngIf="ordered"
@@ -24,7 +27,7 @@ import { NgIf } from '@angular/common';
       [class.ui-list--unstyled]="unstyled"
       [attr.aria-label]="ariaLabel || null"
     >
-      <ng-content></ng-content>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
     </ol>
   `,
   styles: [`

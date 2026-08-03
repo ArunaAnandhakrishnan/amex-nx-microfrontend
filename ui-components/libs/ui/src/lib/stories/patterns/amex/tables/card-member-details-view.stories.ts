@@ -13,9 +13,13 @@ export const ActiveWithLinks: Story = {
   name: 'Active member with Offers & Benefits',
   args: {
     details: {
-      name: 'AHMED AL MANSOURI', userId: 'ahmed_supp01',
-      cardNumber: '3791XXXXXX7018', status: 'Active',
-      accountType: 'Supplementary', hasOffers: true, hasBenefits: true,
+      name: 'AHMED AL MANSOURI',
+      userId: 'ahmed_supp01',
+      cardNumber: '3791XXXXXX7018',
+      status: 'Active',
+      accountType: 'Supplementary',
+      hasOffers: true,
+      hasBenefits: true,
     },
   },
 };
@@ -24,9 +28,13 @@ export const InactiveMember: Story = {
   name: 'Inactive member',
   args: {
     details: {
-      name: 'SARA KHALID', userId: 'sara_supp02',
-      cardNumber: '3791XXXXXX8024', status: 'Inactive',
-      accountType: 'Primary', hasOffers: false, hasBenefits: false,
+      name: 'SARA KHALID',
+      userId: 'sara_supp02',
+      cardNumber: '3791XXXXXX8024',
+      status: 'Inactive',
+      accountType: 'Primary',
+      hasOffers: false,
+      hasBenefits: false,
     },
   },
 };

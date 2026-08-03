@@ -4,12 +4,19 @@ import { PaginationComponent } from '../../primitives/pagination';
 const meta: Meta<PaginationComponent> = {
   title: 'Primitives/Pagination',
   component: PaginationComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     currentPage: { control: { type: 'number', min: 1 } },
     totalPages: { control: { type: 'number', min: 1 } },
     pageChange: { action: 'pageChange' },
-  
+
     variant: { control: 'select', options: ['numbered', 'compact'] },
     showFirstLast: { control: 'boolean' },
     showRangeLabel: { control: 'boolean' },

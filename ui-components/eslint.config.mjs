@@ -17,14 +17,12 @@ export default [
       '**/*.cjs',
       '**/*.mjs',
     ],
-    // Override or add rules here
     rules: {},
   },
   ...nx.configs['flat/angular'],
   ...nx.configs['flat/angular-template'],
   {
     files: ['**/*.html'],
-    // Override or add rules here
     rules: {},
   },
 ];

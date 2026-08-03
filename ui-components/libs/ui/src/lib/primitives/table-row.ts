@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, HostBinding, HostListener } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostBinding,
+  HostListener,
+} from '@angular/core';
 
 @Component({
   selector: 'ui-table-row',
@@ -19,19 +26,30 @@ import { Component, Input, Output, EventEmitter, HostBinding, HostListener } fro
       <ng-content></ng-content>
     </tr>
   `,
-  styles: [`
-    .ui-table-row {
-      border-bottom: var(--table-row-border-bottom, none);
-    }
-    .ui-table-row--hoverable:hover { background: var(--table-row-hover-bg, #f5f9ff); }
-    .ui-table-row--selected { background: var(--table-row-selected-bg, #e3f2fd); }
-    .ui-table-row--clickable { cursor: pointer; }
-    :host { display: contents; }
-  `],
+  styles: [
+    `
+      .ui-table-row {
+        border-bottom: var(--table-row-border-bottom, none);
+      }
+      .ui-table-row--hoverable:hover {
+        background: var(--table-row-hover-bg, #f5f9ff);
+      }
+      .ui-table-row--selected {
+        background: var(--table-row-selected-bg, #e3f2fd);
+      }
+      .ui-table-row--clickable {
+        cursor: pointer;
+      }
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class TableRowComponent {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `ui-table-row-${++TableRowComponent._idCounter}`;
+  @HostBinding('attr.id') @Input() id =
+    `ui-table-row-${++TableRowComponent._idCounter}`;
   @Input() header = false;
   @Input() selected = false;
   @Input() hoverable = true;

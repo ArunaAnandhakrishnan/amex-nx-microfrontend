@@ -1,6 +1,15 @@
-import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostBinding,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AmexStatusBadgeComponent, AmexStatus } from './currency-logic/status-badge';
+import {
+  AmexStatusBadgeComponent,
+  AmexStatus,
+} from './currency-logic/status-badge';
 import { ButtonComponent } from '../../primitives/button';
 
 export type AmexUserRole =
@@ -12,7 +21,11 @@ export type AmexUserRole =
   | 'travel-agent'
   | 'internal-admin';
 
-export type AmexUserRowButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
+export type AmexUserRowButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'ghost'
+  | 'danger';
 export type AmexUserRowButtonSize = 'sm' | 'md' | 'lg';
 
 export interface AmexUser {
@@ -28,8 +41,8 @@ export interface AmexUser {
 const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
   'master-admin': 'Master Admin',
   'sub-admin': 'Sub Admin',
-  'user': 'User',
-  'mrm': 'MRM',
+  user: 'User',
+  mrm: 'MRM',
   'vat-user': 'VAT User',
   'travel-agent': 'Travel Agent',
   'internal-admin': 'Internal Admin',
@@ -48,7 +61,9 @@ const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
       </div>
       <div class="amex-user-row__role">{{ roleLabel }}</div>
       <amex-status-badge [status]="user.status"></amex-status-badge>
-      <div *ngIf="user.lastLogin" class="amex-user-row__login">{{ user.lastLogin }}</div>
+      <div *ngIf="user.lastLogin" class="amex-user-row__login">
+        {{ user.lastLogin }}
+      </div>
       <div class="amex-user-row__actions">
         <ui-button
           *ngIf="showEdit"
@@ -57,8 +72,9 @@ const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
           [variant]="editVariant"
           [size]="buttonSize"
           [disabled]="disabled"
-          [ariaLabel]="editAriaLabel || (editLabel + ' ' + user.name)"
-          (click)="edit.emit(user)">
+          [ariaLabel]="editAriaLabel || editLabel + ' ' + user.name"
+          (click)="edit.emit(user)"
+        >
         </ui-button>
         <ui-button
           *ngIf="showResetPassword"
@@ -67,8 +83,11 @@ const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
           [variant]="resetPasswordVariant"
           [size]="buttonSize"
           [disabled]="disabled"
-          [ariaLabel]="resetPasswordAriaLabel || (resetPasswordLabel + ' ' + user.name)"
-          (click)="resetPassword.emit(user)">
+          [ariaLabel]="
+            resetPasswordAriaLabel || resetPasswordLabel + ' ' + user.name
+          "
+          (click)="resetPassword.emit(user)"
+        >
         </ui-button>
         <ui-button
           *ngIf="showToggleStatus && user.status === activeStatus"
@@ -77,8 +96,9 @@ const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
           [variant]="lockVariant"
           [size]="buttonSize"
           [disabled]="disabled"
-          [ariaLabel]="lockAriaLabel || (lockLabel + ' ' + user.name)"
-          (click)="toggleStatus.emit(user)">
+          [ariaLabel]="lockAriaLabel || lockLabel + ' ' + user.name"
+          (click)="toggleStatus.emit(user)"
+        >
         </ui-button>
         <ui-button
           *ngIf="showToggleStatus && user.status !== activeStatus"
@@ -87,62 +107,84 @@ const DEFAULT_ROLE_LABELS: Record<AmexUserRole, string> = {
           [variant]="unlockVariant"
           [size]="buttonSize"
           [disabled]="disabled"
-          [ariaLabel]="unlockAriaLabel || (unlockLabel + ' ' + user.name)"
-          (click)="toggleStatus.emit(user)">
+          [ariaLabel]="unlockAriaLabel || unlockLabel + ' ' + user.name"
+          (click)="toggleStatus.emit(user)"
+        >
         </ui-button>
       </div>
     </div>
   `,
-  styles: [`
-    .amex-user-row {
-      display: grid;
-      grid-template-columns: 40px 1fr 130px auto auto auto;
-      align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
-      border-bottom: 1px solid #f0f0f0;
-      background: #fff;
-    }
-    .amex-user-row:hover { background: #fafbff; }
-    .amex-user-row__avatar {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: #016FD0;
-      color: #fff;
-      font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .amex-user-row__name { font-size: 13px; font-weight: 600; color: #111; }
-    .amex-user-row__email { font-size: 12px; color: #888; }
-    .amex-user-row__role {
-      font-size: 12px; color: #555;
-      background: #f0f4ff;
-      padding: 3px 10px; border-radius: 10px;
-      white-space: nowrap;
-    }
-    .amex-user-row__login { font-size: 11px; color: #aaa; white-space: nowrap; }
-    .amex-user-row__actions { display: flex; gap: 6px; }
-  `],
+  styles: [
+    `
+      .amex-user-row {
+        display: grid;
+        grid-template-columns: 40px 1fr 130px auto auto auto;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-bottom: 1px solid #f0f0f0;
+        background: #fff;
+      }
+      .amex-user-row:hover {
+        background: #fafbff;
+      }
+      .amex-user-row__avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #016fd0;
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .amex-user-row__name {
+        font-size: 13px;
+        font-weight: 600;
+        color: #111;
+      }
+      .amex-user-row__email {
+        font-size: 12px;
+        color: #888;
+      }
+      .amex-user-row__role {
+        font-size: 12px;
+        color: #555;
+        background: #f0f4ff;
+        padding: 3px 10px;
+        border-radius: 10px;
+        white-space: nowrap;
+      }
+      .amex-user-row__login {
+        font-size: 11px;
+        color: #aaa;
+        white-space: nowrap;
+      }
+      .amex-user-row__actions {
+        display: flex;
+        gap: 6px;
+      }
+    `,
+  ],
 })
 export class AmexUserRowComponent {
   private static _idCounter = 0;
 
-  /** Overridable so parent tables/screens can supply a stable id for aria-* wiring; falls back to an auto-generated one. */
-  @HostBinding('attr.id') @Input() id = `amex-user-row-${++AmexUserRowComponent._idCounter}`;
+ @HostBinding('attr.id') @Input() id =
+    `amex-user-row-${++AmexUserRowComponent._idCounter}`;
 
   @Input() user!: AmexUser;
   @Input() disabled = false;
 
-  /** Which status value counts as "active" for the Lock/Unlock toggle — configurable, not assumed elsewhere. */
   @Input() activeStatus: AmexStatus = 'active';
 
-  /** Per-action visibility toggles. */
   @Input() showEdit = true;
   @Input() showResetPassword = true;
   @Input() showToggleStatus = true;
 
-  /** Fully configurable action button copy, styling and a11y — nothing hardcoded. */
   @Input() editLabel = 'Edit';
   @Input() resetPasswordLabel = 'Reset Pwd';
   @Input() lockLabel = 'Lock';
@@ -159,7 +201,6 @@ export class AmexUserRowComponent {
   @Input() lockAriaLabel = '';
   @Input() unlockAriaLabel = '';
 
-  /** Optional override/extension of the built-in role→label map, merged over the defaults. */
   @Input() roleLabels: Partial<Record<AmexUserRole, string>> = {};
 
   @Output() edit = new EventEmitter<AmexUser>();
@@ -167,7 +208,14 @@ export class AmexUserRowComponent {
   @Output() toggleStatus = new EventEmitter<AmexUser>();
 
   get initials(): string {
-    return this.user?.name?.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() ?? '??';
+    return (
+      this.user?.name
+        ?.split(' ')
+        .map((w) => w[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase() ?? '??'
+    );
   }
 
   get roleLabel(): string {

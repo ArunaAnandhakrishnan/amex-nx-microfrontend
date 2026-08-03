@@ -4,19 +4,23 @@ import { AmexReportDownloadButtonComponent } from '../../../../patterns/amex/act
 const meta: Meta<AmexReportDownloadButtonComponent> = {
   title: 'Patterns/Amex/Action/ReportDownloadButton',
   component: AmexReportDownloadButtonComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'needs-improvement', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'needs-improvement',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     download: { action: 'download' },
-    back:     { action: 'back' },
+    back: { action: 'back' },
   },
 };
 export default meta;
 type Story = StoryObj<AmexReportDownloadButtonComponent>;
 
-/**
- * BCRB portal — single Excel format with star label, Submit + Back buttons.
- * Matches the BCRB Reports screenshot exactly.
- */
 export const BCRBExcel: Story = {
   name: 'BCRB — Export to Excel (default)',
   args: {
@@ -29,9 +33,6 @@ export const BCRBExcel: Story = {
   },
 };
 
-/**
- * OMS / VAT Invoice portal — single PDF format.
- */
 export const OMSPdf: Story = {
   name: 'OMS — Export to PDF',
   args: {
@@ -44,10 +45,6 @@ export const OMSPdf: Story = {
     },
   },
 };
-
-/**
- * BTA portal — single CSV format with custom submit label.
- */
 export const BTACsv: Story = {
   name: 'BTA — Export to CSV',
   args: {
@@ -59,11 +56,6 @@ export const BTACsv: Story = {
     },
   },
 };
-
-/**
- * SOC/ROC portal — multiple formats available (dropdown).
- * User selects PDF / Excel / CSV / RTF before submitting.
- */
 export const SOCMultiFormat: Story = {
   name: 'SOC/ROC — Multi-format dropdown',
   args: {
@@ -77,9 +69,6 @@ export const SOCMultiFormat: Story = {
   },
 };
 
-/**
- * Loading state — Submit button shows spinner and is disabled.
- */
 export const Loading: Story = {
   name: 'Loading state',
   args: {
@@ -91,10 +80,6 @@ export const Loading: Story = {
     },
   },
 };
-
-/**
- * No back button — used in modal or inline panel contexts.
- */
 export const NoBackButton: Story = {
   name: 'No Back button',
   args: {

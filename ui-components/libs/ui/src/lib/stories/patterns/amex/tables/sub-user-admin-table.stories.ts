@@ -16,9 +16,24 @@ export const WithUsers: Story = {
     showCreate: true,
     createLabel: 'Create Sub User',
     rows: [
-      { name: 'Ahmed Al Mansouri', email: 'ahmed@merchant.ae', role: 'Sub User', status: 'Active' },
-      { name: 'Sara Khalid',       email: 'sara@merchant.ae',  role: 'VAT User', status: 'Active' },
-      { name: 'Omar Hassan',       email: 'omar@merchant.ae',  role: 'Sub User', status: 'Inactive' },
+      {
+        name: 'Ahmed Al Mansouri',
+        email: 'ahmed@merchant.ae',
+        role: 'Sub User',
+        status: 'Active',
+      },
+      {
+        name: 'Sara Khalid',
+        email: 'sara@merchant.ae',
+        role: 'VAT User',
+        status: 'Active',
+      },
+      {
+        name: 'Omar Hassan',
+        email: 'omar@merchant.ae',
+        role: 'Sub User',
+        status: 'Inactive',
+      },
     ],
   },
 };

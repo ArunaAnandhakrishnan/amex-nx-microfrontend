@@ -19,7 +19,7 @@ type Story = StoryObj<ListComponent>;
 export const Bulleted: Story = {
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [ListItemComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `
       <ui-list [ordered]="ordered" [compact]="compact" [unstyled]="unstyled" [ariaLabel]="ariaLabel">
         <ui-list-item>First item</ui-list-item>
@@ -33,12 +33,12 @@ export const Numbered: Story = {
   args: { ordered: true },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [ListItemComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `
       <ui-list [ordered]="ordered">
-        <ui-list-item>Step one — enter your details</ui-list-item>
-        <ui-list-item>Step two — confirm your email</ui-list-item>
-        <ui-list-item>Step three — set a password</ui-list-item>
+        <ui-list-item>Step one â€” enter your details</ui-list-item>
+        <ui-list-item>Step two â€” confirm your email</ui-list-item>
+        <ui-list-item>Step three â€” set a password</ui-list-item>
       </ui-list>`,
   }),
 };
@@ -47,7 +47,7 @@ export const Unstyled: Story = {
   args: { unstyled: true },
   render: (args) => ({
     props: args,
-    moduleMetadata: { imports: [ListItemComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `
       <ui-list [unstyled]="unstyled">
         <ui-list-item>No bullet, card-row style</ui-list-item>
@@ -59,7 +59,7 @@ export const Unstyled: Story = {
 export const ClickableItems: Story = {
   name: 'List with clickable items',
   render: () => ({
-    moduleMetadata: { imports: [ListItemComponent] },
+    moduleMetadata: { imports: [ListComponent, ListItemComponent] },
     template: `
       <ui-list [unstyled]="true">
         <ui-list-item [clickable]="true" (itemClick)="onClick('Settings')">Settings</ui-list-item>

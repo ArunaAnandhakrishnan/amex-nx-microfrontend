@@ -28,10 +28,6 @@ const meta: Meta<AmexRegisterFormComponent> = {
 export default meta;
 
 type Story = StoryObj<AmexRegisterFormComponent>;
-
-
-// ===================== ONLS =====================
-
 export const Empty: Story = {
   args: {
     portalTitle: '',
@@ -60,9 +56,6 @@ export const WithSuccess: Story = {
     portalStyle: 'onls',
   },
 };
-
-
-// ===================== OMS =====================
 
 export const OmsRegister: Story = {
   args: {

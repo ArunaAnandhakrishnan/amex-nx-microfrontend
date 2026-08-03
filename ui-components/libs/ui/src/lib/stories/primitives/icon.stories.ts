@@ -16,17 +16,17 @@ export default meta;
 type Story = StoryObj<IconComponent>;
 
 export const GlyphSmall: Story = {
-  name: 'Glyph — Small',
+  name: 'Glyph ï¿½ Small',
   args: { glyph: '?', size: 'sm' },
 };
 
 export const GlyphMedium: Story = {
-  name: 'Glyph — Medium',
+  name: 'Glyph ï¿½ Medium',
   args: { glyph: '?', size: 'md' },
 };
 
 export const GlyphLarge: Story = {
-  name: 'Glyph — Large',
+  name: 'Glyph ï¿½ Large',
   args: { glyph: '?', size: 'lg' },
 };
 

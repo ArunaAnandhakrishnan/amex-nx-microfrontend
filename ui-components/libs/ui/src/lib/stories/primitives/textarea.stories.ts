@@ -4,13 +4,21 @@ import { TextareaComponent } from '../../primitives/textarea';
 const meta: Meta<TextareaComponent> = {
   title: 'Primitives/Textarea',
   component: TextareaComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     placeholder: { control: 'text' },
     rows: { control: 'number' },
     disabled: { control: 'boolean' },
     error: { control: 'text' },
-  
+
     invalid: { control: 'boolean' },
     required: { control: 'boolean' },
     readonly: { control: 'boolean' },

@@ -13,9 +13,9 @@ A design-system component library built with **Angular 21** in an **Nx 22** mono
 
 ## Packages
 
-| Package | Path | Description |
-|---------|------|-------------|
-| `@ui-components/ui` | `libs/ui` | Angular components |
+| Package                    | Path             | Description                 |
+| -------------------------- | ---------------- | --------------------------- |
+| `@ui-components/ui`        | `libs/ui`        | Angular components          |
 | `@ui-components/ui-styles` | `libs/ui-styles` | SCSS design tokens & themes |
 
 ## Component Categories
@@ -37,7 +37,7 @@ import { ButtonComponent, InputComponent } from '@ui-components/ui';
   template: `
     <ui-button label="Submit" variant="primary"></ui-button>
     <ui-input type="email" placeholder="you@example.com"></ui-input>
-  `
+  `,
 })
 export class MyComponent {}
 ```
@@ -50,9 +50,9 @@ Import the SCSS token system in your global styles:
 @use '@ui-components/ui-styles/src/lib/styles/index' as *;
 
 // Then use tokens directly:
-color: $color-primary;       // #1976d2
-padding: $spacing-md;        // 16px
-font-size: $font-size-lg;    // 16px
+color: $color-primary; 
+padding: $spacing-md;
+font-size: $font-size-lg;
 ```
 
 ## Form Integration

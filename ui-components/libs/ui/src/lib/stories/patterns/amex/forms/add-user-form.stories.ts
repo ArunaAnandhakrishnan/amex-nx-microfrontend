@@ -15,24 +15,31 @@ export default meta;
 type Story = StoryObj<AmexAddUserFormComponent>;
 
 export const CreateMRMUser: Story = {
-  name: 'OMS — Create MRM User',
+  name: 'OMS ï¿½ Create MRM User',
   args: {
     title: 'CREATE MRM USER',
-    showUserId: false, showPassword: true,
-    showRole: true, showMerchantAccount: false,
-    submitLabel: 'Submit', backLabel: 'Back',
+    showUserId: false,
+    showPassword: true,
+    showRole: true,
+    showMerchantAccount: false,
+    submitLabel: 'Submit',
+    backLabel: 'Back',
   },
 };
 
 export const EditMRMUser: Story = {
-  name: 'OMS — Edit MRM User (pre-filled, image42)',
+  name: 'OMS ï¿½ Edit MRM User (pre-filled, image42)',
   args: {
     title: 'EDIT MRM USER',
-    showUserId: true, userIdReadonly: true,
-    showPassword: false, showRole: false,
-    submitLabel: 'Submit', backLabel: 'Back',
+    showUserId: true,
+    userIdReadonly: true,
+    showPassword: false,
+    showRole: false,
+    submitLabel: 'Submit',
+    backLabel: 'Back',
     initialData: {
-      userId: 'wasimtest123', userName: 'wasimtest123',
+      userId: 'wasimtest123',
+      userName: 'wasimtest123',
       emailAddress: 'wasim.sayyed@americanexpress.com.bh',
       status: 'Active',
     },
@@ -40,24 +47,28 @@ export const EditMRMUser: Story = {
 };
 
 export const CreateOMSUser: Story = {
-  name: 'OMS — Create OMS User with Merchant Account',
+  name: 'OMS ï¿½ Create OMS User with Merchant Account',
   args: {
     title: 'CREATE OMS USER',
-    showMerchantAccount: true, showPassword: true,
-    submitLabel: 'Submit', backLabel: 'Back',
+    showMerchantAccount: true,
+    showPassword: true,
+    submitLabel: 'Submit',
+    backLabel: 'Back',
   },
 };
 
 export const BTAUser: Story = {
-  name: 'BTA — Create User with Corporate Account',
+  name: 'BTA ï¿½ Create User with Corporate Account',
   args: {
     title: 'CREATE BTA USER',
-    showCorporateAccount: true, showPassword: true,
+    showCorporateAccount: true,
+    showPassword: true,
     roleOptions: [
       { value: 'corp_admin', label: 'Corporate Admin' },
       { value: 'travel_agent', label: 'Travel Agent Admin' },
       { value: 'amex_internal', label: 'Amex Internal Admin' },
     ],
-    submitLabel: 'Save', backLabel: 'Cancel',
+    submitLabel: 'Save',
+    backLabel: 'Cancel',
   },
 };

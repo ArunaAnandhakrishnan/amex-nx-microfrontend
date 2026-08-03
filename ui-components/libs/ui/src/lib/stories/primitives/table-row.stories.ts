@@ -9,7 +9,14 @@ const IMPORTS = [TableComponent, TableBodyComponent, TableCellComponent];
 const meta: Meta<TableRowComponent> = {
   title: 'Primitives/TableRow',
   component: TableRowComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     header: { control: 'boolean' },
     selected: { control: 'boolean' },

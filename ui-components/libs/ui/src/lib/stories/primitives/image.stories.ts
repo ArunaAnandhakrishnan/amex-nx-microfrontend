@@ -25,7 +25,11 @@ export const Default: Story = {
 };
 
 export const Contain: Story = {
-  args: { src: 'https://placehold.co/600x200', alt: 'Wide placeholder', objectFit: 'contain' },
+  args: {
+    src: 'https://placehold.co/600x200',
+    alt: 'Wide placeholder',
+    objectFit: 'contain',
+  },
   render: (args) => ({
     props: args,
     template: `<div style="width:320px;height:180px;background:#eee"><ui-image [src]="src" [alt]="alt" [objectFit]="objectFit"></ui-image></div>`,
@@ -33,7 +37,7 @@ export const Contain: Story = {
 };
 
 export const Fallback: Story = {
-  name: 'No src — fallback shown',
+  name: 'No src ï¿½ fallback shown',
   args: { fallbackText: 'AMERICAN EXPRESS', alt: 'Card art unavailable' },
   render: (args) => ({
     props: args,

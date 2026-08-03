@@ -13,11 +13,11 @@ Step-by-step guide to integrating **VN Core UI Components** into any Angular app
 
 ## Prerequisites
 
-| Requirement | Version |
-|-------------|---------|
-| Node.js | ≥ 18 |
-| Angular | ≥ 17 (standalone components) |
-| TypeScript | ≥ 5.0 |
+| Requirement | Version                      |
+| ----------- | ---------------------------- |
+| Node.js     | ≥ 18                         |
+| Angular     | ≥ 17 (standalone components) |
+| TypeScript  | ≥ 5.0                        |
 
 ---
 
@@ -45,7 +45,9 @@ If your consuming app is **outside** this Nx workspace, add the path aliases man
     "baseUrl": ".",
     "paths": {
       "@ui-components/ui": ["node_modules/@ui-components/ui/src/index.ts"],
-      "@ui-components/ui-styles": ["node_modules/@ui-components/ui-styles/src/index.ts"]
+      "@ui-components/ui-styles": [
+        "node_modules/@ui-components/ui-styles/src/index.ts"
+      ]
     }
   }
 }
@@ -60,6 +62,7 @@ If your consuming app is **outside** this Nx workspace, add the path aliases man
 Add the design token stylesheet to your application's global styles file.
 
 **`src/styles.scss`**
+
 ```scss
 @use '@ui-components/ui-styles/src/lib/styles/index' as *;
 
@@ -72,6 +75,7 @@ body {
 ```
 
 **`angular.json` / `project.json`** — make sure the styles file is registered:
+
 ```json
 {
   "build": {
@@ -96,7 +100,7 @@ import { Component } from '@angular/core';
 import {
   ButtonComponent,
   InputComponent,
-  BadgeComponent
+  BadgeComponent,
 } from '@ui-components/ui';
 
 @Component({
@@ -107,7 +111,7 @@ import {
     <ui-badge label="New" variant="success"></ui-badge>
     <ui-input type="email" placeholder="Enter email"></ui-input>
     <ui-button label="Submit" variant="primary"></ui-button>
-  `
+  `,
 })
 export class ExampleComponent {}
 ```
@@ -132,6 +136,7 @@ export class YourModule {}
 If you get `Can't find stylesheet` errors for SCSS imports, add `stylePreprocessorOptions` to your build config:
 
 **`angular.json` / `project.json`**
+
 ```json
 {
   "build": {
@@ -160,7 +165,7 @@ import {
   SelectComponent,
   TextareaComponent,
   CheckboxComponent,
-  ButtonComponent
+  ButtonComponent,
 } from '@ui-components/ui';
 
 @Component({
@@ -168,67 +173,93 @@ import {
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    FormGroupComponent, FormFieldComponent,
-    InputComponent, SelectComponent,
-    TextareaComponent, CheckboxComponent, ButtonComponent
+    FormGroupComponent,
+    FormFieldComponent,
+    InputComponent,
+    SelectComponent,
+    TextareaComponent,
+    CheckboxComponent,
+    ButtonComponent,
   ],
   template: `
     <form [formGroup]="form" (ngSubmit)="submit()">
       <ui-form-group legend="Contact Us">
-
-        <ui-form-field label="Full Name" [required]="true"
-          [error]="getError('name')">
-          <ui-input formControlName="name" placeholder="John Doe"
-            [error]="getError('name')">
+        <ui-form-field
+          label="Full Name"
+          [required]="true"
+          [error]="getError('name')"
+        >
+          <ui-input
+            formControlName="name"
+            placeholder="John Doe"
+            [error]="getError('name')"
+          >
           </ui-input>
         </ui-form-field>
 
-        <ui-form-field label="Email" [required]="true"
-          [error]="getError('email')">
-          <ui-input formControlName="email" type="email"
-            placeholder="john@example.com" [error]="getError('email')">
+        <ui-form-field
+          label="Email"
+          [required]="true"
+          [error]="getError('email')"
+        >
+          <ui-input
+            formControlName="email"
+            type="email"
+            placeholder="john@example.com"
+            [error]="getError('email')"
+          >
           </ui-input>
         </ui-form-field>
 
         <ui-form-field label="Subject">
-          <ui-select formControlName="subject"
-            [options]="subjects" placeholder="Select subject">
+          <ui-select
+            formControlName="subject"
+            [options]="subjects"
+            placeholder="Select subject"
+          >
           </ui-select>
         </ui-form-field>
 
         <ui-form-field label="Message" [required]="true">
-          <ui-textarea formControlName="message"
-            placeholder="Your message..." [rows]="5">
+          <ui-textarea
+            formControlName="message"
+            placeholder="Your message..."
+            [rows]="5"
+          >
           </ui-textarea>
         </ui-form-field>
 
         <ui-form-field>
-          <ui-checkbox formControlName="agreed"
-            label="I agree to the terms and conditions">
+          <ui-checkbox
+            formControlName="agreed"
+            label="I agree to the terms and conditions"
+          >
           </ui-checkbox>
         </ui-form-field>
 
-        <ui-button label="Send Message" variant="primary"
-          [disabled]="form.invalid">
+        <ui-button
+          label="Send Message"
+          variant="primary"
+          [disabled]="form.invalid"
+        >
         </ui-button>
-
       </ui-form-group>
     </form>
-  `
+  `,
 })
 export class ContactFormComponent {
   form = this.fb.group({
-    name:    ['', Validators.required],
-    email:   ['', [Validators.required, Validators.email]],
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     subject: [''],
     message: ['', Validators.required],
-    agreed:  [false],
+    agreed: [false],
   });
 
   subjects = [
     { label: 'General Inquiry', value: 'general' },
-    { label: 'Support',         value: 'support' },
-    { label: 'Billing',         value: 'billing' },
+    { label: 'Support', value: 'support' },
+    { label: 'Billing', value: 'billing' },
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -237,7 +268,7 @@ export class ContactFormComponent {
     const ctrl = this.form.get(field);
     if (!ctrl?.touched || !ctrl.errors) return '';
     if (ctrl.errors['required']) return `${field} is required`;
-    if (ctrl.errors['email'])    return 'Invalid email address';
+    if (ctrl.errors['email']) return 'Invalid email address';
     return '';
   }
 
@@ -260,19 +291,23 @@ Components like `Card`, `Modal`, `Tabs`, `Accordion`, `Badge`, `Alert` etc. are 
   standalone: true,
   imports: [CardComponent, BadgeComponent, ButtonComponent, NgFor],
   template: `
-    <ui-card *ngFor="let product of products"
+    <ui-card
+      *ngFor="let product of products"
       [title]="product.name"
       [subtitle]="product.category"
       [hoverable]="true"
-      [hasFooter]="true">
-      <ui-badge [label]="product.stock > 0 ? 'In Stock' : 'Out of Stock'"
-        [variant]="product.stock > 0 ? 'success' : 'error'">
+      [hasFooter]="true"
+    >
+      <ui-badge
+        [label]="product.stock > 0 ? 'In Stock' : 'Out of Stock'"
+        [variant]="product.stock > 0 ? 'success' : 'error'"
+      >
       </ui-badge>
       <div slot="footer">
         <ui-button label="Buy Now" variant="primary" size="sm"></ui-button>
       </div>
     </ui-card>
-  `
+  `,
 })
 export class ProductListComponent {
   products = [
@@ -289,8 +324,7 @@ export class ProductListComponent {
   standalone: true,
   imports: [ModalComponent, ButtonComponent],
   template: `
-    <ui-button label="Open Dialog" variant="primary"
-      (click)="isOpen = true">
+    <ui-button label="Open Dialog" variant="primary" (click)="isOpen = true">
     </ui-button>
 
     <ui-modal
@@ -298,24 +332,35 @@ export class ProductListComponent {
       title="Confirm Action"
       size="sm"
       [hasFooter]="true"
-      (closed)="isOpen = false">
-
+      (closed)="isOpen = false"
+    >
       Are you sure you want to proceed?
 
       <div slot="footer">
-        <ui-button label="Cancel" variant="secondary" size="sm"
-          (click)="isOpen = false">
+        <ui-button
+          label="Cancel"
+          variant="secondary"
+          size="sm"
+          (click)="isOpen = false"
+        >
         </ui-button>
-        <ui-button label="Confirm" variant="primary" size="sm"
-          (click)="confirm()">
+        <ui-button
+          label="Confirm"
+          variant="primary"
+          size="sm"
+          (click)="confirm()"
+        >
         </ui-button>
       </div>
     </ui-modal>
-  `
+  `,
 })
 export class ConfirmDialogComponent {
   isOpen = false;
-  confirm() { console.log('confirmed'); this.isOpen = false; }
+  confirm() {
+    console.log('confirmed');
+    this.isOpen = false;
+  }
 }
 ```
 
@@ -326,28 +371,40 @@ export class ConfirmDialogComponent {
   standalone: true,
   imports: [NotificationToastComponent, NgFor],
   template: `
-    <div style="position:fixed; bottom:24px; right:24px; display:flex; flex-direction:column; gap:8px; z-index:9999">
+    <div
+      style="position:fixed; bottom:24px; right:24px; display:flex; flex-direction:column; gap:8px; z-index:9999"
+    >
       <ui-notification-toast
         *ngFor="let toast of toasts"
         [variant]="toast.variant"
         [title]="toast.title"
         [message]="toast.message"
         [duration]="4000"
-        (dismissed)="remove(toast.id)">
+        (dismissed)="remove(toast.id)"
+      >
       </ui-notification-toast>
     </div>
-  `
+  `,
 })
 export class ToastHostComponent {
-  toasts: Array<{ id: number; variant: 'info'|'success'|'warning'|'error'; title: string; message: string }> = [];
+  toasts: Array<{
+    id: number;
+    variant: 'info' | 'success' | 'warning' | 'error';
+    title: string;
+    message: string;
+  }> = [];
   private counter = 0;
 
-  show(variant: 'info'|'success'|'warning'|'error', title: string, message: string) {
+  show(
+    variant: 'info' | 'success' | 'warning' | 'error',
+    title: string,
+    message: string,
+  ) {
     this.toasts.push({ id: ++this.counter, variant, title, message });
   }
 
   remove(id: number) {
-    this.toasts = this.toasts.filter(t => t.id !== id);
+    this.toasts = this.toasts.filter((t) => t.id !== id);
   }
 }
 ```
@@ -385,17 +442,19 @@ You can use the token variables in any SCSS file within your app after importing
 ### Available tokens
 
 **Colors**
+
 ```scss
-$color-primary:   #1976d2;
+$color-primary: #1976d2;
 $color-secondary: #ff4081;
-$color-text:      #333;
-$color-border:    #e0e0e0;
-$color-success:   #4caf50;
-$color-error:     #f44336;
-$color-warning:   #ff9800;
+$color-text: #333;
+$color-border: #e0e0e0;
+$color-success: #4caf50;
+$color-error: #f44336;
+$color-warning: #ff9800;
 ```
 
 **Spacing**
+
 ```scss
 $spacing-xs: 4px;
 $spacing-sm: 8px;
@@ -405,13 +464,14 @@ $spacing-xl: 32px;
 ```
 
 **Typography**
+
 ```scss
-$font-family-base:   'Arial', sans-serif;
-$font-size-sm:       12px;
-$font-size-md:       14px;
-$font-size-lg:       16px;
+$font-family-base: 'Arial', sans-serif;
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-lg: 16px;
 $font-weight-normal: 400;
-$font-weight-bold:   600;
+$font-weight-bold: 600;
 ```
 
 ---
@@ -422,10 +482,14 @@ The library ships light and dark CSS variable themes. Apply the dark theme by se
 
 ```html
 <!-- Light (default) -->
-<body>...</body>
+<body>
+  ...
+</body>
 
 <!-- Dark mode -->
-<body data-theme="dark">...</body>
+<body data-theme="dark">
+  ...
+</body>
 ```
 
 Toggle programmatically:
@@ -441,56 +505,62 @@ toggleDark(enabled: boolean) {
 ## Component API Quick Reference
 
 ### Button `ui-button`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `label` | `string` | `'Button'` | Button text |
-| `variant` | `'primary' \| 'secondary'` | `'primary'` | Visual style |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
-| `disabled` | `boolean` | `false` | Disabled state |
+
+| Input      | Type                       | Default     | Description    |
+| ---------- | -------------------------- | ----------- | -------------- |
+| `label`    | `string`                   | `'Button'`  | Button text    |
+| `variant`  | `'primary' \| 'secondary'` | `'primary'` | Visual style   |
+| `size`     | `'sm' \| 'md' \| 'lg'`     | `'md'`      | Size           |
+| `disabled` | `boolean`                  | `false`     | Disabled state |
 
 ### Input `ui-input`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `type` | `'text' \| 'email' \| 'password' \| 'number'` | `'text'` | Input type |
-| `placeholder` | `string` | `''` | Placeholder text |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `error` | `string` | `''` | Error message |
+
+| Input         | Type                                          | Default  | Description      |
+| ------------- | --------------------------------------------- | -------- | ---------------- |
+| `type`        | `'text' \| 'email' \| 'password' \| 'number'` | `'text'` | Input type       |
+| `placeholder` | `string`                                      | `''`     | Placeholder text |
+| `disabled`    | `boolean`                                     | `false`  | Disabled state   |
+| `error`       | `string`                                      | `''`     | Error message    |
 
 ### Select `ui-select`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `options` | `SelectOption[]` | `[]` | `{ label, value }` array |
-| `placeholder` | `string` | `''` | Placeholder option |
-| `disabled` | `boolean` | `false` | Disabled state |
-| `error` | `string` | `''` | Error message |
+
+| Input         | Type             | Default | Description              |
+| ------------- | ---------------- | ------- | ------------------------ |
+| `options`     | `SelectOption[]` | `[]`    | `{ label, value }` array |
+| `placeholder` | `string`         | `''`    | Placeholder option       |
+| `disabled`    | `boolean`        | `false` | Disabled state           |
+| `error`       | `string`         | `''`    | Error message            |
 
 ### Badge `ui-badge`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `label` | `string` | `''` | Badge text |
-| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'neutral'` | `'primary'` | Color |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Size |
+
+| Input     | Type                                                                         | Default     | Description |
+| --------- | ---------------------------------------------------------------------------- | ----------- | ----------- |
+| `label`   | `string`                                                                     | `''`        | Badge text  |
+| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'error' \| 'neutral'` | `'primary'` | Color       |
+| `size`    | `'sm' \| 'md' \| 'lg'`                                                       | `'md'`      | Size        |
 
 ### Modal `ui-modal`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `open` | `boolean` | `false` | Visibility |
-| `title` | `string` | `''` | Header title |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Width |
-| `closeOnBackdrop` | `boolean` | `true` | Close on backdrop click |
-| `hasFooter` | `boolean` | `false` | Show footer slot |
-| **Output** | | | |
-| `closed` | `EventEmitter` | — | Emits when closed |
+
+| Input             | Type                   | Default | Description             |
+| ----------------- | ---------------------- | ------- | ----------------------- |
+| `open`            | `boolean`              | `false` | Visibility              |
+| `title`           | `string`               | `''`    | Header title            |
+| `size`            | `'sm' \| 'md' \| 'lg'` | `'md'`  | Width                   |
+| `closeOnBackdrop` | `boolean`              | `true`  | Close on backdrop click |
+| `hasFooter`       | `boolean`              | `false` | Show footer slot        |
+| **Output**        |                        |         |                         |
+| `closed`          | `EventEmitter`         | —       | Emits when closed       |
 
 ### NotificationToast `ui-notification-toast`
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `variant` | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Color |
-| `title` | `string` | `''` | Bold heading |
-| `message` | `string` | `''` | Body text |
-| `duration` | `number` | `4000` | Auto-dismiss ms (0 = never) |
-| **Output** | | | |
-| `dismissed` | `EventEmitter` | — | Emits when closed |
+
+| Input       | Type                                          | Default  | Description                 |
+| ----------- | --------------------------------------------- | -------- | --------------------------- |
+| `variant`   | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'` | Color                       |
+| `title`     | `string`                                      | `''`     | Bold heading                |
+| `message`   | `string`                                      | `''`     | Body text                   |
+| `duration`  | `number`                                      | `4000`   | Auto-dismiss ms (0 = never) |
+| **Output**  |                                               |          |                             |
+| `dismissed` | `EventEmitter`                                | —        | Emits when closed           |
 
 ---
 

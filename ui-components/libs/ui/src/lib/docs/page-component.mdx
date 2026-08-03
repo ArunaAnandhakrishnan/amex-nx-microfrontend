@@ -23,11 +23,11 @@ A reusable, configurable page layout shell for all AEME AMEX portals. Composes n
 
 ## Portal Styles
 
-| `portalStyle` | Portal |
-|---|---|
-| `onls` | ONLS Helper / Hub Login / Supp Access / Lounge / Pay-with-Points / Wearables |
-| `oms` | Online Merchant Services |
-| `bcrb` | BCRB Reports portal |
+| `portalStyle` | Portal                                                                       |
+| ------------- | ---------------------------------------------------------------------------- |
+| `onls`        | ONLS Helper / Hub Login / Supp Access / Lounge / Pay-with-Points / Wearables |
+| `oms`         | Online Merchant Services                                                     |
+| `bcrb`        | BCRB Reports portal                                                          |
 
 ---
 
@@ -41,7 +41,8 @@ A reusable, configurable page layout shell for all AEME AMEX portals. Composes n
   portalTitle="ONLS Helper Tool"
   pageTitle="PRIORITY PASS™ ENROLLMENT"
   [tabs]="tabs"
-  activeTabId="misc">
+  activeTabId="misc"
+>
   Page content here
 </amex-page-component>
 ```
@@ -57,9 +58,7 @@ A reusable, configurable page layout shell for all AEME AMEX portals. Composes n
 
   Page content here
 
-  <div footer>
-    Custom Footer
-  </div>
+  <div footer>Custom Footer</div>
 </amex-page-component>
 ```
 
@@ -84,7 +83,8 @@ pageConfig: AmexPortalLayoutConfig = {
 <amex-page-component
   [headerTemplate]="myHdr"
   [sidebarTemplate]="mySidebar"
-  portalStyle="bcrb">
+  portalStyle="bcrb"
+>
   Page content here
 </amex-page-component>
 
@@ -108,7 +108,8 @@ The component can gate its own content behind an auth check and optionally poll 
   healthCheckUrl="/api/health"
   [showHealthStatus]="true"
   (loginRedirect)="onRedirect($event)"
-  (healthCheck)="onHealthResult($event)">
+  (healthCheck)="onHealthResult($event)"
+>
   Page content here
 </amex-page-component>
 ```
@@ -120,12 +121,11 @@ The component can gate its own content behind an auth check and optionally poll 
   [config]="config"
   portalStyle="onls"
   [tabs]="tabs"
-  activeTabId="misc">
-
+  activeTabId="misc"
+>
   <app-custom-header header></app-custom-header>
   <router-outlet></router-outlet>
   <app-custom-footer footer></app-custom-footer>
-
 </amex-page-component>
 ```
 
@@ -134,87 +134,94 @@ The component can gate its own content behind an auth check and optionally poll 
 ## All `@Input()` properties
 
 ### Identity
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `id` | `string` | auto-generated | Unique element id, bound via `HostBinding` |
+
+| Input | Type     | Default        | Description                                |
+| ----- | -------- | -------------- | ------------------------------------------ |
+| `id`  | `string` | auto-generated | Unique element id, bound via `HostBinding` |
 
 ### Auth guard & health check
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `requireAuth` | `boolean` | `false` | Gate content behind auth check |
-| `loginRedirectUrl` | `string` | `undefined` | Where to redirect if unauthenticated |
-| `loginUrl` | `string` | `''` | Login endpoint |
-| `simulateRedirect` | `boolean` | `false` | Simulate redirect in Storybook/dev instead of navigating |
-| `healthCheckUrl` | `string` | `''` | Endpoint polled for health status |
-| `showHealthStatus` | `boolean` | `false` | Display health check result in UI |
+
+| Input              | Type      | Default     | Description                                              |
+| ------------------ | --------- | ----------- | -------------------------------------------------------- |
+| `requireAuth`      | `boolean` | `false`     | Gate content behind auth check                           |
+| `loginRedirectUrl` | `string`  | `undefined` | Where to redirect if unauthenticated                     |
+| `loginUrl`         | `string`  | `''`        | Login endpoint                                           |
+| `simulateRedirect` | `boolean` | `false`     | Simulate redirect in Storybook/dev instead of navigating |
+| `healthCheckUrl`   | `string`  | `''`        | Endpoint polled for health status                        |
+| `showHealthStatus` | `boolean` | `false`     | Display health check result in UI                        |
 
 ### Core layout
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `config` | `AmexPortalLayoutConfig` | `undefined` | Centralized config object |
-| `showHeader` | `boolean` | `undefined` | Show/hide header region |
-| `showFooter` | `boolean` | `undefined` | Show/hide footer region |
-| `portalStyle` | `AmexNavPortalStyle` (`'onls' \| 'oms' \| 'bcrb'`) | `'onls'` | Portal visual style |
-| `portalTitle` | `string` | `undefined` | Title in top nav bar |
-| `username` | `string` | `''` | Shown in nav bar |
-| `omsServiceName` | `string` | `'Merchant Services'` | OMS branding subtitle |
-| `footerText` | `string` | `undefined` | Default footer text |
-| `showCustomHeader` | `boolean` | `false` | Use projected header content |
-| `showCustomFooter` | `boolean` | `false` | Use projected footer content |
-| `showCustomSidebar` | `boolean` | `false` | Use projected sidebar content |
-| `headerTemplate` | `TemplateRef<unknown>` | `undefined` | Custom header template (Approach 4) |
-| `footerTemplate` | `TemplateRef<unknown>` | `undefined` | Custom footer template (Approach 4) |
-| `sidebarTemplate` | `TemplateRef<unknown>` | `undefined` | Custom sidebar template (Approach 4) |
+
+| Input               | Type                                               | Default               | Description                          |
+| ------------------- | -------------------------------------------------- | --------------------- | ------------------------------------ |
+| `config`            | `AmexPortalLayoutConfig`                           | `undefined`           | Centralized config object            |
+| `showHeader`        | `boolean`                                          | `undefined`           | Show/hide header region              |
+| `showFooter`        | `boolean`                                          | `undefined`           | Show/hide footer region              |
+| `portalStyle`       | `AmexNavPortalStyle` (`'onls' \| 'oms' \| 'bcrb'`) | `'onls'`              | Portal visual style                  |
+| `portalTitle`       | `string`                                           | `undefined`           | Title in top nav bar                 |
+| `username`          | `string`                                           | `''`                  | Shown in nav bar                     |
+| `omsServiceName`    | `string`                                           | `'Merchant Services'` | OMS branding subtitle                |
+| `footerText`        | `string`                                           | `undefined`           | Default footer text                  |
+| `showCustomHeader`  | `boolean`                                          | `false`               | Use projected header content         |
+| `showCustomFooter`  | `boolean`                                          | `false`               | Use projected footer content         |
+| `showCustomSidebar` | `boolean`                                          | `false`               | Use projected sidebar content        |
+| `headerTemplate`    | `TemplateRef<unknown>`                             | `undefined`           | Custom header template (Approach 4)  |
+| `footerTemplate`    | `TemplateRef<unknown>`                             | `undefined`           | Custom footer template (Approach 4)  |
+| `sidebarTemplate`   | `TemplateRef<unknown>`                             | `undefined`           | Custom sidebar template (Approach 4) |
 
 ### Tab Bar
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `tabs` | `AmexTabItem[]` | `[]` | Primary tabs |
-| `activeTabId` | `string` | `''` | Active tab id |
-| `subItems` | `AmexTabItem[]` | `[]` | ONLS sub-nav row |
-| `activeSubId` | `string` | `''` | Active sub-nav id |
+
+| Input         | Type            | Default | Description       |
+| ------------- | --------------- | ------- | ----------------- |
+| `tabs`        | `AmexTabItem[]` | `[]`    | Primary tabs      |
+| `activeTabId` | `string`        | `''`    | Active tab id     |
+| `subItems`    | `AmexTabItem[]` | `[]`    | ONLS sub-nav row  |
+| `activeSubId` | `string`        | `''`    | Active sub-nav id |
 
 ### Sidebar
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `showSidebar` | `boolean` | `true` | Show/hide sidebar |
-| `sidebarItems` | `AmexSidebarMenuItem[]` | `[]` | Sidebar items (OMS/BCRB) |
-| `activeSidebarId` | `string` | `''` | Active sidebar item id |
+
+| Input             | Type                    | Default | Description              |
+| ----------------- | ----------------------- | ------- | ------------------------ |
+| `showSidebar`     | `boolean`               | `true`  | Show/hide sidebar        |
+| `sidebarItems`    | `AmexSidebarMenuItem[]` | `[]`    | Sidebar items (OMS/BCRB) |
+| `activeSidebarId` | `string`                | `''`    | Active sidebar item id   |
 
 ### Page Header
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `pageTitle` | `string` | `''` | Section banner title |
-| `pageSubtitle` | `string` | `''` | Optional subtitle |
-| `pageCtaLabel` | `string` | `''` | Optional CTA button label |
+
+| Input          | Type     | Default | Description               |
+| -------------- | -------- | ------- | ------------------------- |
+| `pageTitle`    | `string` | `''`    | Section banner title      |
+| `pageSubtitle` | `string` | `''`    | Optional subtitle         |
+| `pageCtaLabel` | `string` | `''`    | Optional CTA button label |
 
 ### BCRB Dashboard Bar
-| Input | Type | Default | Description |
-|---|---|---|---|
-| `showDashboardBar` | `boolean` | `true` | Show BCRB bureau bar |
-| `showBureauDropdown` | `boolean` | `true` | Show bureau selector |
-| `bureauLabel` | `string` | `'Bureau'` | Label for bureau dropdown |
-| `bureauOptions` | `AmexMenuBarLink[]` | `[]` | Bureau options |
-| `activeBureauId` | `string` | `''` | Active bureau id |
-| `dashboardLinks` | `AmexMenuBarLink[]` | `[]` | Sub-nav links |
-| `activeDashboardLinkId` | `string` | `''` | Active link id |
+
+| Input                   | Type                | Default    | Description               |
+| ----------------------- | ------------------- | ---------- | ------------------------- |
+| `showDashboardBar`      | `boolean`           | `true`     | Show BCRB bureau bar      |
+| `showBureauDropdown`    | `boolean`           | `true`     | Show bureau selector      |
+| `bureauLabel`           | `string`            | `'Bureau'` | Label for bureau dropdown |
+| `bureauOptions`         | `AmexMenuBarLink[]` | `[]`       | Bureau options            |
+| `activeBureauId`        | `string`            | `''`       | Active bureau id          |
+| `dashboardLinks`        | `AmexMenuBarLink[]` | `[]`       | Sub-nav links             |
+| `activeDashboardLinkId` | `string`            | `''`       | Active link id            |
 
 ---
 
 ## All `@Output()` events
 
-| Output | Payload | Description |
-|---|---|---|
-| `loginRedirect` | `string` | Emitted when an unauthenticated user would be redirected |
-| `logout` | `void` | Log Out button clicked |
-| `menuToggle` | `void` | BCRB hamburger clicked |
-| `tabClick` | `string` | Tab id |
-| `subClick` | `string` | Sub-nav item id |
-| `sidebarItemClick` | `string` | Sidebar item id |
-| `pageCtaClick` | `void` | Page header CTA clicked |
-| `bureauChange` | `string` | Bureau id |
-| `dashboardLinkClick` | `string` | Dashboard link id |
-| `healthCheck` | `AmexPortalHealthStatus` | Result of the health check poll |
+| Output               | Payload                  | Description                                              |
+| -------------------- | ------------------------ | -------------------------------------------------------- |
+| `loginRedirect`      | `string`                 | Emitted when an unauthenticated user would be redirected |
+| `logout`             | `void`                   | Log Out button clicked                                   |
+| `menuToggle`         | `void`                   | BCRB hamburger clicked                                   |
+| `tabClick`           | `string`                 | Tab id                                                   |
+| `subClick`           | `string`                 | Sub-nav item id                                          |
+| `sidebarItemClick`   | `string`                 | Sidebar item id                                          |
+| `pageCtaClick`       | `void`                   | Page header CTA clicked                                  |
+| `bureauChange`       | `string`                 | Bureau id                                                |
+| `dashboardLinkClick` | `string`                 | Dashboard link id                                        |
+| `healthCheck`        | `AmexPortalHealthStatus` | Result of the health check poll                          |
 
 ---
 

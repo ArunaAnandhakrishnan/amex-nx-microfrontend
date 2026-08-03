@@ -1,7 +1,10 @@
 import { Component, Input, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AmexAmountComponent } from './currency-logic/amount';
-import { AmexStatusBadgeComponent, AmexStatus } from './currency-logic/status-badge';
+import {
+  AmexStatusBadgeComponent,
+  AmexStatus,
+} from './currency-logic/status-badge';
 
 export interface AmexTransaction {
   date: string;
@@ -19,7 +22,10 @@ export interface AmexTransaction {
   standalone: true,
   imports: [CommonModule, AmexAmountComponent, AmexStatusBadgeComponent],
   template: `
-    <div class="amex-stmt-row" [class.amex-stmt-row--credit]="transaction.type === 'credit'">
+    <div
+      class="amex-stmt-row"
+      [class.amex-stmt-row--credit]="transaction.type === 'credit'"
+    >
       <div class="amex-stmt-row__date">{{ transaction.date }}</div>
       <div class="amex-stmt-row__main">
         <div class="amex-stmt-row__desc">{{ transaction.description }}</div>
@@ -37,54 +43,64 @@ export interface AmexTransaction {
         <amex-amount
           [amount]="transaction.amount"
           [currency]="transaction.currency || 'AED'"
-          [type]="transaction.type">
+          [type]="transaction.type"
+        >
         </amex-amount>
       </div>
     </div>
   `,
-  styles: [`
-    .amex-stmt-row {
-      display: grid;
-      grid-template-columns: 90px 1fr auto auto auto;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-bottom: 1px solid #f0f0f0;
-      background: #fff;
-      transition: background 0.1s;
-    }
-    .amex-stmt-row:hover { background: #fafbff; }
-    .amex-stmt-row--credit { border-left: 3px solid #2e7d32; }
+  styles: [
+    `
+      .amex-stmt-row {
+        display: grid;
+        grid-template-columns: 90px 1fr auto auto auto;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        background: #fff;
+        transition: background 0.1s;
+      }
+      .amex-stmt-row:hover {
+        background: #fafbff;
+      }
+      .amex-stmt-row--credit {
+        border-left: 3px solid #2e7d32;
+      }
 
-    .amex-stmt-row__date {
-      font-size: 12px;
-      color: #888;
-      white-space: nowrap;
-    }
-    .amex-stmt-row__desc {
-      font-size: 14px;
-      color: #111;
-      font-weight: 500;
-    }
-    .amex-stmt-row__ref {
-      font-size: 11px;
-      color: #aaa;
-      margin-top: 2px;
-    }
-    .amex-stmt-row__cat {
-      font-size: 11px;
-      color: #888;
-      background: #f5f5f5;
-      padding: 2px 8px;
-      border-radius: 10px;
-    }
-    .amex-stmt-row__amount { text-align: right; white-space: nowrap; }
-  `],
+      .amex-stmt-row__date {
+        font-size: 12px;
+        color: #888;
+        white-space: nowrap;
+      }
+      .amex-stmt-row__desc {
+        font-size: 14px;
+        color: #111;
+        font-weight: 500;
+      }
+      .amex-stmt-row__ref {
+        font-size: 11px;
+        color: #aaa;
+        margin-top: 2px;
+      }
+      .amex-stmt-row__cat {
+        font-size: 11px;
+        color: #888;
+        background: #f5f5f5;
+        padding: 2px 8px;
+        border-radius: 10px;
+      }
+      .amex-stmt-row__amount {
+        text-align: right;
+        white-space: nowrap;
+      }
+    `,
+  ],
 })
 export class AmexStatementRowComponent {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `statement-row-${++AmexStatementRowComponent._idCounter}`;
-
+  @HostBinding('attr.id') @Input() id =
+    `statement-row-${++AmexStatementRowComponent._idCounter}`;
 
   @Input() transaction!: AmexTransaction;
 }

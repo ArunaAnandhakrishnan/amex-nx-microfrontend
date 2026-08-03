@@ -4,10 +4,27 @@ import { BadgeComponent } from '../../primitives/badge';
 const meta: Meta<BadgeComponent> = {
   title: 'Primitives/Badge',
   component: BadgeComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'screen-reader', 'color-contrast'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'screen-reader',
+    'color-contrast',
+  ],
   argTypes: {
-    variant: { control: 'select', options: ['primary','secondary','success','warning','error','neutral'] },
-    size: { control: 'radio', options: ['sm','md','lg'] },
+    variant: {
+      control: 'select',
+      options: [
+        'primary',
+        'secondary',
+        'success',
+        'warning',
+        'error',
+        'neutral',
+      ],
+    },
+    size: { control: 'radio', options: ['sm', 'md', 'lg'] },
     label: { control: 'text' },
   },
 };
@@ -16,7 +33,9 @@ type Story = StoryObj<BadgeComponent>;
 
 export const Primary: Story = { args: { label: 'New', variant: 'primary' } };
 export const Success: Story = { args: { label: 'Active', variant: 'success' } };
-export const Warning: Story = { args: { label: 'Pending', variant: 'warning' } };
+export const Warning: Story = {
+  args: { label: 'Pending', variant: 'warning' },
+};
 export const Error: Story = { args: { label: 'Failed', variant: 'error' } };
 export const AllVariants: Story = {
   render: () => ({

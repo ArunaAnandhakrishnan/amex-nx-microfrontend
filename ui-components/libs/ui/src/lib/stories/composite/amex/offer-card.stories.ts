@@ -6,14 +6,14 @@ const meta: Meta<AmexOfferCardComponent> = {
   component: AmexOfferCardComponent,
   tags: ['autodocs'],
   argTypes: {
-    enroll:         { action: 'enroll' },
-    unenroll:       { action: 'unenroll' },
-    cardClick:      { action: 'cardClick' },
+    enroll: { action: 'enroll' },
+    unenroll: { action: 'unenroll' },
+    cardClick: { action: 'cardClick' },
     toggleFavorite: { action: 'toggleFavorite' },
-    close:          { action: 'close' },
-    prev:           { action: 'prev' },
-    next:           { action: 'next' },
-  
+    close: { action: 'close' },
+    prev: { action: 'prev' },
+    next: { action: 'next' },
+
     tileImageHeight: { control: 'text' },
     detailImageHeight: { control: 'text' },
     imageFallbackText: { control: 'text' },
@@ -50,18 +50,19 @@ const meta: Meta<AmexOfferCardComponent> = {
 export default meta;
 type Story = StoryObj<AmexOfferCardComponent>;
 
-// --- Shared sample offers -----------------------------------------------------
 const diningOffer = {
   id: '1',
   title: 'General Offer',
   description: 'Bowling Maniac 1',
   category: 'Dining',
   expiryDate: '31 Dec, 2024',
-  imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop',
+  imageUrl:
+    'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&auto=format&fit=crop',
   hasFlash: true,
   enrolled: false,
   isFavorite: false,
-  termsAndConditions: 'American Express reserves the right to modify / cancel this anytime.',
+  termsAndConditions:
+    'American Express reserves the right to modify / cancel this anytime.',
 };
 
 const travelOffer = {
@@ -70,11 +71,13 @@ const travelOffer = {
   description: 'Correct File format',
   category: 'Travel',
   expiryDate: '08 Oct, 2047',
-  imageUrl: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&auto=format&fit=crop',
+  imageUrl:
+    'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&auto=format&fit=crop',
   hasFlash: true,
   enrolled: false,
   isFavorite: false,
-  termsAndConditions: 'American Express reserves the right to modify / cancel this anytime.',
+  termsAndConditions:
+    'American Express reserves the right to modify / cancel this anytime.',
 };
 
 const enrolledOffer = {
@@ -83,11 +86,13 @@ const enrolledOffer = {
   description: 'Correct File format',
   category: 'Shopping',
   expiryDate: '08 Oct, 2047',
-  imageUrl: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&auto=format&fit=crop',
+  imageUrl:
+    'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&auto=format&fit=crop',
   hasFlash: true,
   enrolled: true,
   isFavorite: false,
-  termsAndConditions: 'American Express reserves the right to modify / cancel this anytime.',
+  termsAndConditions:
+    'American Express reserves the right to modify / cancel this anytime.',
 };
 
 const noImageOffer = {
@@ -99,39 +104,41 @@ const noImageOffer = {
   hasFlash: true,
   enrolled: false,
   isFavorite: false,
-  termsAndConditions: 'American Express reserves the right to modify / cancel this anytime.',
+  termsAndConditions:
+    'American Express reserves the right to modify / cancel this anytime.',
 };
-
-// --- GRID TILE STORIES --------------------------------------------------------
-
-/** Standard tile — not enrolled, with image */
 export const TileAvailable: Story = {
   name: 'Tile / Available',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:300px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:300px">${story().template}</div>`,
+    }),
   ],
   args: { detailMode: false, offer: diningOffer },
 };
 
-/** Tile — enrolled state */
 export const TileEnrolled: Story = {
   name: 'Tile / Enrolled',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:300px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:300px">${story().template}</div>`,
+    }),
   ],
   args: { detailMode: false, offer: enrolledOffer },
 };
 
-/** Tile — no hero image (AMERICAN EXPRESS placeholder) */
 export const TileNoImage: Story = {
   name: 'Tile / No Image (placeholder)',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:300px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:300px">${story().template}</div>`,
+    }),
   ],
   args: { detailMode: false, offer: noImageOffer },
 };
-
-/** Three tiles in a 3-column grid — matches Browse by Category page */
 export const TileGrid: Story = {
   name: 'Tile / 3-column Grid',
   decorators: [
@@ -158,21 +165,31 @@ export const TileGrid: Story = {
       offer2: travelOffer,
       offer3: enrolledOffer,
       offer4: noImageOffer,
-      offer5: { ...noImageOffer, id: '5', title: 'Save To Card Offer', description: '<body onscroll=alert(1)>...' },
-      offer6: { ...diningOffer, id: '6', imageUrl: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&auto=format&fit=crop' },
+      offer5: {
+        ...noImageOffer,
+        id: '5',
+        title: 'Save To Card Offer',
+        description: '<body onscroll=alert(1)>...',
+      },
+      offer6: {
+        ...diningOffer,
+        id: '6',
+        imageUrl:
+          'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&auto=format&fit=crop',
+      },
       cardClick: (o: unknown) => console.log('cardClick', o),
       toggleFavorite: (o: unknown) => console.log('toggleFavorite', o),
     },
   }),
 };
 
-// --- DETAIL VIEW STORIES ------------------------------------------------------
-
-/** Detail panel — Not Enrolled (shows blue Enroll button) */
 export const DetailNotEnrolled: Story = {
   name: 'Detail / Not Enrolled',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:620px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:620px">${story().template}</div>`,
+    }),
   ],
   args: {
     detailMode: true,
@@ -182,17 +199,19 @@ export const DetailNotEnrolled: Story = {
       description:
         'Discover new culinary horizons and savor exclusive dining delights with our 10% cashback offer. ' +
         'As a premium member, indulge in unforgettable culinary experiences at your favorite restaurants, ' +
-        'knowing you\'ll earn cashback on every bite, capped at AED 50 per month',
+        "knowing you'll earn cashback on every bite, capped at AED 50 per month",
       eligibleCards: ['gold', 'platinum'],
     },
   },
 };
 
-/** Detail panel — Enrolled (green "Enrolled" status) */
 export const DetailEnrolled: Story = {
   name: 'Detail / Enrolled',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:620px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:620px">${story().template}</div>`,
+    }),
   ],
   args: {
     detailMode: true,
@@ -203,24 +222,26 @@ export const DetailEnrolled: Story = {
       description:
         'Discover new culinary horizons and savor exclusive dining delights with our 10% cashback offer. ' +
         'As a premium member, indulge in unforgettable culinary experiences at your favorite restaurants, ' +
-        'knowing you\'ll earn cashback on every bite, capped at AED 50 per month',
+        "knowing you'll earn cashback on every bite, capped at AED 50 per month",
       eligibleCards: ['gold', 'platinum'],
     },
   },
 };
-
-/** Detail panel — no image, AMERICAN EXPRESS placeholder background */
 export const DetailNoImage: Story = {
   name: 'Detail / No Image',
   decorators: [
-    (story) => ({ ...story(), template: `<div style="width:620px">${story().template}</div>` }),
+    (story) => ({
+      ...story(),
+      template: `<div style="width:620px">${story().template}</div>`,
+    }),
   ],
   args: {
     detailMode: true,
     offer: {
       ...noImageOffer,
       title: 'Save To Card Offer',
-      description: 'Exclusive save-to-card promotional offer for eligible card members.',
+      description:
+        'Exclusive save-to-card promotional offer for eligible card members.',
       eligibleCards: ['platinum', 'centurion'],
     },
   },

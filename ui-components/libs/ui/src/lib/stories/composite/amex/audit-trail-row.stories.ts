@@ -16,11 +16,37 @@ export default meta;
 type Story = StoryObj<AmexAuditTrailRowComponent>;
 
 export const Approved: Story = {
-  args: { entry: { timestamp: '2024-03-12 09:14:22', user: 'john.smith@amex.com', userRole: 'Master Admin', action: 'Card Application Approved', details: 'Platinum card approved for RICHARD BLACK', ipAddress: '10.20.1.55', status: 'approved' } },
+  args: {
+    entry: {
+      timestamp: '2024-03-12 09:14:22',
+      user: 'john.smith@amex.com',
+      userRole: 'Master Admin',
+      action: 'Card Application Approved',
+      details: 'Platinum card approved for RICHARD BLACK',
+      ipAddress: '10.20.1.55',
+      status: 'approved',
+    },
+  },
 };
 export const Rejected: Story = {
-  args: { entry: { timestamp: '2024-03-12 11:45:00', user: 'ali.hassan@amex.com', userRole: 'User', action: 'Login Attempt Failed', details: 'Invalid OTP — 3rd attempt', ipAddress: '192.168.5.11', status: 'rejected' } },
+  args: {
+    entry: {
+      timestamp: '2024-03-12 11:45:00',
+      user: 'ali.hassan@amex.com',
+      userRole: 'User',
+      action: 'Login Attempt Failed',
+      details: 'Invalid OTP — 3rd attempt',
+      ipAddress: '192.168.5.11',
+      status: 'rejected',
+    },
+  },
 };
 export const Minimal: Story = {
-  args: { entry: { timestamp: '2024-03-10 08:00:00', user: 'system@amex.com', action: 'Scheduled Report Generated' } },
+  args: {
+    entry: {
+      timestamp: '2024-03-10 08:00:00',
+      user: 'system@amex.com',
+      action: 'Scheduled Report Generated',
+    },
+  },
 };

@@ -16,7 +16,15 @@ const meta: Meta<TabsComponent> = {
     activeTab: { control: 'text' },
     ariaLabel: { control: 'text' },
   },
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader', 'roving-tabindex'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+    'roving-tabindex',
+  ],
 };
 export default meta;
 type Story = StoryObj<TabsComponent>;

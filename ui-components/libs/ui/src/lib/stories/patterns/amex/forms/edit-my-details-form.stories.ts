@@ -19,6 +19,10 @@ export const PreFilled: Story = {
   args: {
     panelTitle: 'Edit My Details',
     showPhone: true,
-    initialData: { name: 'Ahmed Al Mansouri', email: 'ahmed@company.ae', phone: '+971 50 123 4567' },
+    initialData: {
+      name: 'Ahmed Al Mansouri',
+      email: 'ahmed@company.ae',
+      phone: '+971 50 123 4567',
+    },
   },
 };

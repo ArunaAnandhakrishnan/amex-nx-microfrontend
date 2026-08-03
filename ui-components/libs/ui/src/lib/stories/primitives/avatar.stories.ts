@@ -4,11 +4,18 @@ import { AvatarComponent } from '../../primitives/avatar';
 const meta: Meta<AvatarComponent> = {
   title: 'Primitives/Avatar',
   component: AvatarComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'screen-reader', 'color-contrast'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'screen-reader',
+    'color-contrast',
+  ],
   argTypes: {
-    size: { control: 'radio', options: ['sm','md','lg','xl'] },
+    size: { control: 'radio', options: ['sm', 'md', 'lg', 'xl'] },
     color: { control: 'color' },
-  
+
     src: { control: 'text' },
     alt: { control: 'text' },
     initials: { control: 'text' },
@@ -17,8 +24,12 @@ const meta: Meta<AvatarComponent> = {
 export default meta;
 type Story = StoryObj<AvatarComponent>;
 
-export const WithInitials: Story = { args: { initials: 'JD', size: 'md', color: '#1976d2' } };
-export const WithImage: Story = { args: { src: 'https://i.pravatar.cc/150?img=3', alt: 'User', size: 'md' } };
+export const WithInitials: Story = {
+  args: { initials: 'JD', size: 'md', color: '#1976d2' },
+};
+export const WithImage: Story = {
+  args: { src: 'https://i.pravatar.cc/150?img=3', alt: 'User', size: 'md' },
+};
 export const Sizes: Story = {
   render: () => ({
     template: `

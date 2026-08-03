@@ -15,27 +15,32 @@ export default meta;
 type Story = StoryObj<AmexEditUserFormComponent>;
 
 export const OMSEditMRMUser: Story = {
-  name: 'OMS — Edit MRM User',
+  name: 'OMS ï¿½ Edit MRM User',
   args: {
     title: 'EDIT MRM USER',
     data: {
-      userId: 'wasimtest123', userName: 'wasimtest123',
+      userId: 'wasimtest123',
+      userName: 'wasimtest123',
       emailAddress: 'wasim.sayyed@americanexpress.com.bh',
-      role: '', status: 'Active',
+      role: '',
+      status: 'Active',
     },
     showRole: false,
   },
 };
 
 export const OMSEditWithMerchant: Story = {
-  name: 'OMS — Edit with Merchant Account',
+  name: 'OMS ï¿½ Edit with Merchant Account',
   args: {
     title: 'EDIT OMS USER',
     showMerchantAccount: true,
     data: {
-      userId: 'vpaytestrac', userName: 'vpaytestrac',
+      userId: 'vpaytestrac',
+      userName: 'vpaytestrac',
       emailAddress: 'A.K@americanexpress.com.bh',
-      role: '', status: 'Inactive', merchantAccount: '9275640241',
+      role: '',
+      status: 'Inactive',
+      merchantAccount: '9275640241',
     },
   },
 };

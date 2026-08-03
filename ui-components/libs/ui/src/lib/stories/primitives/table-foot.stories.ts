@@ -7,7 +7,14 @@ import { TableHeaderCellComponent } from '../../primitives/table-header-cell';
 import { TableBodyComponent } from '../../primitives/table-body';
 import { TableCellComponent } from '../../primitives/table-cell';
 
-const IMPORTS = [TableComponent, TableHeadComponent, TableRowComponent, TableHeaderCellComponent, TableBodyComponent, TableCellComponent];
+const IMPORTS = [
+  TableComponent,
+  TableHeadComponent,
+  TableRowComponent,
+  TableHeaderCellComponent,
+  TableBodyComponent,
+  TableCellComponent,
+];
 
 const meta: Meta<TableFootComponent> = {
   title: 'Primitives/TableFoot',

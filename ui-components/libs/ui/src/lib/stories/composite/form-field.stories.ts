@@ -7,13 +7,21 @@ import { CheckboxComponent } from '../../primitives/checkbox';
 const meta: Meta<FormFieldComponent> = {
   title: 'Composite/FormField',
   component: FormFieldComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     label: { control: 'text' },
     hint: { control: 'text' },
     error: { control: 'text' },
     required: { control: 'boolean' },
-  
+
     forId: { control: 'text' },
     layout: { control: 'select', options: ['vertical', 'horizontal'] },
     labelWidth: { control: 'text' },
@@ -24,7 +32,11 @@ export default meta;
 type Story = StoryObj<FormFieldComponent>;
 
 export const WithInput: Story = {
-  args: { label: 'Email address', hint: 'We will never share your email', required: true },
+  args: {
+    label: 'Email address',
+    hint: 'We will never share your email',
+    required: true,
+  },
   render: (args) => ({
     props: args,
     moduleMetadata: { imports: [InputComponent] },
@@ -37,7 +49,11 @@ export const WithInput: Story = {
 };
 
 export const WithError: Story = {
-  args: { label: 'Username', error: 'Username is already taken', required: true },
+  args: {
+    label: 'Username',
+    error: 'Username is already taken',
+    required: true,
+  },
   render: (args) => ({
     props: args,
     moduleMetadata: { imports: [InputComponent] },

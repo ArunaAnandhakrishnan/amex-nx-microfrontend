@@ -4,7 +4,14 @@ import { LabelComponent } from '../../primitives/label';
 const meta: Meta<LabelComponent> = {
   title: 'Primitives/Label',
   component: LabelComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+  ],
   argTypes: {
     forId: { control: 'text' },
     required: { control: 'boolean' },

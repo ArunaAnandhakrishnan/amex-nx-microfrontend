@@ -1,65 +1,100 @@
-import { Component, Input, Output, EventEmitter, HostListener, HostBinding } from '@angular/core';
-import { NgIf } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostBinding,
+} from '@angular/core';
+import { ButtonComponent } from './button';
 import { IconComponent } from './icon';
 
 @Component({
   selector: 'ui-icon-button',
   standalone: true,
-  imports: [IconComponent],
+  imports: [ButtonComponent, IconComponent],
   template: `
-    <button type="button" class="icon-btn icon-btn-{{variant}} icon-btn-{{size}}"
+    <ui-button
+      class="icon-btn-{{ variant }} icon-btn-{{ size }}"
+      type="button"
+      label=""
+      [ariaLabel]="ariaLabel || ariaLabelFallback"
+      [ariaDescribedBy]="ariaDescribedBy"
+      [ariaPressed]="ariaPressed"
+      [ariaExpanded]="ariaExpanded"
+      [ariaSelected]="ariaSelected"
+      [ariaControls]="ariaControls"
+      [role]="role"
+      [tabIndexOverride]="tabIndexOverride"
       [disabled]="disabled"
-      [attr.role]="role"
-      [attr.aria-label]="ariaLabel || ariaLabelFallback"
-      [attr.aria-describedby]="ariaDescribedBy"
-      [attr.aria-pressed]="ariaPressed"
-      [attr.aria-expanded]="ariaExpanded"
-      [attr.aria-selected]="ariaSelected"
-      [attr.aria-controls]="ariaControls || null"
-      [attr.aria-disabled]="disabled"
-      [attr.tabindex]="tabIndexOverride"
       (click)="clicked.emit()"
-      (keydown)="onKeydown($event)">
-      <ui-icon [glyph]="icon" size="sm" [decorative]="!ariaLabel"
-        [ariaLabel]="ariaLabel || ariaLabelFallback">
-        <ng-content></ng-content>
-      </ui-icon>
-    </button>
+    >
+      <ui-icon
+        slot="icon-start"
+        [glyph]="icon"
+        size="sm"
+        [decorative]="true"
+      ></ui-icon>
+    </ui-button>
   `,
-  styles: [`
-    .icon-btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      border: none; border-radius: 50%; cursor: pointer;
-      transition: background 0.2s, opacity 0.2s; font-family: Arial, sans-serif;
-      width: var(--icon-btn-size, 36px);
-      height: var(--icon-btn-size, 36px);
-      color: var(--icon-btn-color, #fff);
-      background: var(--icon-btn-bg, #1976d2);
-    }
-    .icon-btn-sm { --icon-btn-size: 28px; }
-    .icon-btn-md { --icon-btn-size: 36px; }
-    .icon-btn-lg { --icon-btn-size: 48px; }
-    .icon-btn-primary {
-      --icon-btn-bg: #1976d2;
-      --icon-btn-color: #fff;
-    }
-    .icon-btn-primary:hover:not(:disabled) { background: var(--icon-btn-hover-bg, #1565c0); }
-    .icon-btn-ghost {
-      --icon-btn-bg: transparent;
-      --icon-btn-color: #555;
-    }
-    .icon-btn-ghost:hover:not(:disabled) { background: var(--icon-btn-hover-bg, #f0f0f0); }
-    .icon-btn-danger {
-      --icon-btn-bg: #f44336;
-      --icon-btn-color: #fff;
-    }
-    .icon-btn-danger:hover:not(:disabled) { background: var(--icon-btn-hover-bg, #d32f2f); }
-    .icon-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  `],
+  styles: [
+    `
+      :host {
+        display: inline-flex;
+      }
+      .icon-btn-sm {
+        --btn-width: 28px;
+        --btn-padding: 0;
+        --btn-gap: 0;
+      }
+      .icon-btn-md {
+        --btn-width: 36px;
+        --btn-padding: 0;
+        --btn-gap: 0;
+      }
+      .icon-btn-lg {
+        --btn-width: 48px;
+        --btn-padding: 0;
+        --btn-gap: 0;
+      }
+
+      .icon-btn-sm ::ng-deep .btn,
+      .icon-btn-md ::ng-deep .btn,
+      .icon-btn-lg ::ng-deep .btn {
+        height: var(--btn-width);
+        border-radius: 50%;
+        justify-content: center;
+      }
+      .icon-btn-sm ::ng-deep .btn-label,
+      .icon-btn-md ::ng-deep .btn-label,
+      .icon-btn-lg ::ng-deep .btn-label {
+        display: none;
+      }
+
+      :host(.variant-primary) {
+        --btn-bg: #1976d2;
+        --btn-color: #fff;
+        --btn-bg-hover: #1565c0;
+      }
+      :host(.variant-ghost) {
+        --btn-bg: transparent;
+        --btn-color: #555;
+        --btn-bg-hover: #f0f0f0;
+      }
+      :host(.variant-danger) {
+        --btn-bg: #f44336;
+        --btn-color: #fff;
+        --btn-bg-hover: #d32f2f;
+      }
+    `,
+  ],
 })
 export class IconButtonComponent {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `ui-icon-button-${++IconButtonComponent._idCounter}`;
+  @HostBinding('attr.id') @Input() id =
+    `ui-icon-button-${++IconButtonComponent._idCounter}`;
+  @HostBinding('class') get variantClass() {
+    return `variant-${this.variant}`;
+  }
 
   @Input() icon = '★';
   @Input() ariaLabel = '';
@@ -77,17 +112,17 @@ export class IconButtonComponent {
 
   get ariaLabelFallback(): string {
     const iconLabels: { [key: string]: string } = {
-      '★': 'Star', '✕': 'Close', '✓': 'Check', '✗': 'Cross', '❤': 'Heart',
-      '➕': 'Add', '➖': 'Remove', '✏': 'Edit', '🔍': 'Search', '⚙': 'Settings'
+      '★': 'Star',
+      '✕': 'Close',
+      '✓': 'Check',
+      '✗': 'Cross',
+      '❤': 'Heart',
+      '➕': 'Add',
+      '➖': 'Remove',
+      '✏': 'Edit',
+      '🔍': 'Search',
+      '⚙': 'Settings',
     };
     return iconLabels[this.icon] || 'Icon button';
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      this.clicked.emit();
-    }
   }
 }

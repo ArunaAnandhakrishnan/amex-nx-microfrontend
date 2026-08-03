@@ -4,7 +4,15 @@ import { RadioComponent } from '../../primitives/radio';
 const meta: Meta<RadioComponent> = {
   title: 'Primitives/Radio',
   component: RadioComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     name: { control: 'text' },
     value: { control: 'text' },
@@ -33,7 +41,6 @@ export const Disabled: Story = {
   args: { name: 'demo', value: 'a', label: 'Disabled option', disabled: true },
 };
 
-/** Note: for a full group with roving tabindex and a shared `name`, use RadioGroup instead. */
 export const StandaloneGroup: Story = {
   name: 'Two standalone radios sharing a name',
   render: () => ({

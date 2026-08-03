@@ -4,9 +4,16 @@ import { SpinnerComponent } from '../../primitives/spinner';
 const meta: Meta<SpinnerComponent> = {
   title: 'Primitives/Spinner',
   component: SpinnerComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'screen-reader', 'color-contrast'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'screen-reader',
+    'color-contrast',
+  ],
   argTypes: {
-    size: { control: 'radio', options: ['sm','md','lg'] },
+    size: { control: 'radio', options: ['sm', 'md', 'lg'] },
     color: { control: 'color' },
   },
 };

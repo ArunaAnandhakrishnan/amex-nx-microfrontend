@@ -4,7 +4,14 @@ import { AccentCardComponent } from '../../../composite/amex/accent-card';
 const meta: Meta<AccentCardComponent> = {
   title: 'Composite/amex/AccentCard',
   component: AccentCardComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'screen-reader', 'color-contrast'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'screen-reader',
+    'color-contrast',
+  ],
   argTypes: {
     accentColor: { control: 'color' },
     accentHeight: { control: 'number' },

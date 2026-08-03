@@ -10,19 +10,35 @@ export default meta;
 type Story = StoryObj<AmexSearchBarComponent>;
 
 export const CardNumber: Story = {
-  args: { label: 'Card Number', placeholder: 'Enter card number', buttonLabel: 'Submit' },
+  args: {
+    label: 'Card Number',
+    placeholder: 'Enter card number',
+    buttonLabel: 'Submit',
+  },
 };
 
 export const ClientCode: Story = {
-  args: { label: 'Client Code', placeholder: 'Enter client code', buttonLabel: 'Submit' },
+  args: {
+    label: 'Client Code',
+    placeholder: 'Enter client code',
+    buttonLabel: 'Submit',
+  },
 };
 
 export const UserIdOrUCI: Story = {
-  args: { label: 'User ID / UCI', placeholder: 'Enter User ID or UCI', buttonLabel: 'Search' },
+  args: {
+    label: 'User ID / UCI',
+    placeholder: 'Enter User ID or UCI',
+    buttonLabel: 'Search',
+  },
 };
 
 export const IBAN: Story = {
-  args: { label: 'IBAN Number', placeholder: 'Enter IBAN number', buttonLabel: 'Submit' },
+  args: {
+    label: 'IBAN Number',
+    placeholder: 'Enter IBAN number',
+    buttonLabel: 'Submit',
+  },
 };
 
 export const WithError: Story = {

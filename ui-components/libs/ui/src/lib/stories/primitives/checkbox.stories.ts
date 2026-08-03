@@ -4,11 +4,19 @@ import { CheckboxComponent } from '../../primitives/checkbox';
 const meta: Meta<CheckboxComponent> = {
   title: 'Primitives/Checkbox',
   component: CheckboxComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     label: { control: 'text' },
     disabled: { control: 'boolean' },
-  
+
     ariaLabel: { control: 'text' },
     ariaDescribedBy: { control: 'text' },
     ariaInvalid: { control: 'boolean' },

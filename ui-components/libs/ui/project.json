@@ -4,7 +4,7 @@
   "sourceRoot": "libs/ui/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["scope:shared","type:lib"],
+  "tags": ["scope:shared", "type:lib"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -23,9 +23,7 @@
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "configDir": "libs/ui/.storybook",
-        "styles": [
-          "libs/ui-styles/src/lib/styles/index.scss"
-        ],
+        "styles": ["libs/ui-styles/src/lib/styles/index.scss"],
         "tsConfig": "libs/ui/tsconfig.lib.json",
         "compodoc": false,
         "port": 4400
@@ -35,9 +33,7 @@
       "executor": "@storybook/angular:build-storybook",
       "options": {
         "configDir": "libs/ui/.storybook",
-        "styles": [
-          "libs/ui-styles/src/lib/styles/index.scss"
-        ],
+        "styles": ["libs/ui-styles/src/lib/styles/index.scss"],
         "tsConfig": "libs/ui/tsconfig.lib.json",
         "compodoc": false,
         "outputDir": "dist/storybook/ui"
@@ -45,9 +41,7 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "libs/ui/jest.config.cts",
         "tsConfig": "libs/ui/tsconfig.spec.json"

@@ -3,7 +3,12 @@ import { AmexContactInformationFormComponent } from '../../../../patterns/amex/f
 import { ContactRow } from '../../../../patterns/amex/forms/contact-section-card';
 
 const emptyRow = (): ContactRow => ({
-  name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '',
+  name: '',
+  jobTitle: '',
+  email: '',
+  countryCode: '',
+  landline: '',
+  mobile: '',
 });
 
 const meta: Meta<AmexContactInformationFormComponent> = {
@@ -37,7 +42,8 @@ export const Empty: Story = {
 export const WithErrorBanner: Story = {
   name: 'Error banner shown (matches image1)',
   args: {
-    errorMessage: 'Some unexpected error has occurred. We are sorry for the inconvenience. Please try again after sometime.',
+    errorMessage:
+      'Some unexpected error has occurred. We are sorry for the inconvenience. Please try again after sometime.',
     sections: [
       { title: 'Marketing', contacts: [emptyRow(), emptyRow(), emptyRow()] },
       { title: 'Finance', contacts: [emptyRow(), emptyRow(), emptyRow()] },
@@ -56,7 +62,14 @@ export const PreFilled: Story = {
       {
         title: 'Marketing',
         contacts: [
-          { name: 'Sara Khalid', jobTitle: 'Marketing Lead', email: 'sara@merchant.ae', countryCode: '+971', landline: '', mobile: '501234567' },
+          {
+            name: 'Sara Khalid',
+            jobTitle: 'Marketing Lead',
+            email: 'sara@merchant.ae',
+            countryCode: '+971',
+            landline: '',
+            mobile: '501234567',
+          },
           emptyRow(),
           emptyRow(),
         ],
@@ -64,7 +77,14 @@ export const PreFilled: Story = {
       {
         title: 'Finance',
         contacts: [
-          { name: 'John Finance', jobTitle: 'Finance Manager', email: 'finance@merchant.ae', countryCode: '+91', landline: '17123456', mobile: '39123456' },
+          {
+            name: 'John Finance',
+            jobTitle: 'Finance Manager',
+            email: 'finance@merchant.ae',
+            countryCode: '+91',
+            landline: '17123456',
+            mobile: '39123456',
+          },
           emptyRow(),
           emptyRow(),
         ],
@@ -72,7 +92,14 @@ export const PreFilled: Story = {
       {
         title: 'Operations',
         contacts: [
-          { name: 'Omar Ops', jobTitle: 'Operations Head', email: 'ops@merchant.ae', countryCode: '+1', landline: '', mobile: '777777777' },
+          {
+            name: 'Omar Ops',
+            jobTitle: 'Operations Head',
+            email: 'ops@merchant.ae',
+            countryCode: '+1',
+            landline: '',
+            mobile: '777777777',
+          },
           emptyRow(),
           emptyRow(),
         ],

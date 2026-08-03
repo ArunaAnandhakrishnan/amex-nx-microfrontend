@@ -18,9 +18,24 @@ export const WithTransactions: Story = {
       { value: '3', label: 'Index 3 - Kuwait' },
     ],
     rows: [
-      { date: '01/09/2024', amount: 'AED 1,200.00', merchant: 'Emirates Airlines',   reference: 'EK-2024-001' },
-      { date: '05/09/2024', amount: 'AED 450.00',   merchant: 'Marriott Hotel Dubai', reference: 'MH-2024-045' },
-      { date: '10/09/2024', amount: 'AED 3,800.00', merchant: 'Etihad Airways',       reference: 'EY-2024-112' },
+      {
+        date: '01/09/2024',
+        amount: 'AED 1,200.00',
+        merchant: 'Emirates Airlines',
+        reference: 'EK-2024-001',
+      },
+      {
+        date: '05/09/2024',
+        amount: 'AED 450.00',
+        merchant: 'Marriott Hotel Dubai',
+        reference: 'MH-2024-045',
+      },
+      {
+        date: '10/09/2024',
+        amount: 'AED 3,800.00',
+        merchant: 'Etihad Airways',
+        reference: 'EY-2024-112',
+      },
     ],
   },
 };

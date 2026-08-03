@@ -15,7 +15,8 @@ type Story = StoryObj<AmexMasterDataTableComponent>;
 export const CountryMaster: Story = {
   name: 'Country Master',
   args: {
-    nameLabel: 'Country Name', codeLabel: 'Country Code',
+    nameLabel: 'Country Name',
+    codeLabel: 'Country Code',
     rows: [
       { code: '784', name: 'UNITED ARAB EMIRATES' },
       { code: '048', name: 'BAHRAIN' },
@@ -29,7 +30,8 @@ export const CountryMaster: Story = {
 export const CurrencyMaster: Story = {
   name: 'Currency Master',
   args: {
-    nameLabel: 'Currency Name', codeLabel: 'Currency Code',
+    nameLabel: 'Currency Name',
+    codeLabel: 'Currency Code',
     rows: [
       { code: '001', name: 'US DOLLAR' },
       { code: '002', name: 'UAE DIRHAM' },

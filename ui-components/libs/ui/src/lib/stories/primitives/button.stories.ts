@@ -4,9 +4,19 @@ import { ButtonComponent } from '../../primitives/button';
 const meta: Meta<ButtonComponent> = {
   title: 'Primitives/Button',
   component: ButtonComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'secondary', 'ghost', 'danger'] },
+    variant: {
+      control: 'select',
+      options: ['primary', 'secondary', 'ghost', 'danger'],
+    },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
@@ -59,7 +69,12 @@ export const SubmitType: Story = {
 };
 export const AsToggle: Story = {
   name: 'Toggle (aria-pressed)',
-  args: { label: 'Toggle Me', variant: 'secondary', role: 'button', ariaPressed: true },
+  args: {
+    label: 'Toggle Me',
+    variant: 'secondary',
+    role: 'button',
+    ariaPressed: true,
+  },
 };
 
 export const Test1: Story = {

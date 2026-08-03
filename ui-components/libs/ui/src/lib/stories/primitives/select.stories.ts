@@ -11,12 +11,20 @@ const COUNTRIES = [
 const meta: Meta<SelectComponent> = {
   title: 'Primitives/Select',
   component: SelectComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     error: { control: 'text' },
-  
+
     options: { control: 'object' },
     invalid: { control: 'boolean' },
     required: { control: 'boolean' },
@@ -36,7 +44,11 @@ export const Default: Story = {
 };
 
 export const WithError: Story = {
-  args: { options: COUNTRIES, placeholder: 'Select a country', error: 'Please select an option' },
+  args: {
+    options: COUNTRIES,
+    placeholder: 'Select a country',
+    error: 'Please select an option',
+  },
 };
 
 export const Disabled: Story = {

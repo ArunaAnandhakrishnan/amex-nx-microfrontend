@@ -13,11 +13,11 @@ export default meta;
 type Story = StoryObj<AmexCurrencyMasterFormComponent>;
 
 export const AddNew: Story = {
-  name: 'Add New — free text (SOC/ROC image7)',
+  name: 'Add New ï¿½ free text (SOC/ROC image7)',
   args: {},
 };
 
 export const ModifyUSDAuto: Story = {
-  name: 'Modify — US DOLLAR auto-fills (image10)',
+  name: 'Modify ï¿½ US DOLLAR auto-fills (image10)',
   args: {},
 };

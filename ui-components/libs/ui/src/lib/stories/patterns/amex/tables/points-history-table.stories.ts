@@ -15,8 +15,20 @@ export const WithHistory: Story = {
     totalCredit: 'AED 250.00',
     totalPointsRedeemed: '25,000',
     rows: [
-      { transactionDate: '01/08/2024', description: 'NOON PAYMENTS', pointsRedeemed: '5,000',  amountOffset: 'AED 50.00',  redemptionDate: '03/08/2024' },
-      { transactionDate: '15/08/2024', description: 'AMAZON AE',     pointsRedeemed: '20,000', amountOffset: 'AED 200.00', redemptionDate: '17/08/2024' },
+      {
+        transactionDate: '01/08/2024',
+        description: 'NOON PAYMENTS',
+        pointsRedeemed: '5,000',
+        amountOffset: 'AED 50.00',
+        redemptionDate: '03/08/2024',
+      },
+      {
+        transactionDate: '15/08/2024',
+        description: 'AMAZON AE',
+        pointsRedeemed: '20,000',
+        amountOffset: 'AED 200.00',
+        redemptionDate: '17/08/2024',
+      },
     ],
   },
 };

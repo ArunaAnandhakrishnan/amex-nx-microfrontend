@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<AmexCardListSelectorComponent>;
 
 export const Empty: Story = {
-  name: 'Empty — no results yet',
+  name: 'Empty ï¿½ no results yet',
   args: { rows: [], memberName: '', memberCardNumber: '' },
 };
 
@@ -25,9 +25,21 @@ export const WithCards: Story = {
     memberName: 'BAHONE',
     memberCardNumber: '3744XXXXXXX9008',
     rows: [
-      { cardNumber: '3744XXXXXXX9008', cardType: 'Centurion USD', status: 'Active' },
-      { cardNumber: '3744XXXXXXX1023', cardType: 'Centurion LCY', status: 'Active' },
-      { cardNumber: '3744XXXXXXX5042', cardType: 'Supplementary', status: 'Inactive' },
+      {
+        cardNumber: '3744XXXXXXX9008',
+        cardType: 'Centurion USD',
+        status: 'Active',
+      },
+      {
+        cardNumber: '3744XXXXXXX1023',
+        cardType: 'Centurion LCY',
+        status: 'Active',
+      },
+      {
+        cardNumber: '3744XXXXXXX5042',
+        cardType: 'Supplementary',
+        status: 'Inactive',
+      },
     ],
   },
 };

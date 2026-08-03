@@ -31,8 +31,6 @@ const meta: Meta<AmexLoginFormComponent> = {
 export default meta;
 type Story = StoryObj<AmexLoginFormComponent>;
 
-// ===================== ONLS =====================
-
 export const HubLogin: Story = {
   args: {
     portalTitle: '',
@@ -72,8 +70,6 @@ export const WithSuccess: Story = {
     portalStyle: 'onls',
   },
 };
-
-// ===================== OMS =====================
 
 export const OmsLogin: Story = {
   args: {

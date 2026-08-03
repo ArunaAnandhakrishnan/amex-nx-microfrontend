@@ -1,4 +1,3 @@
-// Primitives
 export * from './lib/primitives/button';
 export * from './lib/primitives/input';
 export * from './lib/primitives/textarea';
@@ -86,7 +85,6 @@ export * from './lib/patterns/amex/tables/user-management-table';
 export * from './lib/patterns/amex/tables/socroc-records-table';
 export * from './lib/patterns/amex/tables/eligible-transactions-table';
 export * from './lib/patterns/amex/tables/card-list-selector';
-export * from './lib/patterns/amex/tables/wearable-device-table';
 export * from './lib/patterns/amex/tables/audit-trail-detail-table';
 export * from './lib/patterns/amex/tables/master-data-table';
 export * from './lib/patterns/amex/tables/rejection-report-table';
@@ -117,7 +115,6 @@ export * from './lib/patterns/amex/forms/upload-certificate-panel';
 export * from './lib/patterns/amex/forms/tax-invoice-delivery-form';
 export * from './lib/patterns/amex/forms/customized-reports-form';
 export * from './lib/patterns/amex/forms/algeria-payment-form';
-export * from './lib/patterns/amex/forms/wearable-issuance-form';
 export * from './lib/patterns/amex/forms/centurion-card-art-selector';
 export * from './lib/patterns/amex/forms/file-upload-form';
 export * from './lib/patterns/amex/forms/vat-invoice-search-form';
@@ -137,7 +134,6 @@ export * from './lib/patterns/amex/display-viewers/offers-panel';
 export * from './lib/patterns/amex/display-viewers/benefits-panel';
 export * from './lib/patterns/amex/display-viewers/priority-pass-viewer';
 export * from './lib/patterns/amex/display-viewers/centurion-card-details-view';
-export * from './lib/patterns/amex/display-viewers/wearable-details-view';
 export * from './lib/patterns/amex/display-viewers/report-submission-confirmation';
 export * from './lib/patterns/amex/display-viewers/audit-trail-summary-view';
 export * from './lib/patterns/amex/display-viewers/points-balance-summary-card';
@@ -161,6 +157,6 @@ export * from './lib/patterns/amex/layout/adapters';
 export * from './lib/patterns/amex/layout/runtime-config';
 export * from './lib/patterns/amex/layout/portal-bootstrap';
 
-export * from './lib/primitives/list';      
+export * from './lib/primitives/list';
 export * from './lib/primitives/list-item';
-export * from './lib/composite/panel';      
+export * from './lib/composite/panel';

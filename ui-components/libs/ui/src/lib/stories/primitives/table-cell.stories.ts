@@ -12,7 +12,10 @@ const meta: Meta<TableCellComponent> = {
   tags: ['autodocs'],
   argTypes: {
     align: { control: 'select', options: ['left', 'center', 'right'] },
-    verticalAlign: { control: 'select', options: ['top', 'middle', 'bottom', 'baseline'] },
+    verticalAlign: {
+      control: 'select',
+      options: ['top', 'middle', 'bottom', 'baseline'],
+    },
     colspan: { control: 'number' },
     rowspan: { control: 'number' },
     truncate: { control: 'boolean' },

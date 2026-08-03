@@ -18,9 +18,33 @@ export const WithData: Story = {
   args: {
     loaded: true,
     rows: [
-      { date: '01/09/2024', time: '09:14', user: 'admin_bta', action: 'User Created',   entity: 'User', oldValue: '',             newValue: 'wasimtest123' },
-      { date: '05/09/2024', time: '11:32', user: 'admin_bta', action: 'Password Reset', entity: 'User', oldValue: 'Old Password', newValue: 'Temp Password' },
-      { date: '10/09/2024', time: '14:05', user: 'admin_bta', action: 'Role Updated',   entity: 'User', oldValue: 'Viewer',       newValue: 'Editor' },
+      {
+        date: '01/09/2024',
+        time: '09:14',
+        user: 'admin_bta',
+        action: 'User Created',
+        entity: 'User',
+        oldValue: '',
+        newValue: 'wasimtest123',
+      },
+      {
+        date: '05/09/2024',
+        time: '11:32',
+        user: 'admin_bta',
+        action: 'Password Reset',
+        entity: 'User',
+        oldValue: 'Old Password',
+        newValue: 'Temp Password',
+      },
+      {
+        date: '10/09/2024',
+        time: '14:05',
+        user: 'admin_bta',
+        action: 'Role Updated',
+        entity: 'User',
+        oldValue: 'Viewer',
+        newValue: 'Editor',
+      },
     ],
   },
 };

@@ -28,8 +28,13 @@ const rows = Array.from({ length: 12 }, (_, i) => ({
   processId: String(1281 + i),
   fileName: `1281_REP00${i}_220920241714`,
   reportCreationTime: '22-09-2024 05:14',
-  processingStatus: i === 0 ? 'NO RESPONSE FROM BACKEND. CONTACT ADMIN' : 'Completed',
+  processingStatus:
+    i === 0 ? 'NO RESPONSE FROM BACKEND. CONTACT ADMIN' : 'Completed',
 }));
 
-export const WithData: Story = { args: { columns: cols, rows, initialPageSize: 5 } };
-export const Empty: Story = { args: { columns: cols, rows: [], initialPageSize: 5 } };
+export const WithData: Story = {
+  args: { columns: cols, rows, initialPageSize: 5 },
+};
+export const Empty: Story = {
+  args: { columns: cols, rows: [], initialPageSize: 5 },
+};

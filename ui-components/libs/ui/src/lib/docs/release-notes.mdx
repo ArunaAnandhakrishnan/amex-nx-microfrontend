@@ -11,16 +11,19 @@ A full changelog of all component library versions, including new components, im
 
 ---
 
-## v1.2.0 — *Current*
+## v1.2.0 — _Current_
+
 **Released:** March 2026
 
 ### ✨ New Components
+
 - **FileUpload** — Drag-and-drop or click-to-upload with multi-file support
 - **NotificationToast** — Auto-dismissing feedback toasts with 4 variants
 - **DateInput** — Native date picker with min/max range and error state
 - **SearchBar** — Pill-shaped search input with clear button and CVA support
 
 ### 🔧 Improvements
+
 - `Modal` — Added `closeOnBackdrop` input and `hasFooter` slot support
 - `Card` — Added `hoverable` lift animation and `hasFooter` slot
 - `Accordion` — Added `multiple` mode to allow multiple open panels simultaneously
@@ -28,7 +31,9 @@ A full changelog of all component library versions, including new components, im
 - All CVA components now correctly propagate `setDisabledState`
 
 ### ♿ Accessibility Enhancements
+
 **Core UI Components — 95% WCAG 2.0 AA Compliant**
+
 - **Keyboard Navigation** — 100% compliant across all components
   - Full keyboard support for all interactive elements
   - Proper Tab order and focus management
@@ -49,6 +54,7 @@ A full changelog of all component library versions, including new components, im
   - 2 minor contrast issues identified for improvement
 
 **Amex Components - Complete Accessibility Implementation Achieved**
+
 - **Current State**: **95% WCAG 2.0 AA compliant** - **FULL IMPLEMENTATION COMPLETED**
 - **Keyboard Navigation**: **95% compliant** - **COMPREHENSIVE COVERAGE**
   - **Authentication forms**: Complete keyboard navigation (Login, ChangePassword, ForgotPassword)
@@ -74,28 +80,33 @@ A full changelog of all component library versions, including new components, im
 ### **Complete Accessibility Implementation Achieved**
 
 #### **Authentication Forms (All Forms Complete)**
+
 - **LoginForm**: Full keyboard navigation, ARIA attributes, error announcements, focus management
 - **ChangePasswordForm**: Complete ONLS/OMS styles, keyboard navigation, form validation
 - **ForgotPasswordForm**: Full accessibility support for both portal styles
 - **All Forms**: aria-labelledby, aria-describedby, aria-required, role="alert" announcements
 
 #### **Action Components (Complete)**
+
 - **ReportDownloadButton**: Full keyboard navigation, ARIA attributes, screen reader announcements
 - **All Action Components**: Enter/Space key support, focus management, loading state announcements
 
 #### **Display Components (Complete)**
+
 - **StatusBadge**: Semantic HTML, ARIA attributes, improved color contrast, keyboard navigation
 - **Amount**: Screen reader support, color contrast fixes, semantic structure
 - **CardMemberDetailsView**: Table-to-semantic HTML conversion, keyboard navigation, ARIA roles
 - **BenefitsPanel**: Grid navigation, modal focus management, screen reader announcements
 
 #### **Advanced Features (Complete)**
+
 - **Skip Links**: Global skip navigation component with keyboard support
 - **Heading Hierarchy**: Proper semantic heading structure across all components
 - **Landmarks**: role="main", role="region", role="navigation" implementation
 - **Focus Management**: Comprehensive focus trapping and escape key handling
 
 #### **Testing Framework (Complete)**
+
 - **Automated Testing**: Comprehensive accessibility testing utilities
 - **WCAG 2.0 AA Compliance**: Full test suite for keyboard navigation, ARIA, color contrast, semantic HTML
 - **Manual Testing Guidelines**: Screen reader testing procedures and validation checklists
@@ -104,6 +115,7 @@ A full changelog of all component library versions, including new components, im
 ### **Accessibility Testing Tools Implemented**
 
 #### **Automated Testing Suite**
+
 - **Keyboard Navigation Testing**: Focus management, tab order, keyboard shortcuts
 - **ARIA Attributes Validation**: Correct usage, references, role implementation
 - **Color Contrast Analysis**: WCAG AA compliance checking for all text elements
@@ -111,6 +123,7 @@ A full changelog of all component library versions, including new components, im
 - **Screen Reader Support**: Alt text, form labels, live regions, announcements
 
 #### **Manual Testing Framework**
+
 - **Screen Reader Testing**: JAWS, NVDA, VoiceOver compatibility testing
 - **Keyboard Only Testing**: Complete functionality without mouse interaction
 - **High Contrast Mode**: Visual accessibility testing in Windows high contrast
@@ -121,18 +134,21 @@ A full changelog of all component library versions, including new components, im
 #### **Project Status**: **COMPLETED** - All accessibility improvements implemented
 
 #### **Final Compliance Metrics**
+
 - **Keyboard Navigation**: **95% compliant** - Complete keyboard accessibility
 - **Screen Reader Support**: **95% compliant** - Full ARIA implementation
 - **Color Contrast**: **95% compliant** - WCAG AA compliant across all components
 - **Overall WCAG 2.0 AA**: **95% compliant** - Production-ready accessibility
 
 #### **Components Enhanced**
+
 - **Authentication Forms**: LoginForm, ChangePasswordForm, ForgotPasswordForm
 - **Action Components**: ReportDownloadButton with full keyboard support
 - **Display Components**: StatusBadge, Amount, CardMemberDetailsView, BenefitsPanel
 - **Advanced Features**: SkipLinks component, comprehensive testing framework
 
 #### **Key Achievements**
+
 - **Zero Critical Violations**: All WCAG 2.0 AA critical issues resolved
 - **Comprehensive Testing**: Automated and manual accessibility testing suite
 - **Semantic HTML**: All components use proper semantic structure
@@ -140,6 +156,7 @@ A full changelog of all component library versions, including new components, im
 - **Screen Reader Support**: Full compatibility with major screen readers
 
 #### **Production Readiness**
+
 - **Automated Testing**: Comprehensive accessibility validation in CI/CD
 - **Documentation**: Complete accessibility guidelines and best practices
 - **Training**: Team equipped with accessibility knowledge
@@ -148,6 +165,7 @@ A full changelog of all component library versions, including new components, im
 **Impact**: The Amex components now provide **industry-leading accessibility** with comprehensive WCAG 2.0 AA compliance, ensuring equal access for all users regardless of ability and meeting all legal accessibility requirements.
 
 ### 🐛 Bug Fixes
+
 - `Select` — Fixed arrow icon overlapping long option text
 - `ProgressBar` — Fixed indeterminate animation clipping on Safari
 - `Checkbox` — Fixed checkmark alignment on Windows Chrome
@@ -155,9 +173,11 @@ A full changelog of all component library versions, including new components, im
 ---
 
 ## v1.1.0
+
 **Released:** February 2026
 
 ### ✨ New Components
+
 - **Badge** — Status indicator with 6 variants and 3 sizes
 - **Avatar** — User representation with initials or image fallback
 - **Spinner** — Animated SVG loading indicator
@@ -175,13 +195,16 @@ A full changelog of all component library versions, including new components, im
 - **Accordion** — Collapsible FAQ-style sections
 
 ### 🔧 Improvements
+
 - Storybook upgraded to v10 with Vite builder — faster HMR
 - All components switched to inline templates for Vite compatibility
 - Added `@storybook/addon-essentials` — Actions and Controls tabs now fully functional
 - `FormGroup` — Added `horizontal` layout mode
 
 ### ♿ Accessibility Implementation
+
 **Complete WCAG 2.0 AA Support Added**
+
 - **Keyboard Navigation**: Full keyboard support for all new components
   - Badge, Avatar, Spinner, Toggle, Tag, Divider, ProgressBar, Alert
   - IconButton, Breadcrumb, Pagination, Card, Modal, Tabs, Accordion
@@ -199,27 +222,31 @@ A full changelog of all component library versions, including new components, im
 ---
 
 ## v1.0.0
+
 **Released:** January 2026
 
 ### 🎉 Initial Release
 
 #### Atoms
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Button | `ui-button` | Primary action trigger with variant and size |
-| Input | `ui-input` | Text, email, password, number input with CVA |
-| Textarea | `ui-textarea` | Multi-line text input with resize |
-| Select | `ui-select` | Custom-styled native dropdown |
-| Checkbox | `ui-checkbox` | Binary selection with custom styling |
-| RadioGroup | `ui-radio-group` | Single-select from a list of options |
+
+| Component  | Selector         | Description                                  |
+| ---------- | ---------------- | -------------------------------------------- |
+| Button     | `ui-button`      | Primary action trigger with variant and size |
+| Input      | `ui-input`       | Text, email, password, number input with CVA |
+| Textarea   | `ui-textarea`    | Multi-line text input with resize            |
+| Select     | `ui-select`      | Custom-styled native dropdown                |
+| Checkbox   | `ui-checkbox`    | Binary selection with custom styling         |
+| RadioGroup | `ui-radio-group` | Single-select from a list of options         |
 
 #### Molecules
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| FormField | `ui-form-field` | Label + hint + error wrapper |
+
+| Component | Selector        | Description                      |
+| --------- | --------------- | -------------------------------- |
+| FormField | `ui-form-field` | Label + hint + error wrapper     |
 | FormGroup | `ui-form-group` | Fieldset grouping related fields |
 
 ### 🏗 Infrastructure
+
 - Angular 21 + Nx 22 monorepo setup
 - `libs/ui` — component library with Storybook
 - `libs/ui-styles` — SCSS design tokens (colors, spacing, typography)
@@ -228,7 +255,9 @@ A full changelog of all component library versions, including new components, im
 - Typography: `$font-size-sm/md/lg`, `$font-weight-normal/bold`
 
 ### ♿ Accessibility Foundation
+
 **Initial WCAG 2.0 AA Compliance**
+
 - **Core Components**: Built with accessibility as first-class requirement
 - **Semantic HTML**: Proper use of native elements and ARIA roles
 - **Keyboard Navigation**: Full keyboard support for all interactive elements
@@ -236,16 +265,19 @@ A full changelog of all component library versions, including new components, im
 ### 🎯 **Storybook Navigation Benefits Achieved**
 
 **Enhanced Discoverability:**
+
 - **Filter components** by accessibility features in Storybook sidebar
 - **Search accessibility components** using standardized tags
 - **Group related components** by a11y compliance level
 
 **Clear Accessibility Indicators:**
+
 - **`needs-improvement`** tag highlights components requiring work
-- **`wcag`** tag identifies compliant components  
+- **`wcag`** tag identifies compliant components
 - **Feature-specific tags** help find components with specific a11y features
 
 **Development Workflow Improvements:**
+
 - **Accessibility-first development** approach with clear tagging
 - **Quick validation** of a11y implementations
 - **Consistent categorization** across entire component library
@@ -254,6 +286,7 @@ A full changelog of all component library versions, including new components, im
 ### Supported Accessibility Features
 
 #### ✅ **Fully Implemented (Core Components)**
+
 - **Keyboard Navigation**
   - Tab order management
   - Arrow key navigation (radio groups, tabs, selects)
@@ -276,18 +309,21 @@ A full changelog of all component library versions, including new components, im
   - Responsive design for magnification
 
 #### 🔄 **Partially Implemented (Amex Components)**
+
 - Display-only components (account numbers, badges) are accessible
 - Authentication forms need complete accessibility overhaul
 - Action components require keyboard and ARIA support
 - Color contrast improvements needed for status indicators
 
 ### Testing & Validation
+
 - **Automated Testing**: axe-core integration for continuous a11y validation
 - **Manual Testing**: Comprehensive keyboard and screen reader testing
 - **Tools**: jest-axe, @axe-core/playwright for automated accessibility testing
 - **Documentation**: Accessibility guidelines and best practices included
 
 ### Compliance Standards Met
+
 - **WCAG 2.0 AA**: Core components fully compliant
 - **Section 508**: Meets federal accessibility requirements
 - **EN 301 549**: European accessibility standards compliance

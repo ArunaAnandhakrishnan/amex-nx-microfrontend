@@ -5,7 +5,15 @@ import { ButtonComponent } from '../../primitives/button';
 const meta: Meta<ModalComponent> = {
   title: 'Composite/Modal',
   component: ModalComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'focus-management', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'focus-management',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     open: { control: 'boolean' },

@@ -6,9 +6,9 @@ const meta: Meta<AmexReportTableComponent> = {
   component: AmexReportTableComponent,
   tags: ['autodocs'],
   argTypes: {
-    export:   { action: 'export' },
+    export: { action: 'export' },
     rowClick: { action: 'rowClick' },
-  
+
     searchPlaceholder: { control: 'text' },
     searchAriaLabel: { control: 'text' },
     emptyMessage: { control: 'text' },
@@ -46,12 +46,42 @@ export const Default: Story = {
       exportable: true,
     },
     rows: [
-      { date: '12 Mar 2024', description: 'Amazon AE',          amount: 'AED 349.99',   status: 'completed' },
-      { date: '11 Mar 2024', description: 'Carrefour MOE',      amount: 'AED 215.50',   status: 'completed' },
-      { date: '10 Mar 2024', description: 'Emirates Airlines',  amount: 'AED 1,200.00', status: 'pending' },
-      { date: '09 Mar 2024', description: 'Atlantis Dispute',   amount: 'AED 5,400.00', status: 'processing' },
-      { date: '08 Mar 2024', description: 'Noon Shopping',      amount: 'AED 89.00',    status: 'completed' },
-      { date: '07 Mar 2024', description: 'Talabat Delivery',   amount: 'AED 54.75',    status: 'approved' },
+      {
+        date: '12 Mar 2024',
+        description: 'Amazon AE',
+        amount: 'AED 349.99',
+        status: 'completed',
+      },
+      {
+        date: '11 Mar 2024',
+        description: 'Carrefour MOE',
+        amount: 'AED 215.50',
+        status: 'completed',
+      },
+      {
+        date: '10 Mar 2024',
+        description: 'Emirates Airlines',
+        amount: 'AED 1,200.00',
+        status: 'pending',
+      },
+      {
+        date: '09 Mar 2024',
+        description: 'Atlantis Dispute',
+        amount: 'AED 5,400.00',
+        status: 'processing',
+      },
+      {
+        date: '08 Mar 2024',
+        description: 'Noon Shopping',
+        amount: 'AED 89.00',
+        status: 'completed',
+      },
+      {
+        date: '07 Mar 2024',
+        description: 'Talabat Delivery',
+        amount: 'AED 54.75',
+        status: 'approved',
+      },
     ],
   },
 };

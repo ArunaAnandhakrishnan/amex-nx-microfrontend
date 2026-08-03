@@ -10,11 +10,19 @@ const SIZES = [
 const meta: Meta<RadioGroupComponent> = {
   title: 'Primitives/RadioGroup',
   component: RadioGroupComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     orientation: { control: 'radio', options: ['vertical', 'horizontal'] },
     disabled: { control: 'boolean' },
-  
+
     options: { control: 'object' },
     name: { control: 'text' },
     legend: { control: 'text' },

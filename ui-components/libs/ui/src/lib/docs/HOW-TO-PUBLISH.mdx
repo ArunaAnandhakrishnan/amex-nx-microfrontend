@@ -8,11 +8,11 @@ import { Meta } from '@storybook/blocks';
 
 There are **3 ways** your teammates can get this library:
 
-| Option | Best for | Command |
-|---|---|---|
+| Option                                  | Best for                          | Command                         |
+| --------------------------------------- | --------------------------------- | ------------------------------- |
 | **A. Private npm registry (Verdaccio)** | Team/intranet, no internet needed | `npm install @ui-components/ui` |
-| **B. GitHub Packages** | Team already uses GitHub | `npm install @ui-components/ui` |
-| **C. Public npmjs.com** | Open source, public | `npm install @ui-components/ui` |
+| **B. GitHub Packages**                  | Team already uses GitHub          | `npm install @ui-components/ui` |
+| **C. Public npmjs.com**                 | Open source, public               | `npm install @ui-components/ui` |
 
 ---
 
@@ -33,6 +33,7 @@ npx nx run ui:build:production
 This creates a `dist/ui-components/` folder — that's your publishable package.
 
 Check the output:
+
 ```
 dist/ui-components/
   ├── esm2022/          ← modern ES modules
@@ -59,6 +60,7 @@ verdaccio
 ```
 
 To keep Verdaccio running in background:
+
 ```bash
 npm install -g pm2
 pm2 start verdaccio
@@ -90,6 +92,7 @@ Tell them to add this `.npmrc` in their project root:
 ```
 
 Then simply:
+
 ```bash
 npm install @ui-components/ui
 ```
@@ -103,12 +106,14 @@ npm install @ui-components/ui
 1. Create a GitHub repo for the monorepo (or use existing).
 
 2. Add `.npmrc` to the **root of your monorepo**:
+
    ```
    @ui-components:registry=https://npm.pkg.github.com
    //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
    ```
 
 3. In `libs/ui/package.json`, set `"repository"`:
+
    ```json
    "repository": {
      "type": "git",
@@ -126,12 +131,14 @@ npm install @ui-components/ui
 ### Your teammates install it:
 
 They add to their `.npmrc`:
+
 ```
 @ui-components:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=<THEIR_GITHUB_TOKEN>
 ```
 
 Then:
+
 ```bash
 npm install @ui-components/ui
 ```
@@ -184,14 +191,11 @@ import {
 
 @Component({
   standalone: true,
-  imports: [
-    AmexLoginFormComponent,
-    AmexStatementViewerComponent,
-  ],
+  imports: [AmexLoginFormComponent, AmexStatementViewerComponent],
   template: `
     <amex-login-form (login)="onLogin($event)"></amex-login-form>
     <amex-statement-viewer [statements]="months"></amex-statement-viewer>
-  `
+  `,
 })
 export class MyPageComponent {
   months = [
@@ -229,6 +233,7 @@ npm publish --registry <your-registry>
 ```
 
 Teammates update with:
+
 ```bash
 npm update @ui-components/ui
 ```
@@ -237,14 +242,14 @@ npm update @ui-components/ui
 
 ## Quick reference
 
-| Task | Command |
-|---|---|
-| Build the library | `nx run ui:build:production` |
-| Publish (Verdaccio) | `cd dist/ui-components && npm publish --registry http://localhost:4873` |
-| UnPublish (Verdaccio) | `npm unpublish @ui-components/ui --force --registry http://localhost:4873` |
-| Publish (GitHub) | `cd dist/ui-components && npm publish --registry https://npm.pkg.github.com` |
-| Publish (public npm) | `cd dist/ui-components && npm publish --access public` |
-| Teammate installs | `npm install @ui-components/ui` |
+| Task                  | Command                                                                      |
+| --------------------- | ---------------------------------------------------------------------------- |
+| Build the library     | `nx run ui:build:production`                                                 |
+| Publish (Verdaccio)   | `cd dist/ui-components && npm publish --registry http://localhost:4873`      |
+| UnPublish (Verdaccio) | `npm unpublish @ui-components/ui --force --registry http://localhost:4873`   |
+| Publish (GitHub)      | `cd dist/ui-components && npm publish --registry https://npm.pkg.github.com` |
+| Publish (public npm)  | `cd dist/ui-components && npm publish --access public`                       |
+| Teammate installs     | `npm install @ui-components/ui`                                              |
 
 ---
 
@@ -252,11 +257,11 @@ npm update @ui-components/ui
 
 Three npm scripts wrap `tools/publish-ui.js` and handle the whole flow for you: dependency check, production build, registry lookup, and safe unpublish-then-republish of the current version.
 
-| Script | What it does |
-|---|---|
-| `npm run ui:publish` | Builds `ui` in production mode, unpublishes the current version from the registry if it already exists, then republishes it |
-| `npm run ui:publish:bump` | Same as above, but bumps the patch version first (`0.0.0` → `0.0.1`) before publishing |
-| `npm run ui:unpublish` | Unpublishes the current version only, no rebuild/republish |
+| Script                    | What it does                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `npm run ui:publish`      | Builds `ui` in production mode, unpublishes the current version from the registry if it already exists, then republishes it |
+| `npm run ui:publish:bump` | Same as above, but bumps the patch version first (`0.0.0` → `0.0.1`) before publishing                                      |
+| `npm run ui:unpublish`    | Unpublishes the current version only, no rebuild/republish                                                                  |
 
 ```bash
 npm run ui:publish

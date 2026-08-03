@@ -7,12 +7,27 @@ import { TextareaComponent } from '../../primitives/textarea';
 import { CheckboxComponent } from '../../primitives/checkbox';
 import { RadioGroupComponent } from '../../primitives/radio-group';
 
-const ALL_IMPORTS = [FormFieldComponent, InputComponent, SelectComponent, TextareaComponent, CheckboxComponent, RadioGroupComponent];
+const ALL_IMPORTS = [
+  FormFieldComponent,
+  InputComponent,
+  SelectComponent,
+  TextareaComponent,
+  CheckboxComponent,
+  RadioGroupComponent,
+];
 
 const meta: Meta<FormGroupComponent> = {
   title: 'Composite/FormGroup',
   component: FormGroupComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     legend: { control: 'text' },
     layout: { control: 'radio', options: ['vertical', 'horizontal'] },

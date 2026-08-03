@@ -9,7 +9,6 @@ const meta: Meta<AmexViewReportDropdownComponent> = {
 export default meta;
 type Story = StoryObj<AmexViewReportDropdownComponent>;
 
-// BTA Audit Trail Summary — 3 distinct views each with different fields
 export const BTAAuditTrailSummary: Story = {
   args: {
     options: [

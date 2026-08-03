@@ -29,11 +29,11 @@ import {
 } from '../../../../patterns/amex/layout/page-component';
 
 // -----------------------------------------------------------------------------
-// MOCK AUTH INTERCEPTOR — keeps Storybook 100% offline.
+// MOCK AUTH INTERCEPTOR ï¿½ keeps Storybook 100% offline.
 //
 // The real <amex-login-modal> POSTs to a real backend
 // (http://localhost:8080/api/auth/login). Storybook has no backend and
-// must NEVER reach out to anything outside itself — not your other app on
+// must NEVER reach out to anything outside itself ï¿½ not your other app on
 // :4200, not the real api-gateway, nothing.
 //
 // This interceptor catches ONLY that login call and answers it locally
@@ -44,25 +44,39 @@ import {
 //     Password: demo123
 //
 // Any other request (anything NOT matching the login URL) is rejected
-// with an error instead of being let through — so a typo in a future
+// with an error instead of being let through ï¿½ so a typo in a future
 // story can never accidentally cause a real network call to leak out.
 // -----------------------------------------------------------------------------
 
 const STORYBOOK_DEFAULT_USERNAME = 'demo';
 const STORYBOOK_DEFAULT_PASSWORD = 'demo123';
 
-const mockAuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next) => {
+const mockAuthInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next,
+) => {
   const isLoginCall = req.url.includes('/api/auth/login');
 
   if (!isLoginCall) {
-    // Hard block — Storybook should never make a real network request.
-    console.warn('[Storybook mockAuthInterceptor] Blocked outbound request to:', req.url);
-    return throwError(() => new Error(`Storybook is offline — blocked request to ${req.url}`));
+    // Hard block ï¿½ Storybook should never make a real network request.
+    console.warn(
+      '[Storybook mockAuthInterceptor] Blocked outbound request to:',
+      req.url,
+    );
+    return throwError(
+      () => new Error(`Storybook is offline ï¿½ blocked request to ${req.url}`),
+    );
   }
 
-  const { username, password } = (req.body ?? {}) as { username?: string; password?: string };
+  const { username, password } = (req.body ?? {}) as {
+    username?: string;
+    password?: string;
+  };
 
-  if (username === STORYBOOK_DEFAULT_USERNAME && password === STORYBOOK_DEFAULT_PASSWORD) {
+  if (
+    username === STORYBOOK_DEFAULT_USERNAME &&
+    password === STORYBOOK_DEFAULT_PASSWORD
+  ) {
     return of({
       success: true,
       data: {
@@ -77,7 +91,8 @@ const mockAuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next)
 
   return of({
     success: false,
-    message: 'Invalid username or password. (Storybook default: demo / demo123)',
+    message:
+      'Invalid username or password. (Storybook default: demo / demo123)',
   } as any).pipe(delay(400));
 };
 
@@ -86,53 +101,54 @@ const mockAuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next)
 // -----------------------------------------------------------------------------
 
 const MAIN_TABS = [
-  { id: 'statements',  label: 'Statements' },
-  { id: 'misc',        label: 'MISC' },
+  { id: 'statements', label: 'Statements' },
+  { id: 'misc', label: 'MISC' },
   { id: 'centralstmt', label: 'Central Statements' },
 ];
 
 const SUB_ITEMS = [
-  { id: 'priority',  label: 'ENROLL FOR PRIORITY PASS™' },
-  { id: 'supp',      label: 'Supplementary Access' },
-  { id: 'wallet',    label: 'Digital Wallet' },
+  { id: 'priority', label: 'ENROLL FOR PRIORITY PASSï¿½' },
+  { id: 'supp', label: 'Supplementary Access' },
+  { id: 'wallet', label: 'Digital Wallet' },
   { id: 'wearables', label: 'Wearables' },
 ];
 
 const BCRB_ITEMS = [
   { id: 'consumer-monthly', label: 'Consumer Monthly Audit Report' },
-  { id: 'corp-monthly',     label: 'Corporate Monthly Audit Report' },
-  { id: 'consumer-data',    label: 'Consumer Data Audit Report' },
-  { id: 'corp-data',        label: 'Corporate Data Audit Report' },
-  { id: 'consumer-full',    label: 'Consumer Full Report' },
+  { id: 'corp-monthly', label: 'Corporate Monthly Audit Report' },
+  { id: 'consumer-data', label: 'Consumer Data Audit Report' },
+  { id: 'corp-data', label: 'Corporate Data Audit Report' },
+  { id: 'consumer-full', label: 'Consumer Full Report' },
   { id: 'consumer-history', label: 'Consumer History Report' },
-  { id: 'corp-history',     label: 'Corporate History Report' },
+  { id: 'corp-history', label: 'Corporate History Report' },
 ];
 
 const BUREAU_OPTIONS = [
-  { id: 'aecb',  label: 'AECB' },
+  { id: 'aecb', label: 'AECB' },
   { id: 'simah', label: 'SIMAH' },
 ];
 
-// -----------------------------------------------------------------------------
-// MOCK ADAPTER IMPLEMENTATIONS (Storybook only — not production code)
-// -----------------------------------------------------------------------------
-
 class MockAuthAdapter implements AmexPortalAuthAdapter {
-  getUsername() { return 'john.doe@amex.com'; }
-  logout()      { console.log('[MockAuthAdapter] logout called'); }
+  getUsername() {
+    return 'john.doe@amex.com';
+  }
+  logout() {
+    console.log('[MockAuthAdapter] logout called');
+  }
 }
 
-/**
- * Mock adapter that simulates an UNAUTHENTICATED user, for the
- * requireAuth demo stories. Has a toggle so the modal/redirect can be
- * "logged in" by calling onLoginSuccess like the real adapter contract.
- */
 class MockUnauthenticatedAdapter implements AmexPortalAuthAdapter {
   private authed = false;
-  getUsername() { return this.authed ? 'jane.smith@amex.com' : ''; }
-  isAuthenticated() { return this.authed; }
+  getUsername() {
+    return this.authed ? 'jane.smith@amex.com' : '';
+  }
+  isAuthenticated() {
+    return this.authed;
+  }
   onLoginSuccess(_token: string) {
-    console.log('[MockUnauthenticatedAdapter] onLoginSuccess called — user is now authed');
+    console.log(
+      '[MockUnauthenticatedAdapter] onLoginSuccess called ï¿½ user is now authed',
+    );
     this.authed = true;
   }
   logout() {
@@ -141,30 +157,44 @@ class MockUnauthenticatedAdapter implements AmexPortalAuthAdapter {
   }
 }
 
-/**
- * FIX — Always-authenticated adapter used as the DEFAULT for every
- * non-auth-demo wrapper (Stories 1–7, Portal/Layout variants, and the
- * Docs autodocs preview). This guarantees requireAuth can never show a
- * stray login modal in stories that aren't explicitly testing auth.
- */
 class MockAlwaysAuthenticatedAdapter implements AmexPortalAuthAdapter {
-  getUsername()      { return 'demo.user@amex.com'; }
-  isAuthenticated()  { return true; }
+  getUsername() {
+    return 'demo.user@amex.com';
+  }
+  isAuthenticated() {
+    return true;
+  }
   onLoginSuccess(_t: string) {}
-  logout()           { console.log('[MockAlwaysAuthenticatedAdapter] logout called'); }
+  logout() {
+    console.log('[MockAlwaysAuthenticatedAdapter] logout called');
+  }
 }
 
 class MockNavAdapter implements AmexPortalNavigationAdapter {
-  getTabs()                  { return MAIN_TABS; }
-  getSidebarItems()          { return BCRB_ITEMS; }
-  onTabClick(id: string)     { console.log('[MockNavAdapter] tab:', id); }
-  onSidebarClick(id: string) { console.log('[MockNavAdapter] sidebar:', id); }
+  getTabs() {
+    return MAIN_TABS;
+  }
+  getSidebarItems() {
+    return BCRB_ITEMS;
+  }
+  onTabClick(id: string) {
+    console.log('[MockNavAdapter] tab:', id);
+  }
+  onSidebarClick(id: string) {
+    console.log('[MockNavAdapter] sidebar:', id);
+  }
 }
 
 class MockThemeAdapter implements AmexPortalThemeAdapter {
-  getTheme()                                    { return 'onls'; }
-  applyTheme(t: string)                         { console.log('[MockThemeAdapter] applyTheme:', t); }
-  onThemeChange(_cb: (t: string) => void): void { return undefined; }
+  getTheme() {
+    return 'onls';
+  }
+  applyTheme(t: string) {
+    console.log('[MockThemeAdapter] applyTheme:', t);
+  }
+  onThemeChange(_cb: (t: string) => void): void {
+    return undefined;
+  }
 }
 
 class MockAnalyticsAdapter implements AmexPortalAnalyticsAdapter {
@@ -177,20 +207,32 @@ class MockAnalyticsAdapter implements AmexPortalAnalyticsAdapter {
 }
 
 class MockUserContextAdapter implements AmexPortalUserContextAdapter {
-  getUserId()        { return 'USR-001'; }
-  getRoles()         { return ['AGENT', 'VIEWER']; }
-  hasRole(r: string) { return ['AGENT', 'VIEWER'].includes(r); }
-  getLocale()        { return 'en-AE'; }
+  getUserId() {
+    return 'USR-001';
+  }
+  getRoles() {
+    return ['AGENT', 'VIEWER'];
+  }
+  hasRole(r: string) {
+    return ['AGENT', 'VIEWER'].includes(r);
+  }
+  getLocale() {
+    return 'en-AE';
+  }
 }
 
 class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
   private flags: Record<string, boolean> = {
     'show-beta-reports': true,
-    'enable-wearables':  true,
-    'new-dashboard-ui':  false,
+    'enable-wearables': true,
+    'new-dashboard-ui': false,
   };
-  isEnabled(flag: string) { return this.flags[flag] ?? false; }
-  getFlags()              { return { ...this.flags }; }
+  isEnabled(flag: string) {
+    return this.flags[flag] ?? false;
+  }
+  getFlags() {
+    return { ...this.flags };
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -201,15 +243,17 @@ class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
   selector: 'story-content-projection-wrapper',
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
-  // FIX — explicitly provide an always-authenticated adapter so this
+  // FIX ï¿½ explicitly provide an always-authenticated adapter so this
   // wrapper can NEVER accidentally show the login modal, regardless of
   // any args Storybook tries to inject from the meta/component level.
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAlwaysAuthenticatedAdapter },
+    {
+      provide: AMEX_PORTAL_AUTH_ADAPTER,
+      useClass: MockAlwaysAuthenticatedAdapter,
+    },
   ],
   template: `
     <div style="height:560px">
-
       <amex-page-component
         portalStyle="onls"
         [showSidebar]="false"
@@ -218,7 +262,6 @@ class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
         [requireAuth]="false"
         healthCheckUrl=""
       >
-
         <!-- CUSTOM HEADER -->
         <div
           header
@@ -233,7 +276,9 @@ class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
               width:36px;height:36px;display:flex;align-items:center;
               justify-content:center;border-radius:3px;line-height:1.1;text-align:center
             "
-          >AM<br/>EX</div>
+          >
+            AM<br />EX
+          </div>
 
           <span style="font-size:15px;font-weight:bold">
             Custom Projected Header
@@ -244,16 +289,23 @@ class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
               margin-left:auto;background:#fff;border:none;color:#006fcf;
               font-size:11px;padding:4px 12px;cursor:pointer;border-radius:2px
             "
-          >Log Out</button>
+          >
+            Log Out
+          </button>
         </div>
 
         <!-- BODY -->
         <div style="padding:24px;font-family:Arial,sans-serif">
-          <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:12px 16px;font-size:13px;color:#1a237e;margin-bottom:16px">
-            <strong>Approach 2 — Content Projection ?</strong><br/><br/>
-            Header + footer injected via <code>&lt;div header&gt;</code> and <code>&lt;div footer&gt;</code>.
+          <div
+            style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:12px 16px;font-size:13px;color:#1a237e;margin-bottom:16px"
+          >
+            <strong>Approach 2 ï¿½ Content Projection ?</strong><br /><br />
+            Header + footer injected via <code>&lt;div header&gt;</code> and
+            <code>&lt;div footer&gt;</code>.
           </div>
-          <p style="font-size:13px;color:#555">Main content uses default ng-content slot.</p>
+          <p style="font-size:13px;color:#555">
+            Main content uses default ng-content slot.
+          </p>
         </div>
 
         <!-- CUSTOM FOOTER -->
@@ -268,11 +320,9 @@ class MockFeatureFlagAdapter implements AmexPortalFeatureFlagAdapter {
           <span>|</span>
           <a href="#" style="color:#006fcf">Cookie Policy</a>
           <span>|</span>
-          <span>© American Express</span>
+          <span>ï¿½ American Express</span>
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
@@ -287,11 +337,13 @@ class StoryContentProjectionWrapperComponent {}
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAlwaysAuthenticatedAdapter },
+    {
+      provide: AMEX_PORTAL_AUTH_ADAPTER,
+      useClass: MockAlwaysAuthenticatedAdapter,
+    },
   ],
   template: `
     <div style="height:560px">
-
       <amex-page-component
         portalStyle="bcrb"
         username="ssharaf_onlshelper"
@@ -303,35 +355,40 @@ class StoryContentProjectionWrapperComponent {}
         [requireAuth]="false"
         healthCheckUrl=""
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
           <strong style="font-size:14px;display:block;margin-bottom:10px">
             Corporate Monthly Audit Report ( REP-010 )
           </strong>
-          <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:4px;padding:12px 16px;font-size:13px;color:#283593">
-            <strong>Approach 4 — Template Injection ?</strong><br/><br/>
+          <div
+            style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:4px;padding:12px 16px;font-size:13px;color:#283593"
+          >
+            <strong>Approach 4 ï¿½ Template Injection ?</strong><br /><br />
             Full header overridden using <code>[headerTemplate]</code>.
           </div>
         </div>
-
       </amex-page-component>
 
       <ng-template #customHeader>
-        <div style="background:#3d4dac;display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:48px">
+        <div
+          style="background:#3d4dac;display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:48px"
+        >
           <div style="display:flex;align-items:center;gap:12px">
             <span style="color:#fff;font-size:20px;cursor:pointer">?</span>
-            <span style="color:#fff;font-size:16px;font-weight:bold">BCRB Reports — TemplateRef Header</span>
+            <span style="color:#fff;font-size:16px;font-weight:bold"
+              >BCRB Reports ï¿½ TemplateRef Header</span
+            >
           </div>
-          <span style="color:#fff;font-size:13px">User :- ssharaf_onlshelper</span>
+          <span style="color:#fff;font-size:13px"
+            >User :- ssharaf_onlshelper</span
+          >
         </div>
       </ng-template>
-
     </div>
   `,
 })
 class StoryTemplateWrapperComponent {
   readonly bureauOptions = BUREAU_OPTIONS;
-  readonly sidebarItems  = BCRB_ITEMS;
+  readonly sidebarItems = BCRB_ITEMS;
 }
 
 // -----------------------------------------------------------------------------
@@ -343,11 +400,13 @@ class StoryTemplateWrapperComponent {
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAlwaysAuthenticatedAdapter },
+    {
+      provide: AMEX_PORTAL_AUTH_ADAPTER,
+      useClass: MockAlwaysAuthenticatedAdapter,
+    },
   ],
   template: `
     <div style="height:620px">
-
       <amex-page-component
         portalStyle="onls"
         [config]="pageConfig"
@@ -355,20 +414,23 @@ class StoryTemplateWrapperComponent {
         activeTabId="misc"
         [subItems]="subItems"
         activeSubId="priority"
-        pageTitle="PRIORITY PASS™ ENROLLMENT"
+        pageTitle="PRIORITY PASSï¿½ ENROLLMENT"
         pageSubtitle="Manage Priority Pass benefit for cardmembers"
         pageCtaLabel="Enroll Now"
         [showCustomFooter]="true"
         [requireAuth]="false"
         healthCheckUrl=""
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
-          <div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#2e7d32">
+          <div
+            style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#2e7d32"
+          >
             ? Priority Pass enrollment is active.
           </div>
-          <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:12px 16px;font-size:12px;color:#5d4037">
-            <strong>Approach 5 — Recommended Combined ?</strong><br/><br/>
+          <div
+            style="background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:12px 16px;font-size:12px;color:#5d4037"
+          >
+            <strong>Approach 5 ï¿½ Recommended Combined ?</strong><br /><br />
             Combines: config + tabs + projected footer.
           </div>
         </div>
@@ -381,21 +443,19 @@ class StoryTemplateWrapperComponent {
           <span>|</span>
           <a href="#" style="color:#006fcf">Cookie Policy</a>
           <span>|</span>
-          <span>© American Express</span>
+          <span>ï¿½ American Express</span>
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
 class StoryCombinedWrapperComponent {
-  readonly tabs     = MAIN_TABS;
+  readonly tabs = MAIN_TABS;
   readonly subItems = SUB_ITEMS;
 
   readonly pageConfig: AmexPortalLayoutConfig = {
     header: { visible: true },
-    footer: { visible: true, text: '© American Express' },
+    footer: { visible: true, text: 'ï¿½ American Express' },
   };
 }
 
@@ -409,61 +469,80 @@ class StoryCombinedWrapperComponent {
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER,         useClass: MockAuthAdapter },
-    { provide: AMEX_PORTAL_NAVIGATION_ADAPTER,   useClass: MockNavAdapter },
-    { provide: AMEX_PORTAL_THEME_ADAPTER,        useClass: MockThemeAdapter },
-    { provide: AMEX_PORTAL_ANALYTICS_ADAPTER,    useClass: MockAnalyticsAdapter },
-    { provide: AMEX_PORTAL_USER_CONTEXT_ADAPTER, useClass: MockUserContextAdapter },
-    { provide: AMEX_PORTAL_FEATURE_FLAG_ADAPTER, useClass: MockFeatureFlagAdapter },
+    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAuthAdapter },
+    { provide: AMEX_PORTAL_NAVIGATION_ADAPTER, useClass: MockNavAdapter },
+    { provide: AMEX_PORTAL_THEME_ADAPTER, useClass: MockThemeAdapter },
+    { provide: AMEX_PORTAL_ANALYTICS_ADAPTER, useClass: MockAnalyticsAdapter },
+    {
+      provide: AMEX_PORTAL_USER_CONTEXT_ADAPTER,
+      useClass: MockUserContextAdapter,
+    },
+    {
+      provide: AMEX_PORTAL_FEATURE_FLAG_ADAPTER,
+      useClass: MockFeatureFlagAdapter,
+    },
   ],
   template: `
     <div style="height:560px">
-
       <amex-page-component
         portalStyle="onls"
         pageTitle="ADAPTER INJECTION DEMO"
-        pageSubtitle="All adapters provided via DI — check console for tracking logs"
+        pageSubtitle="All adapters provided via DI ï¿½ check console for tracking logs"
         [showSidebar]="false"
         [showHeader]="true"
         [showFooter]="true"
-        footerText="© American Express — Adapter Demo"
+        footerText="ï¿½ American Express ï¿½ Adapter Demo"
         [requireAuth]="false"
         healthCheckUrl=""
         (logout)="onLogout()"
         (tabClick)="onTab($event)"
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
-
-          <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:4px;padding:16px;margin-bottom:16px;font-size:13px;color:#283593">
-            <strong>Adapter Injection Pattern ?</strong><br/><br/>
+          <div
+            style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:4px;padding:16px;margin-bottom:16px;font-size:13px;color:#283593"
+          >
+            <strong>Adapter Injection Pattern ?</strong><br /><br />
             This story provides <strong>6 adapters</strong> via Angular DI:
             <ul style="margin:8px 0 0 16px;line-height:1.8">
               <li><code>AMEX_PORTAL_AUTH_ADAPTER</code> ? MockAuthAdapter</li>
-              <li><code>AMEX_PORTAL_NAVIGATION_ADAPTER</code> ? MockNavAdapter</li>
+              <li>
+                <code>AMEX_PORTAL_NAVIGATION_ADAPTER</code> ? MockNavAdapter
+              </li>
               <li><code>AMEX_PORTAL_THEME_ADAPTER</code> ? MockThemeAdapter</li>
-              <li><code>AMEX_PORTAL_ANALYTICS_ADAPTER</code> ? MockAnalyticsAdapter</li>
-              <li><code>AMEX_PORTAL_USER_CONTEXT_ADAPTER</code> ? MockUserContextAdapter</li>
-              <li><code>AMEX_PORTAL_FEATURE_FLAG_ADAPTER</code> ? MockFeatureFlagAdapter</li>
+              <li>
+                <code>AMEX_PORTAL_ANALYTICS_ADAPTER</code> ?
+                MockAnalyticsAdapter
+              </li>
+              <li>
+                <code>AMEX_PORTAL_USER_CONTEXT_ADAPTER</code> ?
+                MockUserContextAdapter
+              </li>
+              <li>
+                <code>AMEX_PORTAL_FEATURE_FLAG_ADAPTER</code> ?
+                MockFeatureFlagAdapter
+              </li>
             </ul>
           </div>
 
-          <div style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:4px;padding:12px 16px;font-size:12px;color:#4a148c">
-            <strong>Shell never owns adapters.</strong><br/>
-            Each microfrontend portal provides its own implementation.
-            Open the browser console to see analytics + auth events fire.
+          <div
+            style="background:#f3e5f5;border:1px solid #ce93d8;border-radius:4px;padding:12px 16px;font-size:12px;color:#4a148c"
+          >
+            <strong>Shell never owns adapters.</strong><br />
+            Each microfrontend portal provides its own implementation. Open the
+            browser console to see analytics + auth events fire.
           </div>
-
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
 class StoryAdapterInjectionWrapperComponent {
-  onLogout()        { console.log('[Story] logout clicked'); }
-  onTab(id: string) { console.log('[Story] tab clicked:', id); }
+  onLogout() {
+    console.log('[Story] logout clicked');
+  }
+  onTab(id: string) {
+    console.log('[Story] tab clicked:', id);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -476,19 +555,29 @@ class StoryAdapterInjectionWrapperComponent {
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAlwaysAuthenticatedAdapter },
+    {
+      provide: AMEX_PORTAL_AUTH_ADAPTER,
+      useClass: MockAlwaysAuthenticatedAdapter,
+    },
     {
       provide: AMEX_PORTAL_FEATURE_FLAG_ADAPTER,
       useValue: {
         isEnabled: (flag: string) =>
-          ({ 'show-beta-reports': true, 'enable-wearables': true, 'new-dashboard-ui': false })[flag] ?? false,
-        getFlags: () => ({ 'show-beta-reports': true, 'enable-wearables': true, 'new-dashboard-ui': false }),
+          ({
+            'show-beta-reports': true,
+            'enable-wearables': true,
+            'new-dashboard-ui': false,
+          })[flag] ?? false,
+        getFlags: () => ({
+          'show-beta-reports': true,
+          'enable-wearables': true,
+          'new-dashboard-ui': false,
+        }),
       } satisfies AmexPortalFeatureFlagAdapter,
     },
   ],
   template: `
     <div style="height:560px">
-
       <amex-page-component
         portalStyle="onls"
         portalTitle="Feature Flag Demo"
@@ -499,55 +588,74 @@ class StoryAdapterInjectionWrapperComponent {
         [requireAuth]="false"
         healthCheckUrl=""
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
-
-          <div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:16px;margin-bottom:16px;font-size:13px;color:#2e7d32">
-            <strong>Feature Flag Adapter ?</strong><br/><br/>
-            Priority: <code>FeatureFlagAdapter</code> ? <code>config.features</code> ? runtime JSON.<br/>
+          <div
+            style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:16px;margin-bottom:16px;font-size:13px;color:#2e7d32"
+          >
+            <strong>Feature Flag Adapter ?</strong><br /><br />
+            Priority: <code>FeatureFlagAdapter</code> ?
+            <code>config.features</code> ? runtime JSON.<br />
             Open console to see flag resolution.
           </div>
 
           <table style="width:100%;border-collapse:collapse;font-size:12px">
             <thead>
               <tr style="background:#f5f5f5">
-                <th style="padding:8px 12px;text-align:left;border-bottom:1px solid #ddd">Flag</th>
-                <th style="padding:8px 12px;text-align:left;border-bottom:1px solid #ddd">Status (via Adapter)</th>
+                <th
+                  style="padding:8px 12px;text-align:left;border-bottom:1px solid #ddd"
+                >
+                  Flag
+                </th>
+                <th
+                  style="padding:8px 12px;text-align:left;border-bottom:1px solid #ddd"
+                >
+                  Status (via Adapter)
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #eee"><code>show-beta-reports</code></td>
                 <td style="padding:8px 12px;border-bottom:1px solid #eee">
-                  <span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold">? ENABLED</span>
+                  <code>show-beta-reports</code>
+                </td>
+                <td style="padding:8px 12px;border-bottom:1px solid #eee">
+                  <span
+                    style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold"
+                    >? ENABLED</span
+                  >
                 </td>
               </tr>
               <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #eee"><code>enable-wearables</code></td>
                 <td style="padding:8px 12px;border-bottom:1px solid #eee">
-                  <span style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold">? ENABLED</span>
+                  <code>enable-wearables</code>
+                </td>
+                <td style="padding:8px 12px;border-bottom:1px solid #eee">
+                  <span
+                    style="background:#e8f5e9;color:#2e7d32;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold"
+                    >? ENABLED</span
+                  >
                 </td>
               </tr>
               <tr>
                 <td style="padding:8px 12px"><code>new-dashboard-ui</code></td>
                 <td style="padding:8px 12px">
-                  <span style="background:#ffebee;color:#c62828;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold">? DISABLED</span>
+                  <span
+                    style="background:#ffebee;color:#c62828;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:bold"
+                    >? DISABLED</span
+                  >
                 </td>
               </tr>
             </tbody>
           </table>
-
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
 class StoryFeatureFlagsWrapperComponent {}
 
 // -----------------------------------------------------------------------------
-// WRAPPER: REQUIRE-AUTH — LOGIN MODAL (NEW)
+// WRAPPER: REQUIRE-AUTH ï¿½ LOGIN MODAL (NEW)
 // requireAuth=true, no loginRedirectUrl ? built-in modal appears.
 // This is the ONLY wrapper that intentionally starts unauthenticated.
 // -----------------------------------------------------------------------------
@@ -561,12 +669,13 @@ class StoryFeatureFlagsWrapperComponent {}
   ],
   template: `
     <div style="height:560px">
-
-      <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:10px 16px;margin-bottom:8px;font-size:12px;color:#1a237e;font-family:Arial,sans-serif">
-        ?? This Storybook is fully offline — the login modal's HTTP call is
+      <div
+        style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:10px 16px;margin-bottom:8px;font-size:12px;color:#1a237e;font-family:Arial,sans-serif"
+      >
+        ?? This Storybook is fully offline ï¿½ the login modal's HTTP call is
         intercepted locally and never leaves the browser (see
-        <code>mockAuthInterceptor</code> at the top of this file).<br/><br/>
-        Use these default mocked credentials to log in for real:<br/>
+        <code>mockAuthInterceptor</code> at the top of this file).<br /><br />
+        Use these default mocked credentials to log in for real:<br />
         <strong>Username:</strong> <code>demo</code> &nbsp;
         <strong>Password:</strong> <code>demo123</code>
       </div>
@@ -580,25 +689,24 @@ class StoryFeatureFlagsWrapperComponent {}
         [showHealthStatus]="false"
         (logout)="loggedOut = true"
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
-          <div style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:12px 16px;font-size:13px;color:#2e7d32">
-            <strong>? You are authenticated.</strong><br/><br/>
-            This content only renders after the real login form succeeds
-            against the mocked credentials above — no fake "simulate" button,
-            no real network call.
+          <div
+            style="background:#e8f5e9;border:1px solid #c8e6c9;border-radius:4px;padding:12px 16px;font-size:13px;color:#2e7d32"
+          >
+            <strong>? You are authenticated.</strong><br /><br />
+            This content only renders after the real login form succeeds against
+            the mocked credentials above ï¿½ no fake "simulate" button, no real
+            network call.
           </div>
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
 class StoryRequireAuthModalWrapperComponent {}
 
 // -----------------------------------------------------------------------------
-// WRAPPER: REQUIRE-AUTH — CUSTOM REDIRECT (NEW)
+// WRAPPER: REQUIRE-AUTH ï¿½ CUSTOM REDIRECT (NEW)
 // requireAuth=true + loginRedirectUrl set ? modal is skipped, browser
 // redirects to the configured URL instead (e.g. shell's own /login page).
 // -----------------------------------------------------------------------------
@@ -612,13 +720,15 @@ class StoryRequireAuthModalWrapperComponent {}
   ],
   template: `
     <div style="height:400px">
-
-      <div style="background:#fff3e0;border:1px solid #ffcc80;border-radius:4px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#e65100;font-family:Arial,sans-serif">
-        <strong>? Redirect demo — preview mode (simulateRedirect=true)</strong><br/><br/>
-        Real portals use <code>loginRedirectUrl="/login"</code> — the component
+      <div
+        style="background:#fff3e0;border:1px solid #ffcc80;border-radius:4px;padding:12px 16px;margin-bottom:12px;font-size:13px;color:#e65100;font-family:Arial,sans-serif"
+      >
+        <strong>? Redirect demo ï¿½ preview mode (simulateRedirect=true)</strong
+        ><br /><br />
+        Real portals use <code>loginRedirectUrl="/login"</code> ï¿½ the component
         auto-prepends <code>window.location.origin</code>. In Storybook
-        <code>[simulateRedirect]="true"</code> prevents actual navigation;
-        check the console to see the redirect target that would fire in production.
+        <code>[simulateRedirect]="true"</code> prevents actual navigation; check
+        the console to see the redirect target that would fire in production.
       </div>
 
       <amex-page-component
@@ -632,10 +742,9 @@ class StoryRequireAuthModalWrapperComponent {}
         (loginRedirect)="onRedirect($event)"
       >
         <div style="padding:20px">
-          Content hidden — unauthenticated, redirect would fire to /login.
+          Content hidden ï¿½ unauthenticated, redirect would fire to /login.
         </div>
       </amex-page-component>
-
     </div>
   `,
 })
@@ -655,11 +764,13 @@ class StoryRequireAuthRedirectWrapperComponent {
   standalone: true,
   imports: [CommonModule, AmexPageComponent],
   providers: [
-    { provide: AMEX_PORTAL_AUTH_ADAPTER, useClass: MockAlwaysAuthenticatedAdapter },
+    {
+      provide: AMEX_PORTAL_AUTH_ADAPTER,
+      useClass: MockAlwaysAuthenticatedAdapter,
+    },
   ],
   template: `
     <div style="height:480px">
-
       <amex-page-component
         portalStyle="onls"
         portalTitle="AMEX Wearables"
@@ -669,18 +780,19 @@ class StoryRequireAuthRedirectWrapperComponent {
         [showHealthStatus]="true"
         (healthCheck)="onHealthCheck($event)"
       >
-
         <div style="padding:20px;font-family:Arial,sans-serif">
-          <div style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:12px 16px;font-size:13px;color:#1a237e">
-            <strong>Health check fires automatically on init ?</strong><br/><br/>
+          <div
+            style="background:#e3f2fd;border:1px solid #90caf9;border-radius:4px;padding:12px 16px;font-size:13px;color:#1a237e"
+          >
+            <strong>Health check fires automatically on init ?</strong
+            ><br /><br />
             Watch the floating badge bottom-right. It calls
-            <code>healthCheckUrl</code> via HttpClient and shows UP / DOWN / CHECKING.
-            Open the console to see <code>(healthCheck)</code> output events.
+            <code>healthCheckUrl</code> via HttpClient and shows UP / DOWN /
+            CHECKING. Open the console to see <code>(healthCheck)</code> output
+            events.
           </div>
         </div>
-
       </amex-page-component>
-
     </div>
   `,
 })
@@ -693,7 +805,7 @@ class StoryHealthCheckWrapperComponent {
 // -----------------------------------------------------------------------------
 // META
 //
-// FIX — `component:` field REMOVED. When `meta.component` is set,
+// FIX ï¿½ `component:` field REMOVED. When `meta.component` is set,
 // Storybook's autodocs tries to render AmexPageComponent directly using
 // auto-derived args from its @Input() decorators, completely bypassing
 // our wrapper components (which supply the AMEX_PORTAL_AUTH_ADAPTER
@@ -710,7 +822,7 @@ class StoryHealthCheckWrapperComponent {
 const meta: Meta<AmexPageComponent> = {
   title: 'Patterns/Amex/Layout/PageComponent',
 
-decorators: [
+  decorators: [
     moduleMetadata({
       imports: [
         CommonModule,
@@ -726,13 +838,11 @@ decorators: [
       ],
     }),
     applicationConfig({
-      providers: [
-        provideHttpClient(withInterceptors([mockAuthInterceptor])),
-      ],
+      providers: [provideHttpClient(withInterceptors([mockAuthInterceptor]))],
     }),
-],
+  ],
 
-  // FIX — explicit safe defaults at meta level. Even though `component`
+  // FIX ï¿½ explicit safe defaults at meta level. Even though `component`
   // is removed, Story 1 / ConfigDriven / Portal*/Layout* stories still
   // render `<amex-page-component>` directly (no custom DI provider), so
   // these args double as a guarantee that requireAuth never silently
@@ -759,30 +869,30 @@ backward-compat alias.)
 ## Rendering Priority
 
 ### Header
-1. \`[headerTemplate]\` — TemplateRef override
-2. \`config.header.customComponent\` — dynamic Type<unknown> via ngComponentOutlet
-3. \`[showCustomHeader]="true"\` + \`<div header>\` — content projection slot
+1. \`[headerTemplate]\` ï¿½ TemplateRef override
+2. \`config.header.customComponent\` ï¿½ dynamic Type<unknown> via ngComponentOutlet
+3. \`[showCustomHeader]="true"\` + \`<div header>\` ï¿½ content projection slot
 4. Default AMEX top nav bar
 
 ### Footer
-1. \`[footerTemplate]\` — TemplateRef override
-2. \`config.footer.customComponent\` — dynamic Type<unknown> via ngComponentOutlet
-3. \`[showCustomFooter]="true"\` + \`<div footer>\` — content projection slot
+1. \`[footerTemplate]\` ï¿½ TemplateRef override
+2. \`config.footer.customComponent\` ï¿½ dynamic Type<unknown> via ngComponentOutlet
+3. \`[showCustomFooter]="true"\` + \`<div footer>\` ï¿½ content projection slot
 4. Default text footer
 
 ### Sidebar
-1. \`[sidebarTemplate]\` — TemplateRef override
-2. \`config.sidebar.customComponent\` — dynamic Type<unknown> via ngComponentOutlet
-3. \`[showCustomSidebar]="true"\` + \`<div left-nav>\` — content projection slot
+1. \`[sidebarTemplate]\` ï¿½ TemplateRef override
+2. \`config.sidebar.customComponent\` ï¿½ dynamic Type<unknown> via ngComponentOutlet
+3. \`[showCustomSidebar]="true"\` + \`<div left-nav>\` ï¿½ content projection slot
 4. Default AmexSidebarMenuComponent
 
 ## Auth Gating
 
 | Input | Behavior |
 |---|---|
-| \`[requireAuth]="false"\` (default) | No gating — content always renders |
+| \`[requireAuth]="false"\` (default) | No gating ï¿½ content always renders |
 | \`[requireAuth]="true"\` | Content hidden until \`AMEX_PORTAL_AUTH_ADAPTER.isAuthenticated()\` is true. Shows the built-in \`amex-login-modal\`. |
-| \`[requireAuth]="true"\` + \`[loginRedirectUrl]="'/login'"\` | Skips the modal entirely — redirects the browser to that URL (with \`?returnUrl=...\`) instead. Use this when a portal wants its own custom login page. |
+| \`[requireAuth]="true"\` + \`[loginRedirectUrl]="'/login'"\` | Skips the modal entirely ï¿½ redirects the browser to that URL (with \`?returnUrl=...\`) instead. Use this when a portal wants its own custom login page. |
 
 See **Story 8** and **Story 9** for live demos of auth gating.
 Every other story in this file explicitly provides an
@@ -808,8 +918,8 @@ floating badge (\`[showHealthStatus]="true"\`). See **Story 10**.
 \`FeatureFlagAdapter\` ? \`config.features\` map ? runtime JSON \`features\` key
 
 ## Convenience Inputs
-- \`[showHeader]\` — shortcut for \`config.header.visible\` (config always wins if both set)
-- \`[showFooter]\` — shortcut for \`config.footer.visible\` (config always wins if both set)
+- \`[showHeader]\` ï¿½ shortcut for \`config.header.visible\` (config always wins if both set)
+- \`[showFooter]\` ï¿½ shortcut for \`config.footer.visible\` (config always wins if both set)
 
 ## bootstrapPortal()
 \`\`\`ts
@@ -845,23 +955,27 @@ bootstrapApplication(AppComponent, {
     },
     omsServiceName: {
       control: 'text',
-      description: 'OMS-only — service name shown in the nav bar.',
+      description: 'OMS-only ï¿½ service name shown in the nav bar.',
     },
     requireAuth: {
       control: 'boolean',
-      description: 'Gate content behind auth. Shows built-in login modal unless loginRedirectUrl is set. See Story 8/9.',
+      description:
+        'Gate content behind auth. Shows built-in login modal unless loginRedirectUrl is set. See Story 8/9.',
     },
     loginUrl: {
       control: 'text',
-      description: "Login endpoint passed to amex-login-modal, e.g. 'http://localhost:8080/api/auth/login'.",
+      description:
+        "Login endpoint passed to amex-login-modal, e.g. 'http://localhost:8080/api/auth/login'.",
     },
     simulateRedirect: {
       control: 'boolean',
-      description: 'Safety valve for Storybook/demos — emits (loginRedirect) instead of performing a real navigation when loginRedirectUrl fires.',
+      description:
+        'Safety valve for Storybook/demos ï¿½ emits (loginRedirect) instead of performing a real navigation when loginRedirectUrl fires.',
     },
     loginRedirectUrl: {
       control: 'text',
-      description: 'When set, redirects to this URL instead of showing the login modal.',
+      description:
+        'When set, redirects to this URL instead of showing the login modal.',
     },
     healthCheckUrl: {
       control: 'text',
@@ -873,11 +987,13 @@ bootstrapApplication(AppComponent, {
     },
     showHeader: {
       control: 'boolean',
-      description: 'Convenience input — maps to config.header.visible. Config wins if both set.',
+      description:
+        'Convenience input ï¿½ maps to config.header.visible. Config wins if both set.',
     },
     showFooter: {
       control: 'boolean',
-      description: 'Convenience input — maps to config.footer.visible. Config wins if both set.',
+      description:
+        'Convenience input ï¿½ maps to config.footer.visible. Config wins if both set.',
     },
     showSidebar: {
       control: 'boolean',
@@ -897,31 +1013,34 @@ bootstrapApplication(AppComponent, {
     },
     showDashboardBar: {
       control: 'boolean',
-      description: 'BCRB only — show dashboard menu bar',
+      description: 'BCRB only ï¿½ show dashboard menu bar',
     },
     showBureauDropdown: {
       control: 'boolean',
-      description: 'BCRB dashboard bar — show the bureau selector dropdown',
+      description: 'BCRB dashboard bar ï¿½ show the bureau selector dropdown',
     },
     bureauLabel: {
       control: 'text',
-      description: 'BCRB dashboard bar — label for the bureau selector',
+      description: 'BCRB dashboard bar ï¿½ label for the bureau selector',
     },
     bureauOptions: {
       control: 'object',
-      description: 'BCRB dashboard bar — AmexMenuBarLink[] options for the bureau selector',
+      description:
+        'BCRB dashboard bar ï¿½ AmexMenuBarLink[] options for the bureau selector',
     },
     activeBureauId: {
       control: 'text',
-      description: 'BCRB dashboard bar — id of the currently selected bureau',
+      description: 'BCRB dashboard bar ï¿½ id of the currently selected bureau',
     },
     dashboardLinks: {
       control: 'object',
-      description: 'BCRB dashboard bar — AmexMenuBarLink[] shown alongside the bureau selector',
+      description:
+        'BCRB dashboard bar ï¿½ AmexMenuBarLink[] shown alongside the bureau selector',
     },
     activeDashboardLinkId: {
       control: 'text',
-      description: 'BCRB dashboard bar — id of the currently active dashboard link',
+      description:
+        'BCRB dashboard bar ï¿½ id of the currently active dashboard link',
     },
     pageTitle: {
       control: 'text',
@@ -955,19 +1074,20 @@ bootstrapApplication(AppComponent, {
     },
     config: {
       control: 'object',
-      description: 'Full AmexPortalLayoutConfig. Merges with runtime JSON config. Takes priority over all convenience inputs.',
+      description:
+        'Full AmexPortalLayoutConfig. Merges with runtime JSON config. Takes priority over all convenience inputs.',
     },
     headerTemplate: {
       table: { disable: true },
-      description: 'TemplateRef — Priority 1 header override',
+      description: 'TemplateRef ï¿½ Priority 1 header override',
     },
     footerTemplate: {
       table: { disable: true },
-      description: 'TemplateRef — Priority 1 footer override',
+      description: 'TemplateRef ï¿½ Priority 1 footer override',
     },
     sidebarTemplate: {
       table: { disable: true },
-      description: 'TemplateRef — Priority 1 sidebar override',
+      description: 'TemplateRef ï¿½ Priority 1 sidebar override',
     },
   },
 };
@@ -977,26 +1097,26 @@ export default meta;
 type Story = StoryObj<AmexPageComponent>;
 
 // -----------------------------------------------------------------------------
-// STORY 1 — INPUT BASED
+// STORY 1 ï¿½ INPUT BASED
 // -----------------------------------------------------------------------------
 
 export const InputBased: Story = {
-  name: '1 · Input Based',
+  name: '1 ï¿½ Input Based',
   args: {
-    portalStyle:    'onls',
-    portalTitle:    'ONLS Helper Tool',
-    pageTitle:      'PRIORITY PASS™ ENROLLMENT',
-    pageSubtitle:   'Manage Priority Pass benefit for cardmembers',
-    pageCtaLabel:   'Enroll Now',
-    showHeader:     true,
-    showFooter:     true,
-    showSidebar:    true,
-    footerText:     '© American Express. All rights reserved.',
-    activeTabId:    'misc',
-    activeSubId:    'priority',
-    tabs:           MAIN_TABS,
-    subItems:       SUB_ITEMS,
-    requireAuth:    false,
+    portalStyle: 'onls',
+    portalTitle: 'ONLS Helper Tool',
+    pageTitle: 'PRIORITY PASSï¿½ ENROLLMENT',
+    pageSubtitle: 'Manage Priority Pass benefit for cardmembers',
+    pageCtaLabel: 'Enroll Now',
+    showHeader: true,
+    showFooter: true,
+    showSidebar: true,
+    footerText: 'ï¿½ American Express. All rights reserved.',
+    activeTabId: 'misc',
+    activeSubId: 'priority',
+    tabs: MAIN_TABS,
+    subItems: SUB_ITEMS,
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1022,7 +1142,7 @@ export const InputBased: Story = {
         >
           <div style="padding:16px;font-family:Arial,sans-serif">
             <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-size:12px;color:#5d4037">
-              <strong>Approach 1 — Input Based ?</strong>
+              <strong>Approach 1 ï¿½ Input Based ?</strong>
             </div>
             <p style="font-size:13px;color:#333">Cardholder: <strong>JOHN DOE</strong></p>
           </div>
@@ -1033,40 +1153,40 @@ export const InputBased: Story = {
 };
 
 // -----------------------------------------------------------------------------
-// STORY 2 — CONTENT PROJECTION
+// STORY 2 ï¿½ CONTENT PROJECTION
 // -----------------------------------------------------------------------------
 
 export const ContentProjection: Story = {
-  name: '2 · Content Projection',
+  name: '2 ï¿½ Content Projection',
   render: () => ({
     template: `<story-content-projection-wrapper></story-content-projection-wrapper>`,
   }),
 };
 
 // -----------------------------------------------------------------------------
-// STORY 3 — CONFIG DRIVEN
+// STORY 3 ï¿½ CONFIG DRIVEN
 // -----------------------------------------------------------------------------
 
 export const ConfigDriven: Story = {
-  name: '3 · Config Driven',
+  name: '3 ï¿½ Config Driven',
   args: {
-    portalStyle:  'oms',
-    pageTitle:    'EDIT YOUR PROFILE',
+    portalStyle: 'oms',
+    pageTitle: 'EDIT YOUR PROFILE',
     pageSubtitle: 'Update your merchant account information',
-    showSidebar:  false,
-    showHeader:   true,
-    showFooter:   true,
+    showSidebar: false,
+    showHeader: true,
+    showFooter: true,
     config: {
       header: { visible: true },
-      footer: { visible: true, text: '© American Express — OMS' },
+      footer: { visible: true, text: 'ï¿½ American Express ï¿½ OMS' },
     } satisfies AmexPortalLayoutConfig,
     tabs: [
-      { id: 'profile',  label: 'EDIT YOUR PROFILE' },
+      { id: 'profile', label: 'EDIT YOUR PROFILE' },
       { id: 'merchant', label: 'MERCHANT ACCOUNTS' },
-      { id: 'reports',  label: 'REPORTS' },
+      { id: 'reports', label: 'REPORTS' },
     ],
-    activeTabId:    'profile',
-    requireAuth:    false,
+    activeTabId: 'profile',
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1101,39 +1221,39 @@ export const ConfigDriven: Story = {
 };
 
 // -----------------------------------------------------------------------------
-// STORY 4 — TEMPLATE INJECTION
+// STORY 4 ï¿½ TEMPLATE INJECTION
 // -----------------------------------------------------------------------------
 
 export const TemplateInjection: Story = {
-  name: '4 · Template Injection',
+  name: '4 ï¿½ Template Injection',
   render: () => ({
     template: `<story-template-wrapper></story-template-wrapper>`,
   }),
 };
 
 // -----------------------------------------------------------------------------
-// STORY 5 — RECOMMENDED COMBINED
+// STORY 5 ï¿½ RECOMMENDED COMBINED
 // -----------------------------------------------------------------------------
 
 export const CombinedRecommended: Story = {
-  name: '5 · Combined (Recommended)',
+  name: '5 ï¿½ Combined (Recommended)',
   render: () => ({
     template: `<story-combined-wrapper></story-combined-wrapper>`,
   }),
 };
 
 // -----------------------------------------------------------------------------
-// STORY 6 — ADAPTER INJECTION
+// STORY 6 ï¿½ ADAPTER INJECTION
 // -----------------------------------------------------------------------------
 
 export const AdapterInjection: Story = {
-  name: '6 · Adapter Injection',
+  name: '6 ï¿½ Adapter Injection',
   parameters: {
     docs: {
       description: {
         story: `
 Demonstrates all 6 injection tokens wired up via \`providers\` on a wrapper component.
-Each portal provides its own implementation — the shell owns none of this.
+Each portal provides its own implementation ï¿½ the shell owns none of this.
 Check the browser console when the story loads to see analytics + theme adapter calls.
 
 \`\`\`ts
@@ -1157,20 +1277,20 @@ bootstrapPortal({
 };
 
 // -----------------------------------------------------------------------------
-// STORY 7 — FEATURE FLAGS
+// STORY 7 ï¿½ FEATURE FLAGS
 // -----------------------------------------------------------------------------
 
 export const FeatureFlags: Story = {
-  name: '7 · Feature Flags',
+  name: '7 ï¿½ Feature Flags',
   parameters: {
     docs: {
       description: {
         story: `
 Feature flag resolution priority:
 
-1. **FeatureFlagAdapter** (provided via DI) — takes full control
-2. **config.features** map — static flags in layout config
-3. **Runtime JSON** \`features\` key — loaded at app startup
+1. **FeatureFlagAdapter** (provided via DI) ï¿½ takes full control
+2. **config.features** map ï¿½ static flags in layout config
+3. **Runtime JSON** \`features\` key ï¿½ loaded at app startup
 
 Static config example:
 \`\`\`ts
@@ -1191,11 +1311,11 @@ config: {
 };
 
 // -----------------------------------------------------------------------------
-// STORY 8 — REQUIRE AUTH · LOGIN MODAL
+// STORY 8 ï¿½ REQUIRE AUTH ï¿½ LOGIN MODAL
 // -----------------------------------------------------------------------------
 
 export const RequireAuthModal: Story = {
-  name: '8 · Require Auth — Login Modal',
+  name: '8 ï¿½ Require Auth ï¿½ Login Modal',
   parameters: {
     docs: {
       description: {
@@ -1204,7 +1324,7 @@ export const RequireAuthModal: Story = {
 
 The built-in \`amex-login-modal\` renders on top of the shell when
 \`AMEX_PORTAL_AUTH_ADAPTER.isAuthenticated()\` returns false. The modal's
-real HTTP login call doesn't work in Storybook (no backend running) —
+real HTTP login call doesn't work in Storybook (no backend running) ï¿½
 use the "Simulate Successful Login" button instead to see the gated
 content reveal, fully signal-driven, no page reload.
 
@@ -1223,11 +1343,11 @@ content reveal, fully signal-driven, no page reload.
 };
 
 // -----------------------------------------------------------------------------
-// STORY 9 — REQUIRE AUTH · CUSTOM REDIRECT
+// STORY 9 ï¿½ REQUIRE AUTH ï¿½ CUSTOM REDIRECT
 // -----------------------------------------------------------------------------
 
 export const RequireAuthRedirect: Story = {
-  name: '9 · Require Auth — Custom Redirect',
+  name: '9 ï¿½ Require Auth ï¿½ Custom Redirect',
   parameters: {
     docs: {
       description: {
@@ -1236,7 +1356,7 @@ export const RequireAuthRedirect: Story = {
 
 The built-in modal is skipped entirely. Instead, on unauthenticated state
 the component navigates the browser to \`loginRedirectUrl\` (appending
-\`?returnUrl=<current path>\`) — e.g. redirecting a standalone microfrontend
+\`?returnUrl=<current path>\`) ï¿½ e.g. redirecting a standalone microfrontend
 to the shell's own \`/login\` page.
 
 \`\`\`html
@@ -1256,11 +1376,11 @@ to the shell's own \`/login\` page.
 };
 
 // -----------------------------------------------------------------------------
-// STORY 10 — HEALTH CHECK
+// STORY 10 ï¿½ HEALTH CHECK
 // -----------------------------------------------------------------------------
 
 export const HealthCheck: Story = {
-  name: '10 · Health Check',
+  name: '10 ï¿½ Health Check',
   parameters: {
     docs: {
       description: {
@@ -1286,15 +1406,15 @@ full \`AmexPortalHealthStatus\` on every check.
 // -----------------------------------------------------------------------------
 
 export const PortalONLS: Story = {
-  name: 'Portal · ONLS',
+  name: 'Portal ï¿½ ONLS',
   args: {
-    portalStyle:    'onls',
-    portalTitle:    'ONLS Helper Tool',
-    pageTitle:      'PRIORITY PASS™ ENROLLMENT',
-    showHeader:     true,
-    showFooter:     true,
-    showSidebar:    true,
-    requireAuth:    false,
+    portalStyle: 'onls',
+    portalTitle: 'ONLS Helper Tool',
+    pageTitle: 'PRIORITY PASSï¿½ ENROLLMENT',
+    showHeader: true,
+    showFooter: true,
+    showSidebar: true,
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1319,14 +1439,14 @@ export const PortalONLS: Story = {
 };
 
 export const PortalOMS: Story = {
-  name: 'Portal · OMS',
+  name: 'Portal ï¿½ OMS',
   args: {
-    portalStyle:    'oms',
-    pageTitle:      'EDIT YOUR PROFILE',
-    showHeader:     true,
-    showFooter:     true,
-    showSidebar:    false,
-    requireAuth:    false,
+    portalStyle: 'oms',
+    pageTitle: 'EDIT YOUR PROFILE',
+    showHeader: true,
+    showFooter: true,
+    showSidebar: false,
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1350,15 +1470,15 @@ export const PortalOMS: Story = {
 };
 
 export const PortalBCRB: Story = {
-  name: 'Portal · BCRB',
+  name: 'Portal ï¿½ BCRB',
   args: {
-    portalStyle:    'bcrb',
-    portalTitle:    'BCRB Reports',
-    showHeader:     true,
-    showFooter:     true,
-    showSidebar:    true,
-    sidebarItems:   BCRB_ITEMS,
-    requireAuth:    false,
+    portalStyle: 'bcrb',
+    portalTitle: 'BCRB Reports',
+    showHeader: true,
+    showFooter: true,
+    showSidebar: true,
+    sidebarItems: BCRB_ITEMS,
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1387,14 +1507,14 @@ export const PortalBCRB: Story = {
 // -----------------------------------------------------------------------------
 
 export const EmbeddedMode: Story = {
-  name: 'Layout · Embedded Mode',
+  name: 'Layout ï¿½ Embedded Mode',
   args: {
-    portalStyle:    'onls',
-    showHeader:     false,
-    showFooter:     false,
-    showSidebar:    false,
-    pageTitle:      'EMBEDDED CONTENT PANEL',
-    requireAuth:    false,
+    portalStyle: 'onls',
+    showHeader: false,
+    showFooter: false,
+    showSidebar: false,
+    pageTitle: 'EMBEDDED CONTENT PANEL',
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1412,7 +1532,7 @@ export const EmbeddedMode: Story = {
         >
           <div style="padding:16px;font-family:Arial,sans-serif">
             <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:12px 16px;font-size:12px;color:#5d4037">
-              Embedded mode — parent app owns chrome. No header/footer rendered.
+              Embedded mode ï¿½ parent app owns chrome. No header/footer rendered.
             </div>
           </div>
         </amex-page-component>
@@ -1422,15 +1542,15 @@ export const EmbeddedMode: Story = {
 };
 
 export const NoSidebar: Story = {
-  name: 'Layout · No Sidebar',
+  name: 'Layout ï¿½ No Sidebar',
   args: {
-    portalStyle:    'oms',
-    pageTitle:      'CUSTOMIZED REPORTS',
-    pageCtaLabel:   'Request New Report +',
-    showHeader:     true,
-    showFooter:     true,
-    showSidebar:    false,
-    requireAuth:    false,
+    portalStyle: 'oms',
+    pageTitle: 'CUSTOMIZED REPORTS',
+    pageCtaLabel: 'Request New Report +',
+    showHeader: true,
+    showFooter: true,
+    showSidebar: false,
+    requireAuth: false,
     healthCheckUrl: '',
   },
   render: (args) => ({
@@ -1448,7 +1568,7 @@ export const NoSidebar: Story = {
           [healthCheckUrl]="healthCheckUrl"
         >
           <div style="padding:16px;font-family:Arial,sans-serif">
-            <code>[showSidebar]="false"</code> — content area expands to full width.
+            <code>[showSidebar]="false"</code> ï¿½ content area expands to full width.
           </div>
         </amex-page-component>
       </div>

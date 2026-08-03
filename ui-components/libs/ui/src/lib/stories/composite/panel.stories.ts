@@ -25,7 +25,6 @@ export const Band: Story = {
   }),
 };
 
-/** No title — no band renders, just the bordered content box. */
 export const NoTitle: Story = {
   args: {},
   render: (args) => ({

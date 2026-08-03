@@ -1,4 +1,15 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges, OnDestroy, HostBinding } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  HostBinding,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IconButtonComponent } from '../primitives/icon-button';
 
@@ -7,25 +18,39 @@ import { IconButtonComponent } from '../primitives/icon-button';
   standalone: true,
   imports: [CommonModule, IconButtonComponent],
   template: `
-    <div *ngIf="open" class="modal-backdrop" (click)="onBackdropClick($event)" role="presentation">
-      <div #dialog class="modal modal-{{size}}"
+    <div
+      *ngIf="open"
+      class="modal-backdrop"
+      (click)="onBackdropClick($event)"
+      role="presentation"
+    >
+      <div
+        #dialog
+        class="modal modal-{{ size }}"
         role="dialog"
         aria-modal="true"
         tabindex="-1"
         [attr.aria-label]="ariaLabel || title"
-        [attr.aria-describedby]="ariaDescribedBy">
+        [attr.aria-describedby]="ariaDescribedBy"
+      >
         <div class="modal-header">
-          <h2 class="modal-title" id="modal-title-{{uniqueId}}">{{ title }}</h2>
+          <h2 class="modal-title" id="modal-title-{{ uniqueId }}">
+            {{ title }}
+          </h2>
           <ui-icon-button
             icon="✕"
             variant="ghost"
             size="sm"
             ariaLabel="Close modal"
             [ariaDescribedBy]="title ? 'modal-title-' + uniqueId : ''"
-            (clicked)="closed.emit()">
+            (clicked)="closed.emit()"
+          >
           </ui-icon-button>
         </div>
-        <div class="modal-body" [attr.aria-labelledby]="title ? 'modal-title-' + uniqueId : null">
+        <div
+          class="modal-body"
+          [attr.aria-labelledby]="title ? 'modal-title-' + uniqueId : null"
+        >
           <ng-content></ng-content>
         </div>
         <div *ngIf="hasFooter" class="modal-footer">
@@ -34,29 +59,72 @@ import { IconButtonComponent } from '../primitives/icon-button';
       </div>
     </div>
   `,
-  styles: [`
-    .modal-backdrop {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 1000; padding: 16px;
-    }
-    .modal {
-      background: #fff; border-radius: 8px; width: 100%;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2); font-family: Arial, sans-serif;
-      max-height: 90vh; display: flex; flex-direction: column;
-    }
-    .modal-sm { max-width: 400px; }
-    .modal-md { max-width: 560px; }
-    .modal-lg { max-width: 800px; }
-    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; }
-    .modal-title { margin: 0; font-size: 18px; font-weight: 600; color: #333; }
-    .modal-body { padding: 20px; overflow-y: auto; flex: 1; font-size: 14px; color: #555; line-height: 1.6; }
-    .modal-footer { padding: 12px 20px; border-top: 1px solid #f0f0f0; display: flex; justify-content: flex-end; gap: 8px; }
-  `],
+  styles: [
+    `
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 16px;
+      }
+      .modal {
+        background: #fff;
+        border-radius: 8px;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        font-family: Arial, sans-serif;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .modal-sm {
+        max-width: 400px;
+      }
+      .modal-md {
+        max-width: 560px;
+      }
+      .modal-lg {
+        max-width: 800px;
+      }
+      .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .modal-title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+      .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        flex: 1;
+        font-size: 14px;
+        color: #555;
+        line-height: 1.6;
+      }
+      .modal-footer {
+        padding: 12px 20px;
+        border-top: 1px solid #f0f0f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+    `,
+  ],
 })
-export class ModalComponent {
+export class ModalComponent implements OnChanges, OnDestroy {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `ui-modal-${++ModalComponent._idCounter}`;
+  @HostBinding('attr.id') @Input() id =
+    `ui-modal-${++ModalComponent._idCounter}`;
 
   @Input() open = false;
   @Input() title = '';
@@ -96,7 +164,10 @@ export class ModalComponent {
   }
 
   onBackdropClick(e: MouseEvent) {
-    if (this.closeOnBackdrop && (e.target as HTMLElement).classList.contains('modal-backdrop')) {
+    if (
+      this.closeOnBackdrop &&
+      (e.target as HTMLElement).classList.contains('modal-backdrop')
+    ) {
       this.closeInternal();
     }
   }
@@ -136,9 +207,14 @@ export class ModalComponent {
     if (!dialog) return;
     const focusable = Array.from(
       dialog.querySelectorAll<HTMLElement>(
-        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]'
-      )
-    ).filter((el) => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement);
+        'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]',
+      ),
+    ).filter(
+      (el) =>
+        el.offsetWidth > 0 ||
+        el.offsetHeight > 0 ||
+        el === document.activeElement,
+    );
 
     if (focusable.length === 0) {
       e.preventDefault();

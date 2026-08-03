@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter, ViewChild, HostListener, HostBinding, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  HostListener,
+  HostBinding,
+  AfterViewInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../primitives/button';
@@ -7,18 +16,12 @@ import { SelectComponent, SelectOption } from '../../../primitives/select';
 export type ReportFormat = 'excel' | 'pdf' | 'csv' | 'rtf';
 
 export interface ReportDownloadButtonConfig {
-  /** Label shown above the format icon, e.g. "Export to Excel" */
   label?: string;
-  /** Which formats to show. When more than one is provided a dropdown appears. */
-  formats?: ReportFormat[];
-  /** Text for the primary action button (default: "Submit Request") */
-  submitLabel?: string;
-  /** Show the "Back to main page" secondary button (default: true) */
+ formats?: ReportFormat[];
+ submitLabel?: string;
   showBack?: boolean;
-  /** Text for the back button (default: "Back to main page") */
-  backLabel?: string;
-  /** Disable the submit button while a request is in-flight */
-  loading?: boolean;
+ backLabel?: string;
+ loading?: boolean;
 }
 
 const FORMAT_ICON: Record<ReportFormat, { svg: string; label: string }> = {
@@ -81,7 +84,8 @@ const FORMAT_ICON: Record<ReportFormat, { svg: string; label: string }> = {
             [options]="formatSelectOptions"
             [ariaLabelledBy]="id + '-label'"
             ariaLabel="Select report format"
-            [(ngModel)]="selectedFormat">
+            [(ngModel)]="selectedFormat"
+          >
           </ui-select>
         </ng-container>
         <ng-template #singleIcon>
@@ -90,7 +94,9 @@ const FORMAT_ICON: Record<ReportFormat, { svg: string; label: string }> = {
             class="amex-rdb__svg-icon"
             [innerHTML]="FORMAT_ICON[selectedFormat].svg"
             role="img"
-            [attr.aria-label]="FORMAT_ICON[selectedFormat].label + ' format icon'"
+            [attr.aria-label]="
+              FORMAT_ICON[selectedFormat].label + ' format icon'
+            "
             tabindex="0"
             (keydown)="onIconKeydown($event)"
             #formatIcon
@@ -105,11 +111,30 @@ const FORMAT_ICON: Record<ReportFormat, { svg: string; label: string }> = {
         type="submit"
         [disabled]="!!config.loading"
         [ariaPressed]="!!config.loading"
-        [ariaLabel]="config.loading ? 'Processing download request, please wait' : (config.submitLabel || 'Submit Request for ' + FORMAT_ICON[selectedFormat].label + ' format')"
-        [label]="config.loading ? 'Processing…' : (config.submitLabel || 'Submit Request')"
-        (click)="onSubmit()">
-        <span *ngIf="config.loading" slot="icon-start" class="amex-rdb__spinner" aria-hidden="true"></span>
-        <span *ngIf="config.loading" slot="icon-start" class="sr-only">Processing download request</span>
+        [ariaLabel]="
+          config.loading
+            ? 'Processing download request, please wait'
+            : config.submitLabel ||
+              'Submit Request for ' +
+                FORMAT_ICON[selectedFormat].label +
+                ' format'
+        "
+        [label]="
+          config.loading
+            ? 'Processing…'
+            : config.submitLabel || 'Submit Request'
+        "
+        (click)="onSubmit()"
+      >
+        <span
+          *ngIf="config.loading"
+          slot="icon-start"
+          class="amex-rdb__spinner"
+          aria-hidden="true"
+        ></span>
+        <span *ngIf="config.loading" slot="icon-start" class="sr-only"
+          >Processing download request</span
+        >
       </ui-button>
 
       <!-- Secondary "Back to main page" button -->
@@ -120,128 +145,130 @@ const FORMAT_ICON: Record<ReportFormat, { svg: string; label: string }> = {
         type="button"
         [ariaLabel]="config.backLabel || 'Back to main page'"
         [label]="config.backLabel || 'Back to main page'"
-        (click)="back.emit()">
+        (click)="back.emit()"
+      >
       </ui-button>
     </div>
   `,
-  styles: [`
-    /* ─── Container ────────────────────────────────────────────── */
-    .amex-rdb {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      padding: 32px 24px;
-      background: #fff;
-      font-family: Arial, sans-serif;
-      max-width: 480px;
-      margin: 0 auto;
-    }
+  styles: [
+    `
+      .amex-rdb {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 32px 24px;
+        background: #fff;
+        font-family: Arial, sans-serif;
+        max-width: 480px;
+        margin: 0 auto;
+      }
 
-    /* ─── "Export to Excel ★" label ────────────────────────────── */
-    .amex-rdb__label {
-      font-size: 15px;
-      font-weight: 700;
-      color: #222;
-      text-align: center;
-      letter-spacing: 0.01em;
-    }
-    .amex-rdb__star {
-      color: #c0392b;
-      margin-left: 3px;
-      font-size: 14px;
-    }
+      .amex-rdb__label {
+        font-size: 15px;
+        font-weight: 700;
+        color: #222;
+        text-align: center;
+        letter-spacing: 0.01em;
+      }
+      .amex-rdb__star {
+        color: #c0392b;
+        margin-left: 3px;
+        font-size: 14px;
+      }
 
-    /* ─── Icon area ─────────────────────────────────────────────── */
-    .amex-rdb__icon-row {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 4px;
-    }
-    .amex-rdb__svg-icon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 64px;
-      height: 64px;
-      cursor: default;
-    }
-    .amex-rdb__svg-icon ::ng-deep svg {
-      width: 64px;
-      height: 64px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
-    }
+      .amex-rdb__icon-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4px;
+      }
+      .amex-rdb__svg-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        cursor: default;
+      }
+      .amex-rdb__svg-icon ::ng-deep svg {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+      }
 
-    /* ─── Multi-format dropdown — themed via ui-select's own CSS, layout only here ── */
-    .amex-rdb__dropdown-wrap {
-      min-width: 160px;
-    }
+      .amex-rdb__dropdown-wrap {
+        min-width: 160px;
+      }
 
-    /* ─── Buttons — themed via ui-button's exposed CSS custom properties, no ::ng-deep ── */
-    .amex-rdb__btn-wrap {
-      width: 100%;
-      max-width: 380px;
-      --btn-radius: 4px;
-      --btn-padding: 11px 20px;
-      --btn-font-size: 14px;
-    }
-    .amex-rdb__btn-wrap ::ng-deep .btn {
-      width: 100%;
-      justify-content: center;
-      letter-spacing: 0.02em;
-    }
-    .amex-rdb__btn-wrap--primary {
-      --btn-bg: #016FD0;
-      --btn-color: #fff;
-    }
-    .amex-rdb__btn-wrap--primary:hover { --btn-bg: #0157a8; }
-    .amex-rdb__btn-wrap--secondary {
-      --btn-bg: #016FD0;
-      --btn-color: #fff;
-    }
-    .amex-rdb__btn-wrap--secondary:hover { --btn-bg: #0157a8; }
+      .amex-rdb__btn-wrap {
+        width: 100%;
+        max-width: 380px;
+        --btn-radius: 4px;
+        --btn-padding: 11px 20px;
+        --btn-font-size: 14px;
+      }
+      .amex-rdb__btn-wrap ::ng-deep .btn {
+        width: 100%;
+        justify-content: center;
+        letter-spacing: 0.02em;
+      }
+      .amex-rdb__btn-wrap--primary {
+        --btn-bg: #016fd0;
+        --btn-color: #fff;
+      }
+      .amex-rdb__btn-wrap--primary:hover {
+        --btn-bg: #0157a8;
+      }
+      .amex-rdb__btn-wrap--secondary {
+        --btn-bg: #016fd0;
+        --btn-color: #fff;
+      }
+      .amex-rdb__btn-wrap--secondary:hover {
+        --btn-bg: #0157a8;
+      }
 
-    /* ─── Loading spinner ────────────────────────────────────────  */
-    .amex-rdb__spinner {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: amex-spin 0.7s linear infinite;
-      vertical-align: middle;
-    }
-    @keyframes amex-spin { to { transform: rotate(360deg); } }
+      .amex-rdb__spinner {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: amex-spin 0.7s linear infinite;
+        vertical-align: middle;
+      }
+      @keyframes amex-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
 
-    /* Accessibility */
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-  `],
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    `,
+  ],
 })
 export class AmexReportDownloadButtonComponent implements AfterViewInit {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `report-download-button-${++AmexReportDownloadButtonComponent._idCounter}`;
+  @HostBinding('attr.id') @Input() id =
+    `report-download-button-${++AmexReportDownloadButtonComponent._idCounter}`;
 
   @Input() config: ReportDownloadButtonConfig = {};
 
-  /** Emits the chosen format when "Submit Request" is clicked */
   @Output() download = new EventEmitter<ReportFormat>();
 
-  /** Emits when "Back to main page" is clicked */
   @Output() back = new EventEmitter<void>();
 
-  /** Expose icon map to template */
   readonly FORMAT_ICON = FORMAT_ICON;
 
   @ViewChild('formatIcon') formatIcon!: { nativeElement: HTMLSpanElement };
@@ -255,7 +282,10 @@ export class AmexReportDownloadButtonComponent implements AfterViewInit {
   }
 
   get formatSelectOptions(): SelectOption[] {
-    return this.resolvedFormats.map((f) => ({ label: this.FORMAT_ICON[f].label, value: f }));
+    return this.resolvedFormats.map((f) => ({
+      label: this.FORMAT_ICON[f].label,
+      value: f,
+    }));
   }
 
   get multiFormat(): boolean {
@@ -270,23 +300,20 @@ export class AmexReportDownloadButtonComponent implements AfterViewInit {
     if (this.config.label) return this.config.label;
     const map: Record<ReportFormat, string> = {
       excel: 'Export to Excel',
-      pdf:   'Export to PDF',
-      csv:   'Export to CSV',
-      rtf:   'Export to RTF',
+      pdf: 'Export to PDF',
+      csv: 'Export to CSV',
+      rtf: 'Export to RTF',
     };
     return map[this.selectedFormat] ?? 'Export Report';
   }
 
   ngAfterViewInit() {
-    // Set initial focus to submit button — ui-button exposes a public focus() delegate.
     this.submitBtn?.focus();
   }
 
   onIconKeydown(event: KeyboardEvent): void {
-    // Handle keyboard interaction with format icon
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
-      // Announce current format to screen readers
       this.announceFormat();
     }
   }
@@ -298,7 +325,6 @@ export class AmexReportDownloadButtonComponent implements AfterViewInit {
   }
 
   announceFormat(): void {
-    // Create a temporary announcement for screen readers
     const announcement = document.createElement('div');
     announcement.setAttribute('role', 'status');
     announcement.setAttribute('aria-live', 'polite');
@@ -306,7 +332,6 @@ export class AmexReportDownloadButtonComponent implements AfterViewInit {
     announcement.textContent = `Selected format: ${this.FORMAT_ICON[this.selectedFormat].label}`;
     document.body.appendChild(announcement);
 
-    // Remove after announcement
     setTimeout(() => {
       document.body.removeChild(announcement);
     }, 1000);
@@ -314,7 +339,6 @@ export class AmexReportDownloadButtonComponent implements AfterViewInit {
 
   @HostListener('keydown', ['$event'])
   handleGlobalKeydown(event: KeyboardEvent): void {
-    // Handle Escape key to reset focus
     if (event.key === 'Escape') {
       this.submitBtn?.focus();
     }

@@ -9,7 +9,6 @@ const meta: Meta<AmexEmptyStateMessageComponent> = {
 export default meta;
 type Story = StoryObj<AmexEmptyStateMessageComponent>;
 
-// BCRB / SOC / ONLS — bold centred "No Data Found"
 export const DefaultNodataFound: Story = {
   name: 'Default — No Data Found (BCRB/SOC/ONLS)',
   args: {
@@ -20,7 +19,6 @@ export const DefaultNodataFound: Story = {
   },
 };
 
-// With CTA button
 export const DefaultWithCTA: Story = {
   name: 'Default — With CTA Button',
   args: {
@@ -30,8 +28,6 @@ export const DefaultWithCTA: Story = {
     ctaLabel: 'Add New Record',
   },
 };
-
-// OMS — light green info box
 export const OMSGreenBox: Story = {
   name: 'OMS — Light Green Info Box',
   args: {
@@ -42,7 +38,6 @@ export const OMSGreenBox: Story = {
   },
 };
 
-// OMS — no eligible transactions
 export const OMSNoTransactions: Story = {
   name: 'OMS — No Eligible Transactions',
   args: {
@@ -53,7 +48,6 @@ export const OMSNoTransactions: Story = {
   },
 };
 
-// Priority Pass / ONLS inline red error
 export const ErrorRedInline: Story = {
   name: 'Error — Red Inline (Priority Pass / ONLS)',
   args: {
@@ -64,7 +58,6 @@ export const ErrorRedInline: Story = {
   },
 };
 
-// Backend error red
 export const ErrorBackendFailure: Story = {
   name: 'Error — Backend Failure',
   args: {

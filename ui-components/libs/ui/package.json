@@ -22,5 +22,11 @@
     "type": "git",
     "url": "https://github.com/Verinite-AMEX/amex-nx-microfrontend"
   },
-  "keywords": ["angular", "amex", "aeme", "ui-components", "component-library"]
+  "keywords": [
+    "angular",
+    "amex",
+    "aeme",
+    "ui-components",
+    "component-library"
+  ]
 }

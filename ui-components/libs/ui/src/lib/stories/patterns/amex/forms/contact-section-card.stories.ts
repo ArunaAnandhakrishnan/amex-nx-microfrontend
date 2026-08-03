@@ -18,9 +18,30 @@ export const Marketing: Story = {
   args: {
     title: 'Marketing',
     contacts: [
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
     ],
   },
 };
@@ -30,9 +51,30 @@ export const Finance: Story = {
   args: {
     title: 'Finance',
     contacts: [
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
     ],
   },
 };
@@ -42,9 +84,30 @@ export const OperationsPreFilled: Story = {
   args: {
     title: 'Operations',
     contacts: [
-      { name: 'Omar Ops', jobTitle: 'Operations Head', email: 'ops@merchant.ae', countryCode: '+1', landline: '', mobile: '777777777' },
-      { name: 'Sara Khalid', jobTitle: 'Accountant', email: 'sara@merchant.ae', countryCode: '+973', landline: '', mobile: '36987654' },
-      { name: '', jobTitle: '', email: '', countryCode: '', landline: '', mobile: '' },
+      {
+        name: 'Omar Ops',
+        jobTitle: 'Operations Head',
+        email: 'ops@merchant.ae',
+        countryCode: '+1',
+        landline: '',
+        mobile: '777777777',
+      },
+      {
+        name: 'Sara Khalid',
+        jobTitle: 'Accountant',
+        email: 'sara@merchant.ae',
+        countryCode: '+973',
+        landline: '',
+        mobile: '36987654',
+      },
+      {
+        name: '',
+        jobTitle: '',
+        email: '',
+        countryCode: '',
+        landline: '',
+        mobile: '',
+      },
     ],
   },
 };

@@ -4,7 +4,15 @@ import { FileInputComponent } from '../../primitives/file-input';
 const meta: Meta<FileInputComponent> = {
   title: 'Primitives/FileInput',
   component: FileInputComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     accept: { control: 'text' },
     multiple: { control: 'boolean' },

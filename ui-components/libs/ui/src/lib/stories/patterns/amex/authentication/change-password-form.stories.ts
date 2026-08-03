@@ -5,7 +5,6 @@ const meta: Meta<AmexChangePasswordFormComponent> = {
   title: 'Patterns/Amex/Authentication/ChangePasswordForm',
   component: AmexChangePasswordFormComponent,
   argTypes: {
-    // Shared
     portalStyle: { control: 'select', options: ['onls', 'oms'] },
     formTitle: { control: 'text' },
     currentPasswordLabel: { control: 'text' },

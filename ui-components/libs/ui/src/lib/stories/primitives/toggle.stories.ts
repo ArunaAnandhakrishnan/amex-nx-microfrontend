@@ -4,7 +4,15 @@ import { ToggleComponent } from '../../primitives/toggle';
 const meta: Meta<ToggleComponent> = {
   title: 'Primitives/Toggle',
   component: ToggleComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'form-validation', 'screen-reader', 'keyboard-navigation'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'form-validation',
+    'screen-reader',
+    'keyboard-navigation',
+  ],
   argTypes: {
     label: { control: 'text' },
     disabled: { control: 'boolean' },
@@ -25,4 +33,6 @@ export const On: Story = {
   }),
   args: { label: 'Dark mode' },
 };
-export const Disabled: Story = { args: { label: 'Disabled toggle', disabled: true } };
+export const Disabled: Story = {
+  args: { label: 'Disabled toggle', disabled: true },
+};

@@ -9,7 +9,14 @@ const IMPORTS = [TableComponent, TableHeadComponent, TableRowComponent];
 const meta: Meta<TableHeaderCellComponent> = {
   title: 'Primitives/TableHeaderCell',
   component: TableHeaderCellComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     scope: { control: 'select', options: ['col', 'row'] },
     align: { control: 'select', options: ['left', 'center', 'right'] },

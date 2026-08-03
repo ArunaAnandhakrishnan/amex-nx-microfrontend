@@ -13,11 +13,11 @@ export default meta;
 type Story = StoryObj<AmexCountryMasterFormComponent>;
 
 export const AddNew: Story = {
-  name: 'Add New — free text inputs',
+  name: 'Add New ï¿½ free text inputs',
   args: {},
 };
 
 export const Modify: Story = {
-  name: 'Modify — autocomplete name, code auto-fills',
+  name: 'Modify ï¿½ autocomplete name, code auto-fills',
   args: {},
 };

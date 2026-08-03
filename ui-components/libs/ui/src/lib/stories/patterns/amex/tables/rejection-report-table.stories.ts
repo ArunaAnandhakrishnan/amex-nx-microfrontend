@@ -13,9 +13,24 @@ export const WithRejections: Story = {
   name: 'With rejected items',
   args: {
     rows: [
-      { seNo: 'SE001', rejectionReason: 'Invalid Card Number', date: '22/09/2024', amount: '1,200.00' },
-      { seNo: 'SE004', rejectionReason: 'Duplicate Reference', date: '23/09/2024', amount: '850.00' },
-      { seNo: 'SE007', rejectionReason: 'Expired Approval Code', date: '24/09/2024', amount: '3,400.00' },
+      {
+        seNo: 'SE001',
+        rejectionReason: 'Invalid Card Number',
+        date: '22/09/2024',
+        amount: '1,200.00',
+      },
+      {
+        seNo: 'SE004',
+        rejectionReason: 'Duplicate Reference',
+        date: '23/09/2024',
+        amount: '850.00',
+      },
+      {
+        seNo: 'SE007',
+        rejectionReason: 'Expired Approval Code',
+        date: '24/09/2024',
+        amount: '3,400.00',
+      },
     ],
   },
 };

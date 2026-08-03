@@ -1,4 +1,13 @@
-import { Component, Input, Output, EventEmitter, OnChanges, ViewChildren, QueryList, HostBinding } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  ViewChildren,
+  QueryList,
+  HostBinding,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../primitives/button';
 
@@ -18,7 +27,8 @@ export interface TabItem {
   template: `
     <div class="tabs">
       <div class="tabs-nav" role="tablist" [attr.aria-label]="ariaLabel">
-        <ui-button *ngFor="let tab of tabs; let i = index"
+        <ui-button
+          *ngFor="let tab of tabs; let i = index"
           class="tab-btn"
           [class.active]="tab.id === activeTab"
           variant="ghost"
@@ -32,38 +42,55 @@ export interface TabItem {
           [tabIndexOverride]="tab.id === activeTab ? 0 : -1"
           [id]="'tab-' + tab.id"
           (click)="select(tab.id)"
-          (keydown)="onKeydown($event, i)">
+          (keydown)="onKeydown($event, i)"
+        >
         </ui-button>
       </div>
-      <div class="tabs-content"
+      <div
+        class="tabs-content"
         role="tabpanel"
         [attr.aria-labelledby]="'tab-' + activeTab"
         [attr.aria-live]="'polite'"
-        [id]="'tabpanel-' + activeTab">
+        [id]="'tabpanel-' + activeTab"
+      >
         <ng-content></ng-content>
       </div>
     </div>
   `,
-  styles: [`
-    .tabs { font-family: Arial, sans-serif; }
-    .tabs-nav { display: flex; border-bottom: 2px solid #e0e0e0; gap: 0; }
-    .tab-btn {
-      --btn-bg: transparent;
-      --btn-color: #666;
-      --btn-radius: 0;
-      --btn-padding: 10px 20px;
-      --btn-font-size: 14px;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .tab-btn.active {
-      --btn-color: #1976d2;
-      border-bottom-color: #1976d2;
-      font-weight: 600;
-    }
-    .tabs-content { padding: 16px 0; font-size: 14px; color: #555; }
-  `],
+  styles: [
+    `
+      .tabs {
+        font-family: Arial, sans-serif;
+      }
+      .tabs-nav {
+        display: flex;
+        border-bottom: 2px solid #e0e0e0;
+        gap: 0;
+      }
+      .tab-btn {
+        --btn-bg: transparent;
+        --btn-color: #666;
+        --btn-radius: 0;
+        --btn-padding: 10px 20px;
+        --btn-font-size: 14px;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -2px;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
+      }
+      .tab-btn.active {
+        --btn-color: #1976d2;
+        border-bottom-color: #1976d2;
+        font-weight: 600;
+      }
+      .tabs-content {
+        padding: 16px 0;
+        font-size: 14px;
+        color: #555;
+      }
+    `,
+  ],
 })
 export class TabsComponent implements OnChanges {
   private static _idCounter = 0;
@@ -106,7 +133,6 @@ export class TabsComponent implements OnChanges {
 
   private focusAndSelect(idx: number) {
     this.select(this.tabs[idx].id);
-    // deferred one tick so tabIndexOverride re-renders to 0 before we move focus
     Promise.resolve().then(() => this.tabButtons?.toArray()[idx]?.focus());
   }
 }

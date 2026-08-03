@@ -6,12 +6,19 @@ import { ButtonComponent } from '../../primitives/button';
 const meta: Meta<CardComponent> = {
   title: 'Composite/Card',
   component: CardComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'screen-reader', 'color-contrast'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'screen-reader',
+    'color-contrast',
+  ],
   argTypes: {
     variant: { control: 'radio', options: ['elevated', 'flat'] },
     hoverable: { control: 'boolean' },
     image: { control: 'text' },
-  
+
     subtitle: { control: 'text' },
     hasFooter: { control: 'boolean' },
   },
@@ -36,7 +43,11 @@ export const Hoverable: Story = {
 };
 
 export const WithImage: Story = {
-  args: { title: 'Card Title', subtitle: 'Subtitle text', image: 'https://placehold.co/320x160' },
+  args: {
+    title: 'Card Title',
+    subtitle: 'Subtitle text',
+    image: 'https://placehold.co/320x160',
+  },
   render: (args) => ({
     props: args,
     template: `<ui-card [title]="title" [subtitle]="subtitle" [image]="image" style="max-width:320px;display:block">Some card content goes here.</ui-card>`,

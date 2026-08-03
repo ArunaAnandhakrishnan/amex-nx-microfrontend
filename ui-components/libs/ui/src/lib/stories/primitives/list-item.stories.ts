@@ -5,7 +5,14 @@ import { ListComponent } from '../../primitives/list';
 const meta: Meta<ListItemComponent> = {
   title: 'Primitives/ListItem',
   component: ListItemComponent,
-  tags: ['autodocs', 'a11y', 'accessibility', 'wcag', 'keyboard-navigation', 'screen-reader'],
+  tags: [
+    'autodocs',
+    'a11y',
+    'accessibility',
+    'wcag',
+    'keyboard-navigation',
+    'screen-reader',
+  ],
   argTypes: {
     clickable: { control: 'boolean' },
     itemClick: { action: 'itemClick' },

@@ -1,33 +1,7 @@
-#!/usr/bin/env node
-/**
- * publish-ui.js
- * Automates the install -> build -> (unpublish) -> publish cycle for @ui-components/ui
- * against a Verdaccio registry, so you never have to run the manual
- * unpublish/publish commands by hand again.
- *
- * Usage (run from the Nx workspace root):
- *
- *   node tools/publish-ui.js                 # install + unpublish-if-exists + publish current version (matches your table)
- *   node tools/publish-ui.js --bump=patch    # auto bump 0.0.0 -> 0.0.1, build, publish (no unpublish needed)
- *   node tools/publish-ui.js --bump=minor
- *   node tools/publish-ui.js --bump=major
- *   node tools/publish-ui.js --unpublish-only
- *   node tools/publish-ui.js --registry=https://npm.pkg.github.com
- *   node tools/publish-ui.js --skip-install
- *   node tools/publish-ui.js --dry-run
- *
- * Env vars (all optional, override CLI defaults):
- *   VERDACCIO_REGISTRY   default: http://localhost:4873
- *   NX_PROJECT            default: ui
- *   NX_BUILD_TARGET        default: build:production
- *   DIST_DIR               default: dist/ui-components
- */
-
 const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-// ---------- config ----------
 const args = process.argv.slice(2).reduce((acc, arg) => {
   const [key, val] = arg.replace(/^--/, '').split('=');
   acc[key] = val === undefined ? true : val;
@@ -38,12 +12,11 @@ const REGISTRY = args.registry || process.env.VERDACCIO_REGISTRY || 'http://loca
 const PROJECT = args.project || process.env.NX_PROJECT || 'ui';
 const BUILD_TARGET = args.target || process.env.NX_BUILD_TARGET || 'build:production';
 const DIST_DIR = path.resolve(process.cwd(), args.distDir || process.env.DIST_DIR || 'dist/ui-components');
-const BUMP = args.bump || null; // patch | minor | major | null
+const BUMP = args.bump || null; 
 const UNPUBLISH_ONLY = !!args['unpublish-only'];
 const DRY_RUN = !!args['dry-run'];
 const SKIP_INSTALL = !!args['skip-install'];
 
-// ---------- helpers ----------
 function log(msg) {
   console.log(`\x1b[36m[publish-ui]\x1b[0m ${msg}`);
 }
@@ -88,7 +61,6 @@ function versionExistsOnRegistry(pkgName, version) {
     const out = run(`npm view ${pkgName}@${version} version --registry ${REGISTRY}`, { stdio: 'pipe' });
     return out === version;
   } catch (e) {
-    // npm view throws (E404) when the version/package doesn't exist yet — that's fine.
     return false;
   }
 }
@@ -102,7 +74,6 @@ function packageExistsOnRegistry(pkgName) {
   }
 }
 
-// ---------- steps ----------
 function needsInstall() {
   const nodeModulesDir = path.resolve(process.cwd(), 'node_modules');
   const pkgLockPath = path.resolve(process.cwd(), 'package-lock.json');
@@ -114,10 +85,7 @@ function needsInstall() {
   }
 
   const nodeModulesTime = fs.statSync(nodeModulesDir).mtimeMs;
-
-  // Compare against whichever exists: package-lock.json is more accurate,
-  // fall back to package.json if there's no lockfile.
-  const checkPath = fs.existsSync(pkgLockPath) ? pkgLockPath : pkgJsonPath;
+const checkPath = fs.existsSync(pkgLockPath) ? pkgLockPath : pkgJsonPath;
   if (!fs.existsSync(checkPath)) {
     log('No package.json/package-lock.json found to compare — skipping install check, installing to be safe.');
     return true;
@@ -151,9 +119,7 @@ function build() {
 function bumpVersion() {
   if (!BUMP) return;
   log(`Bumping version in ${DIST_DIR} (${BUMP})...`);
-  // npm version writes the new version into dist/ui-components/package.json directly,
-  // without needing a git repo there (--no-git-tag-version).
-  runInherit(`npm version ${BUMP} --no-git-tag-version`, { cwd: DIST_DIR });
+ runInherit(`npm version ${BUMP} --no-git-tag-version`, { cwd: DIST_DIR });
 }
 
 function unpublishIfExists(pkgName, version) {
@@ -162,11 +128,9 @@ function unpublishIfExists(pkgName, version) {
     try {
       run(`npm unpublish ${pkgName}@${version} --force --registry ${REGISTRY}`);
     } catch (e) {
-      // Fallback: unpublish the whole package (some Verdaccio configs only allow full unpublish)
-      warn(`Version-level unpublish failed, retrying full package unpublish...`);
+     warn(`Version-level unpublish failed, retrying full package unpublish...`);
       run(`npm unpublish ${pkgName} --force --registry ${REGISTRY}`);
     }
-    // Verdaccio can be briefly inconsistent right after an unpublish; give it a moment.
     if (!DRY_RUN) sleep(2000);
   } else {
     log(`${pkgName}@${version} is not on the registry yet — nothing to unpublish.`);
@@ -187,13 +151,11 @@ function publish() {
   runInherit(`npm publish --registry ${REGISTRY}`, { cwd: DIST_DIR });
 }
 
-// ---------- main ----------
 (function main() {
   log(`Registry: ${REGISTRY}`);
 
   if (UNPUBLISH_ONLY) {
     const pkg = readPkg(DIST_DIR) ? readPkg(DIST_DIR) : null;
-    // If dist doesn't exist yet, we still know the package name from libs/ui/package.json
     const pkgName = pkg ? pkg.name : readPkg(path.resolve(process.cwd(), 'libs/ui')).name;
     unpublishAll(pkgName);
     log('Done (unpublish-only).');
@@ -208,9 +170,7 @@ function publish() {
   log(`Package: ${pkg.name}@${pkg.version}`);
 
   if (!BUMP) {
-    // Same-version workflow (mirrors your manual table): unpublish that exact
-    // version if it's already there, then publish.
-    unpublishIfExists(pkg.name, pkg.version);
+   unpublishIfExists(pkg.name, pkg.version);
   }
 
   publish();

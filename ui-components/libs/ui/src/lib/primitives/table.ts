@@ -1,4 +1,3 @@
-// atoms/table.ts
 import { Component, Input, HostBinding } from '@angular/core';
 import { NgIf } from '@angular/common';
 
@@ -17,22 +16,50 @@ import { NgIf } from '@angular/common';
       [attr.aria-labelledby]="ariaLabelledBy || null"
       [attr.aria-describedby]="ariaDescribedBy || null"
     >
-      <caption *ngIf="caption" class="ui-table__caption">{{ caption }}</caption>
+      <caption *ngIf="caption" class="ui-table__caption">
+        {{
+          caption
+        }}
+      </caption>
       <ng-content></ng-content>
     </table>
   `,
-  styles: [`
-    .ui-table { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 13px; }
-    .ui-table__caption { text-align: left; padding: 4px 0; font-size: 12px; color: #666; }
-    .ui-table--bordered th, .ui-table--bordered td { border: 1px solid var(--table-border-color, #e0e0e0); }
-    .ui-table--striped tbody tr:nth-child(even) { background: var(--table-stripe-bg, #fafafa); }
-    .ui-table--compact th, .ui-table--compact td { padding: 4px 8px; }
-    :host { display: block; width: 100%; }
-  `],
+  styles: [
+    `
+      .ui-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+        font-size: 13px;
+      }
+      .ui-table__caption {
+        text-align: left;
+        padding: 4px 0;
+        font-size: 12px;
+        color: #666;
+      }
+      .ui-table--bordered th,
+      .ui-table--bordered td {
+        border: 1px solid var(--table-border-color, #e0e0e0);
+      }
+      .ui-table--striped tbody tr:nth-child(even) {
+        background: var(--table-stripe-bg, #fafafa);
+      }
+      .ui-table--compact th,
+      .ui-table--compact td {
+        padding: 4px 8px;
+      }
+      :host {
+        display: block;
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class TableComponent {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `ui-table-${++TableComponent._idCounter}`;
+  @HostBinding('attr.id') @Input() id =
+    `ui-table-${++TableComponent._idCounter}`;
   @Input() caption = '';
   @Input() bordered = false;
   @Input() striped = false;

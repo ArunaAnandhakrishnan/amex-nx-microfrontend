@@ -1,16 +1,38 @@
-// libs/ui/src/lib/amex/layout/page-component.ts
-// RENAMED FROM: page-shell.ts
-// SELECTOR RENAMED: amex-page-shell → amex-page-component
-
-import { Component, Input, Output, EventEmitter, TemplateRef, inject, OnInit, OnChanges, OnDestroy, Type, ChangeDetectionStrategy, ChangeDetectorRef, signal, computed, DestroyRef, HostBinding } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  TemplateRef,
+  inject,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  Type,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  signal,
+  computed,
+  DestroyRef,
+  HostBinding,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { catchError, of, timeout } from 'rxjs';
-import { AmexTopNavBarComponent, AmexNavPortalStyle } from '../navigation/top-nav-bar';
+import {
+  AmexTopNavBarComponent,
+  AmexNavPortalStyle,
+} from '../navigation/top-nav-bar';
 import { AmexTabBarComponent, AmexTabItem } from '../navigation/tab-bar';
-import { AmexSidebarMenuComponent, AmexSidebarMenuItem } from '../navigation/sidebar-menu';
+import {
+  AmexSidebarMenuComponent,
+  AmexSidebarMenuItem,
+} from '../navigation/sidebar-menu';
 import { AmexPageHeaderComponent } from '../navigation/page-header';
-import { AmexDashboardMenuBarComponent, AmexMenuBarLink } from '../navigation/dashboard-menu-bar';
+import {
+  AmexDashboardMenuBarComponent,
+  AmexMenuBarLink,
+} from '../navigation/dashboard-menu-bar';
 import { AmexLoginModalComponent } from './login-modal.component';
 
 /* ============================================================================
@@ -36,7 +58,10 @@ export {
 
 export { bootstrapPortal } from './portal-bootstrap';
 export type { PortalBootstrapOptions } from './portal-bootstrap';
-export { AmexPortalRuntimeConfigService, providePortalRuntimeConfig } from './runtime-config';
+export {
+  AmexPortalRuntimeConfigService,
+  providePortalRuntimeConfig,
+} from './runtime-config';
 
 import {
   AMEX_PORTAL_AUTH_ADAPTER,
@@ -156,19 +181,20 @@ export interface AmexPortalLayoutConfig {
   ],
   template: `
     <div class="shell" [attr.data-theme]="resolvedTheme">
-
       <!-- ══════════════════════════════════════════════════════════════
            AUTH GATE — MODAL VARIANT
            Shows the built-in login modal when requireAuth=true,
            user is not authenticated, AND no loginRedirectUrl is set.
       ══════════════════════════════════════════════════════════════ -->
-      <ng-container *ngIf="requireAuth && !isAuthenticated() && !loginRedirectUrl">
-          <amex-login-modal
-            [portalTitle]="resolvedPortalTitle"
-            [portalStyle]="resolvedTheme"
-            [loginUrl]="loginUrl || ''"
-            (loginSuccess)="onLoginSuccess($event)"
-          ></amex-login-modal>
+      <ng-container
+        *ngIf="requireAuth && !isAuthenticated() && !loginRedirectUrl"
+      >
+        <amex-login-modal
+          [portalTitle]="resolvedPortalTitle"
+          [portalStyle]="resolvedTheme"
+          [loginUrl]="loginUrl || ''"
+          (loginSuccess)="onLoginSuccess($event)"
+        ></amex-login-modal>
       </ng-container>
 
       <!-- ══════════════════════════════════════════════════════════════
@@ -177,7 +203,9 @@ export interface AmexPortalLayoutConfig {
            a minimal "redirecting" state while the browser navigates away
            to the portal's own custom login page (see _redirectToCustomLoginIfConfigured).
       ══════════════════════════════════════════════════════════════ -->
-      <ng-container *ngIf="requireAuth && !isAuthenticated() && loginRedirectUrl">
+      <ng-container
+        *ngIf="requireAuth && !isAuthenticated() && loginRedirectUrl"
+      >
         <div class="shell__redirecting">
           <div class="shell__redirecting-spinner"></div>
           <span>Redirecting to login…</span>
@@ -193,8 +221,16 @@ export interface AmexPortalLayoutConfig {
         *ngIf="showHealthStatus && healthStatus().status !== 'SKIPPED'"
         [class.shell__health-badge--up]="healthStatus().status === 'UP'"
         [class.shell__health-badge--down]="healthStatus().status === 'DOWN'"
-        [class.shell__health-badge--checking]="healthStatus().status === 'CHECKING'"
-        [title]="'Service health: ' + healthStatus().status + (healthStatus().responseMs ? ' (' + healthStatus().responseMs + 'ms)' : '')"
+        [class.shell__health-badge--checking]="
+          healthStatus().status === 'CHECKING'
+        "
+        [title]="
+          'Service health: ' +
+          healthStatus().status +
+          (healthStatus().responseMs
+            ? ' (' + healthStatus().responseMs + 'ms)'
+            : '')
+        "
       >
         <span class="shell__health-dot"></span>
         <span class="shell__health-label">{{ healthStatus().status }}</span>
@@ -204,30 +240,46 @@ export interface AmexPortalLayoutConfig {
            MAIN SHELL — only rendered when authenticated (or auth not required)
       ══════════════════════════════════════════════════════════════ -->
       <ng-container *ngIf="!requireAuth || isAuthenticated()">
-
         <!-- HEADER -->
         <header class="shell__header" *ngIf="resolvedHeaderVisible">
-          <ng-container *ngIf="headerTemplate" [ngTemplateOutlet]="headerTemplate"></ng-container>
+          <ng-container
+            *ngIf="headerTemplate"
+            [ngTemplateOutlet]="headerTemplate"
+          ></ng-container>
           <ng-container *ngIf="!headerTemplate && resolvedHeaderComponent">
-            <ng-container *ngComponentOutlet="resolvedHeaderComponent"></ng-container>
+            <ng-container
+              *ngComponentOutlet="resolvedHeaderComponent"
+            ></ng-container>
           </ng-container>
-          <ng-container *ngIf="!headerTemplate && !resolvedHeaderComponent && showCustomHeader">
+          <ng-container
+            *ngIf="
+              !headerTemplate && !resolvedHeaderComponent && showCustomHeader
+            "
+          >
             <ng-content select="[header]"></ng-content>
           </ng-container>
-          <ng-container *ngIf="!headerTemplate && !resolvedHeaderComponent && !showCustomHeader">
+          <ng-container
+            *ngIf="
+              !headerTemplate && !resolvedHeaderComponent && !showCustomHeader
+            "
+          >
             <amex-top-nav-bar
               [portalStyle]="resolvedTheme"
               [portalTitle]="resolvedPortalTitle"
               [username]="resolvedUsername"
               [omsServiceName]="omsServiceName"
               (logout)="onLogout()"
-              (menuToggle)="menuToggle.emit()">
+              (menuToggle)="menuToggle.emit()"
+            >
             </amex-top-nav-bar>
           </ng-container>
         </header>
 
         <!-- TABS -->
-        <div class="shell__tabs" *ngIf="resolvedTabs.length && resolvedTheme !== 'bcrb'">
+        <div
+          class="shell__tabs"
+          *ngIf="resolvedTabs.length && resolvedTheme !== 'bcrb'"
+        >
           <amex-tab-bar
             [portalStyle]="resolvedTheme === 'oms' ? 'oms' : 'onls'"
             [tabs]="resolvedTabs"
@@ -235,12 +287,16 @@ export interface AmexPortalLayoutConfig {
             [subItems]="resolvedSubItems"
             [activeSubId]="resolvedActiveSubId"
             (tabClick)="handleTabClick($event)"
-            (subClick)="subClick.emit($event)">
+            (subClick)="subClick.emit($event)"
+          >
           </amex-tab-bar>
         </div>
 
         <!-- DASHBOARD BAR -->
-        <div class="shell__dashboard-bar" *ngIf="resolvedTheme === 'bcrb' && resolvedDashboardVisible">
+        <div
+          class="shell__dashboard-bar"
+          *ngIf="resolvedTheme === 'bcrb' && resolvedDashboardVisible"
+        >
           <amex-dashboard-menu-bar
             [showBureauDropdown]="resolvedShowBureauDropdown"
             [bureauLabel]="resolvedBureauLabel"
@@ -249,28 +305,52 @@ export interface AmexPortalLayoutConfig {
             [links]="resolvedDashboardLinks"
             [activeLinkId]="resolvedActiveDashboardLinkId"
             (bureauChange)="bureauChange.emit($event)"
-            (linkClick)="dashboardLinkClick.emit($event)">
+            (linkClick)="dashboardLinkClick.emit($event)"
+          >
           </amex-dashboard-menu-bar>
         </div>
 
         <!-- BODY -->
         <div class="shell__body">
-
           <!-- SIDEBAR -->
           <aside class="shell__sidebar" *ngIf="resolvedSidebarVisible">
-            <ng-container *ngIf="sidebarTemplate" [ngTemplateOutlet]="sidebarTemplate"></ng-container>
+            <ng-container
+              *ngIf="sidebarTemplate"
+              [ngTemplateOutlet]="sidebarTemplate"
+            ></ng-container>
             <ng-container *ngIf="!sidebarTemplate && resolvedSidebarComponent">
-              <ng-container *ngComponentOutlet="resolvedSidebarComponent"></ng-container>
+              <ng-container
+                *ngComponentOutlet="resolvedSidebarComponent"
+              ></ng-container>
             </ng-container>
-            <ng-container *ngIf="!sidebarTemplate && !resolvedSidebarComponent && showCustomSidebar">
+            <ng-container
+              *ngIf="
+                !sidebarTemplate &&
+                !resolvedSidebarComponent &&
+                showCustomSidebar
+              "
+            >
               <ng-content select="[left-nav]"></ng-content>
             </ng-container>
-            <ng-container *ngIf="!sidebarTemplate && !resolvedSidebarComponent && !showCustomSidebar">
+            <ng-container
+              *ngIf="
+                !sidebarTemplate &&
+                !resolvedSidebarComponent &&
+                !showCustomSidebar
+              "
+            >
               <amex-sidebar-menu
-                [portalStyle]="resolvedTheme === 'bcrb' ? 'bcrb' : resolvedTheme === 'oms' ? 'oms' : 'onls'"
+                [portalStyle]="
+                  resolvedTheme === 'bcrb'
+                    ? 'bcrb'
+                    : resolvedTheme === 'oms'
+                      ? 'oms'
+                      : 'onls'
+                "
                 [items]="resolvedSidebarItems"
                 [activeId]="resolvedSidebarActiveId"
-                (itemClick)="handleSidebarClick($event)">
+                (itemClick)="handleSidebarClick($event)"
+              >
               </amex-sidebar-menu>
             </ng-container>
           </aside>
@@ -283,111 +363,199 @@ export interface AmexPortalLayoutConfig {
                 [title]="resolvedPageTitle"
                 [subtitle]="resolvedPageSubtitle"
                 [ctaLabel]="resolvedPageCtaLabel"
-                (ctaClick)="pageCtaClick.emit()">
+                (ctaClick)="pageCtaClick.emit()"
+              >
               </amex-page-header>
             </div>
             <div class="shell__content-body">
               <ng-content></ng-content>
             </div>
           </div>
-
         </div>
 
         <!-- FOOTER -->
         <footer class="shell__footer" *ngIf="resolvedFooterVisible">
-          <ng-container *ngIf="footerTemplate" [ngTemplateOutlet]="footerTemplate"></ng-container>
+          <ng-container
+            *ngIf="footerTemplate"
+            [ngTemplateOutlet]="footerTemplate"
+          ></ng-container>
           <ng-container *ngIf="!footerTemplate && resolvedFooterComponent">
-            <ng-container *ngComponentOutlet="resolvedFooterComponent"></ng-container>
+            <ng-container
+              *ngComponentOutlet="resolvedFooterComponent"
+            ></ng-container>
           </ng-container>
-          <ng-container *ngIf="!footerTemplate && !resolvedFooterComponent && showCustomFooter">
+          <ng-container
+            *ngIf="
+              !footerTemplate && !resolvedFooterComponent && showCustomFooter
+            "
+          >
             <ng-content select="[footer]"></ng-content>
           </ng-container>
-          <ng-container *ngIf="!footerTemplate && !resolvedFooterComponent && !showCustomFooter">
+          <ng-container
+            *ngIf="
+              !footerTemplate && !resolvedFooterComponent && !showCustomFooter
+            "
+          >
             <div class="shell__footer-default">
               <span class="shell__footer-text">{{ resolvedFooterText }}</span>
             </div>
           </ng-container>
         </footer>
-
       </ng-container>
     </div>
   `,
-  styles: [`
-    :host { display: block; font-family: Arial, sans-serif; }
+  styles: [
+    `
+      :host {
+        display: block;
+        font-family: Arial, sans-serif;
+      }
 
-    .shell {
-      display: flex;
-      flex-direction: column;
-      min-height: 100%;
-      background: #f4f4f4;
-      position: relative;
-    }
+      .shell {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        background: #f4f4f4;
+        position: relative;
+      }
 
-    .shell__header,
-    .shell__tabs,
-    .shell__dashboard-bar,
-    .shell__footer,
-    .shell__page-header { flex-shrink: 0; }
+      .shell__header,
+      .shell__tabs,
+      .shell__dashboard-bar,
+      .shell__footer,
+      .shell__page-header {
+        flex-shrink: 0;
+      }
 
-    .shell__body { display: flex; flex: 1; min-height: 0; }
-    .shell__sidebar { flex-shrink: 0; }
-    .shell__content {
-      flex: 1; display: flex; flex-direction: column;
-      min-width: 0; overflow: hidden;
-    }
-    .shell__page-header { flex-shrink: 0; }
-    .shell__content-body { flex: 1; overflow-y: auto; padding: 16px; }
+      .shell__body {
+        display: flex;
+        flex: 1;
+        min-height: 0;
+      }
+      .shell__sidebar {
+        flex-shrink: 0;
+      }
+      .shell__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+      }
+      .shell__page-header {
+        flex-shrink: 0;
+      }
+      .shell__content-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+      }
 
-    .shell__footer-default {
-      background: #fff; border-top: 1px solid #d8d8d8;
-      padding: 8px 16px; text-align: center; font-size: 11px; color: #777;
-    }
+      .shell__footer-default {
+        background: #fff;
+        border-top: 1px solid #d8d8d8;
+        padding: 8px 16px;
+        text-align: center;
+        font-size: 11px;
+        color: #777;
+      }
 
-    .shell[data-theme="onls"] .shell__content-body { background: #ffffff; }
-    .shell[data-theme="oms"]  .shell__content-body { background: #e8e5e5; }
-    .shell[data-theme="bcrb"] .shell__content-body { background: #f6f6f6; }
+      .shell[data-theme='onls'] .shell__content-body {
+        background: #ffffff;
+      }
+      .shell[data-theme='oms'] .shell__content-body {
+        background: #e8e5e5;
+      }
+      .shell[data-theme='bcrb'] .shell__content-body {
+        background: #f6f6f6;
+      }
 
-    /* ── Health badge ── */
-    .shell__health-badge {
-      position: fixed; bottom: 12px; right: 12px; z-index: 9999;
-      display: flex; align-items: center; gap: 6px;
-      padding: 4px 10px; border-radius: 12px;
-      font-size: 11px; font-weight: bold; font-family: Arial, sans-serif;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
-      pointer-events: none;
-    }
-    .shell__health-badge--up      { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-    .shell__health-badge--down    { background: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
-    .shell__health-badge--checking{ background: #fff8e1; color: #f57f17; border: 1px solid #fff176; }
-    .shell__health-dot {
-      width: 7px; height: 7px; border-radius: 50%; background: currentColor;
-    }
-    .shell__health-badge--checking .shell__health-dot {
-      animation: hb-pulse 1.2s ease-in-out infinite;
-    }
-    @keyframes hb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+      /* ── Health badge ── */
+      .shell__health-badge {
+        position: fixed;
+        bottom: 12px;
+        right: 12px;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: bold;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+        pointer-events: none;
+      }
+      .shell__health-badge--up {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #c8e6c9;
+      }
+      .shell__health-badge--down {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ffcdd2;
+      }
+      .shell__health-badge--checking {
+        background: #fff8e1;
+        color: #f57f17;
+        border: 1px solid #fff176;
+      }
+      .shell__health-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .shell__health-badge--checking .shell__health-dot {
+        animation: hb-pulse 1.2s ease-in-out infinite;
+      }
+      @keyframes hb-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
 
-    /* ── Redirecting state (loginRedirectUrl mode) ── */
-    .shell__redirecting {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #f4f4f4;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; font-family: Arial, sans-serif; color: #555; font-size: 14px;
-    }
-    .shell__redirecting-spinner {
-      width: 32px; height: 32px;
-      border: 3px solid #d8d8d8; border-top-color: #006fcf;
-      border-radius: 50%;
-      animation: shell-redirect-spin 0.8s linear infinite;
-    }
-    @keyframes shell-redirect-spin { to { transform: rotate(360deg); } }
-  `],
+      /* ── Redirecting state (loginRedirectUrl mode) ── */
+      .shell__redirecting {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #f4f4f4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        font-family: Arial, sans-serif;
+        color: #555;
+        font-size: 14px;
+      }
+      .shell__redirecting-spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid #d8d8d8;
+        border-top-color: #006fcf;
+        border-radius: 50%;
+        animation: shell-redirect-spin 0.8s linear infinite;
+      }
+      @keyframes shell-redirect-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    `,
+  ],
 })
 export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   private static _idCounter = 0;
-  @HostBinding('attr.id') @Input() id = `page-component-${++AmexPageComponent._idCounter}`;
-
-
+  @HostBinding('attr.id') @Input() id =
+    `page-component-${++AmexPageComponent._idCounter}`;
 
   /* ==========================================================================
      ── NEW PRODUCTION INPUTS ──────────────────────────────────────────────
@@ -480,79 +648,92 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   @Input() omsServiceName = 'Merchant Services';
   @Input() footerText?: string;
 
-  @Input() showCustomHeader  = false;
-  @Input() showCustomFooter  = false;
+  @Input() showCustomHeader = false;
+  @Input() showCustomFooter = false;
   @Input() showCustomSidebar = false;
 
-  @Input() headerTemplate?:  TemplateRef<unknown>;
-  @Input() footerTemplate?:  TemplateRef<unknown>;
+  @Input() headerTemplate?: TemplateRef<unknown>;
+  @Input() footerTemplate?: TemplateRef<unknown>;
   @Input() sidebarTemplate?: TemplateRef<unknown>;
 
-  @Input() tabs:        AmexTabItem[] = [];
-  @Input() activeTabId  = '';
-  @Input() subItems:    AmexTabItem[] = [];
-  @Input() activeSubId  = '';
+  @Input() tabs: AmexTabItem[] = [];
+  @Input() activeTabId = '';
+  @Input() subItems: AmexTabItem[] = [];
+  @Input() activeSubId = '';
 
-  @Input() showSidebar     = true;
-  @Input() sidebarItems:   AmexSidebarMenuItem[] = [];
+  @Input() showSidebar = true;
+  @Input() sidebarItems: AmexSidebarMenuItem[] = [];
   @Input() activeSidebarId = '';
 
-  @Input() pageTitle    = '';
+  @Input() pageTitle = '';
   @Input() pageSubtitle = '';
   @Input() pageCtaLabel = '';
 
-  @Input() showDashboardBar      = true;
-  @Input() showBureauDropdown    = true;
-  @Input() bureauLabel           = 'Bureau';
-  @Input() bureauOptions:        AmexMenuBarLink[] = [];
-  @Input() activeBureauId        = '';
-  @Input() dashboardLinks:       AmexMenuBarLink[] = [];
+  @Input() showDashboardBar = true;
+  @Input() showBureauDropdown = true;
+  @Input() bureauLabel = 'Bureau';
+  @Input() bureauOptions: AmexMenuBarLink[] = [];
+  @Input() activeBureauId = '';
+  @Input() dashboardLinks: AmexMenuBarLink[] = [];
   @Input() activeDashboardLinkId = '';
 
   /* ==========================================================================
      EVENTS
   ========================================================================== */
 
-  @Output() logout             = new EventEmitter<void>();
-  @Output() menuToggle         = new EventEmitter<void>();
-  @Output() tabClick           = new EventEmitter<string>();
-  @Output() subClick           = new EventEmitter<string>();
-  @Output() sidebarItemClick   = new EventEmitter<string>();
-  @Output() pageCtaClick       = new EventEmitter<void>();
-  @Output() bureauChange       = new EventEmitter<string>();
+  @Output() logout = new EventEmitter<void>();
+  @Output() menuToggle = new EventEmitter<void>();
+  @Output() tabClick = new EventEmitter<string>();
+  @Output() subClick = new EventEmitter<string>();
+  @Output() sidebarItemClick = new EventEmitter<string>();
+  @Output() pageCtaClick = new EventEmitter<void>();
+  @Output() bureauChange = new EventEmitter<string>();
   @Output() dashboardLinkClick = new EventEmitter<string>();
   /** Fires when health check completes. Portals can react (e.g. show banner). */
-  @Output() healthCheck        = new EventEmitter<AmexPortalHealthStatus>();
+  @Output() healthCheck = new EventEmitter<AmexPortalHealthStatus>();
 
   /* ==========================================================================
      ADAPTERS
   ========================================================================== */
 
-  private readonly authAdapter = inject(AMEX_PORTAL_AUTH_ADAPTER, { optional: true }) as (AmexPortalAuthAdapter & {
-    isAuthenticated?(): boolean;
-    listenToStorageEvents?(d: DestroyRef): void;
-  }) | null;
+  private readonly authAdapter = inject(AMEX_PORTAL_AUTH_ADAPTER, {
+    optional: true,
+  }) as
+    | (AmexPortalAuthAdapter & {
+        isAuthenticated?(): boolean;
+        listenToStorageEvents?(d: DestroyRef): void;
+      })
+    | null;
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly navAdapter = inject<AmexPortalNavigationAdapter | null>(
-    AMEX_PORTAL_NAVIGATION_ADAPTER, { optional: true }
+    AMEX_PORTAL_NAVIGATION_ADAPTER,
+    { optional: true },
   );
   private readonly themeAdapter = inject<AmexPortalThemeAdapter | null>(
-    AMEX_PORTAL_THEME_ADAPTER, { optional: true }
+    AMEX_PORTAL_THEME_ADAPTER,
+    { optional: true },
   );
   private readonly analyticsAdapter = inject<AmexPortalAnalyticsAdapter | null>(
-    AMEX_PORTAL_ANALYTICS_ADAPTER, { optional: true }
+    AMEX_PORTAL_ANALYTICS_ADAPTER,
+    { optional: true },
   );
-  private readonly userContextAdapter = inject<AmexPortalUserContextAdapter | null>(
-    AMEX_PORTAL_USER_CONTEXT_ADAPTER, { optional: true }
-  );
-  private readonly featureFlagAdapter = inject<AmexPortalFeatureFlagAdapter | null>(
-    AMEX_PORTAL_FEATURE_FLAG_ADAPTER, { optional: true }
-  );
+  private readonly userContextAdapter =
+    inject<AmexPortalUserContextAdapter | null>(
+      AMEX_PORTAL_USER_CONTEXT_ADAPTER,
+      { optional: true },
+    );
+  private readonly featureFlagAdapter =
+    inject<AmexPortalFeatureFlagAdapter | null>(
+      AMEX_PORTAL_FEATURE_FLAG_ADAPTER,
+      { optional: true },
+    );
 
-  private readonly runtimeConfig    = inject(AmexPortalRuntimeConfigService, { optional: true });
-  private readonly cdr              = inject(ChangeDetectorRef);
-  private readonly http             = inject(HttpClient);
+  private readonly runtimeConfig = inject(AmexPortalRuntimeConfigService, {
+    optional: true,
+  });
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly http = inject(HttpClient);
 
   /* ==========================================================================
      STATE — signals
@@ -562,7 +743,9 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   readonly isAuthenticated = signal<boolean>(false);
 
   /** Health status of the microservice reported via health check. */
-  readonly healthStatus = signal<AmexPortalHealthStatus>({ status: 'CHECKING' });
+  readonly healthStatus = signal<AmexPortalHealthStatus>({
+    status: 'CHECKING',
+  });
 
   /* ==========================================================================
      MEMOIZED CONFIG
@@ -572,7 +755,8 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
 
   private get mergedConfig(): AmexPortalLayoutConfig {
     if (!this._mergedConfig) {
-      const runtime = (this.runtimeConfig?.getAll() ?? {}) as AmexPortalLayoutConfig;
+      const runtime = (this.runtimeConfig?.getAll() ??
+        {}) as AmexPortalLayoutConfig;
       this._mergedConfig = { ...runtime, ...this.config };
     }
     return this._mergedConfig;
@@ -609,7 +793,7 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
     // 5. Analytics
     this.analyticsAdapter?.trackPageView(
       this.resolvedPageTitle || this.resolvedPortalTitle,
-      { portal: this.resolvedPortalTitle, theme: this.resolvedTheme }
+      { portal: this.resolvedPortalTitle, theme: this.resolvedTheme },
     );
   }
 
@@ -643,9 +827,9 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
       .get<{ status: string }>(this.healthCheckUrl)
       .pipe(
         timeout(5000),
-        catchError(() => of({ status: 'DOWN' }))
+        catchError(() => of({ status: 'DOWN' })),
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         const responseMs = Date.now() - start;
         const up = res?.status === 'UP';
         const status: AmexPortalHealthStatus = {
@@ -660,7 +844,7 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
         if (!up) {
           console.warn(
             `[AmexPageComponent] Health check FAILED for ${this.healthCheckUrl}`,
-            `(${responseMs}ms)`
+            `(${responseMs}ms)`,
           );
         }
       });
@@ -679,15 +863,18 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
 
     if (!this.authAdapter) {
       // requireAuth=true but no adapter provided → BLOCK content
-      console.warn('[AmexPageComponent] requireAuth=true but no AMEX_PORTAL_AUTH_ADAPTER provided.');
+      console.warn(
+        '[AmexPageComponent] requireAuth=true but no AMEX_PORTAL_AUTH_ADAPTER provided.',
+      );
       this.isAuthenticated.set(false);
       this._redirectToCustomLoginIfConfigured();
       return;
     }
 
-    const authed = typeof (this.authAdapter as any).isAuthenticated === 'function'
-      ? (this.authAdapter as any).isAuthenticated()
-      : !!this.authAdapter.getUsername();
+    const authed =
+      typeof (this.authAdapter as any).isAuthenticated === 'function'
+        ? (this.authAdapter as any).isAuthenticated()
+        : !!this.authAdapter.getUsername();
 
     this.isAuthenticated.set(authed);
 
@@ -718,16 +905,22 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
     if (
       currentHref.startsWith(fullLoginUrl) ||
       currentHref.includes(this.loginRedirectUrl)
-    ) return;
+    )
+      return;
 
-    const returnUrl  = encodeURIComponent(window.location.pathname + window.location.search);
-    const separator  = fullLoginUrl.includes('?') ? '&' : '?';
-    const target     = `${fullLoginUrl}${separator}returnUrl=${returnUrl}`;
+    const returnUrl = encodeURIComponent(
+      window.location.pathname + window.location.search,
+    );
+    const separator = fullLoginUrl.includes('?') ? '&' : '?';
+    const target = `${fullLoginUrl}${separator}returnUrl=${returnUrl}`;
 
     this.loginRedirect.emit(target);
 
     if (this.simulateRedirect) {
-      console.log('[AmexPageComponent] simulateRedirect=true — would redirect to:', target);
+      console.log(
+        '[AmexPageComponent] simulateRedirect=true — would redirect to:',
+        target,
+      );
       return;
     }
 
@@ -747,11 +940,15 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.isAuthenticated.set(true);
     this.cdr.markForCheck();
-    this.analyticsAdapter?.trackEvent('portal_login_success', { portal: this.resolvedPortalTitle });
+    this.analyticsAdapter?.trackEvent('portal_login_success', {
+      portal: this.resolvedPortalTitle,
+    });
   }
 
   onLogout(): void {
-    this.analyticsAdapter?.trackEvent('portal_logout', { portal: this.resolvedPortalTitle });
+    this.analyticsAdapter?.trackEvent('portal_logout', {
+      portal: this.resolvedPortalTitle,
+    });
     this.authAdapter?.logout();
     if (this.requireAuth) {
       this.isAuthenticated.set(false);
@@ -780,7 +977,10 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
     if (this.featureFlagAdapter) return this.featureFlagAdapter.isEnabled(flag);
     const configFlags = this.mergedConfig.features ?? {};
     if (flag in configFlags) return configFlags[flag];
-    return this.runtimeConfig?.get<Record<string, boolean>>('features')?.[flag] ?? false;
+    return (
+      this.runtimeConfig?.get<Record<string, boolean>>('features')?.[flag] ??
+      false
+    );
   }
 
   hasRole(role: string): boolean {
@@ -797,7 +997,7 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
 
   get resolvedTheme(): AmexNavPortalStyle {
     return (
-      this.themeAdapter?.getTheme() as AmexNavPortalStyle | undefined ??
+      (this.themeAdapter?.getTheme() as AmexNavPortalStyle | undefined) ??
       this.mergedConfig.branding?.theme ??
       this.portalStyle ??
       'onls'
@@ -805,7 +1005,11 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedPortalTitle(): string {
-    return this.mergedConfig.branding?.portalTitle ?? this.portalTitle ?? 'American Express';
+    return (
+      this.mergedConfig.branding?.portalTitle ??
+      this.portalTitle ??
+      'American Express'
+    );
   }
 
   get resolvedUsername(): string {
@@ -813,7 +1017,8 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedHeaderVisible(): boolean {
-    if (this.mergedConfig.header?.visible !== undefined) return this.mergedConfig.header.visible;
+    if (this.mergedConfig.header?.visible !== undefined)
+      return this.mergedConfig.header.visible;
     return this.showHeader ?? true;
   }
 
@@ -822,12 +1027,17 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedFooterVisible(): boolean {
-    if (this.mergedConfig.footer?.visible !== undefined) return this.mergedConfig.footer.visible;
+    if (this.mergedConfig.footer?.visible !== undefined)
+      return this.mergedConfig.footer.visible;
     return this.showFooter ?? true;
   }
 
   get resolvedFooterText(): string {
-    return this.mergedConfig.footer?.text ?? this.footerText ?? '© American Express. All rights reserved.';
+    return (
+      this.mergedConfig.footer?.text ??
+      this.footerText ??
+      '© American Express. All rights reserved.'
+    );
   }
 
   get resolvedFooterComponent(): Type<unknown> | null {
@@ -839,7 +1049,11 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedSidebarItems(): AmexSidebarMenuItem[] {
-    return this.mergedConfig.sidebar?.items ?? this.navAdapter?.getSidebarItems?.() ?? this.sidebarItems;
+    return (
+      this.mergedConfig.sidebar?.items ??
+      this.navAdapter?.getSidebarItems?.() ??
+      this.sidebarItems
+    );
   }
 
   get resolvedSidebarActiveId(): string {
@@ -851,7 +1065,9 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedTabs(): AmexTabItem[] {
-    return this.mergedConfig.tabs?.tabs ?? this.navAdapter?.getTabs?.() ?? this.tabs;
+    return (
+      this.mergedConfig.tabs?.tabs ?? this.navAdapter?.getTabs?.() ?? this.tabs
+    );
   }
 
   get resolvedActiveTabId(): string {
@@ -883,7 +1099,9 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedShowBureauDropdown(): boolean {
-    return this.mergedConfig.dashboard?.showBureauDropdown ?? this.showBureauDropdown;
+    return (
+      this.mergedConfig.dashboard?.showBureauDropdown ?? this.showBureauDropdown
+    );
   }
 
   get resolvedBureauLabel(): string {
@@ -903,7 +1121,9 @@ export class AmexPageComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get resolvedActiveDashboardLinkId(): string {
-    return this.mergedConfig.dashboard?.activeLinkId ?? this.activeDashboardLinkId;
+    return (
+      this.mergedConfig.dashboard?.activeLinkId ?? this.activeDashboardLinkId
+    );
   }
 }
 

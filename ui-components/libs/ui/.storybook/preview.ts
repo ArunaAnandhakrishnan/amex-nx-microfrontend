@@ -10,7 +10,13 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Docs', ['Introduction', 'Release Notes'], 'Primitives', 'Composite', 'Patterns'],
+        order: [
+          'Docs',
+          ['Introduction', 'Release Notes'],
+          'Primitives',
+          'Composite',
+          'Patterns',
+        ],
       },
     },
   },
